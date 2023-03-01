@@ -1,6 +1,7 @@
-train: ../train/images
-val: ../valid/images
-test: ../test/images
+path: ../datasets/
+train: train/images
+val: valid/images
+test: test/images
 
 nc: 57
 names: ['altar', 'anvil', 'arrow', 'axe', 'bar', 'bomb', 'bow', 'breastplate', 'chest', 'cobwebI', 'cobwebT', 'copper', 'crimera', 'crimstone', 'dirt', 'ebony', 'eye', 'eyeC', 'furnace', 'gel', 'glowstick', 'gold', 'grenade', 'heart', 'helmet', 'iron', 'knife', 'legs', 'lens', 'lifeC', 'liquid', 'mirror', 'ore', 'pickaxe', 'platform', 'platinum', 'pot', 'potion', 'recallP', 'rope', 'ropeT', 'sand', 'shuriken', 'silver', 'slime', 'snow', 'spider', 'star', 'stone', 'sword', 'tin', 'torchT', 'tree', 'tungsten', 'wood', 'workbench', 'zombie']
