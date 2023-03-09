@@ -9,6 +9,6 @@ names: ['altar', 'anvil', 'arrow', 'axe', 'bar', 'bomb', 'bow', 'breastplate', '
 roboflow:
   workspace: tec-h4jb3
   project: terraria-3.2
-  version: 4
+  version: 5
   license: MIT
-  url: https://universe.roboflow.com/tec-h4jb3/terraria-3.2/dataset/4
+  url: https://universe.roboflow.com/tec-h4jb3/terraria-3.2/dataset/5
