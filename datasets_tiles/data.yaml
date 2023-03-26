@@ -1,0 +1,14 @@
+path: ../datasets_tiles/
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['dirt']
+
+roboflow:
+  workspace: tec-h4jb3
+  project: terraria-4
+  version: 2
+  license: MIT
+  url: https://universe.roboflow.com/tec-h4jb3/terraria-4/dataset/2

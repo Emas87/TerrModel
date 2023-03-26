@@ -1,0 +1,14 @@
+path: ../datasets_objects/
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 44
+names: ['altar', 'anvil', 'arrow', 'axe', 'bar', 'bomb', 'bow', 'breastplate', 'chest', 'cobwebI', 'cobwebT', 'crimera', 'eye', 'eyeC', 'furnace', 'gel', 'glowstick', 'grenade', 'heart', 'helmet', 'knife', 'legs', 'lens', 'lifeC', 'liquid', 'mirror', 'ore', 'pickaxe', 'platform', 'pot', 'potion', 'recallP', 'rope', 'ropeT', 'shuriken', 'slime', 'spider', 'star', 'sword', 'torchT', 'tree', 'wood', 'workbench', 'zombie']
+
+roboflow:
+  workspace: tec-h4jb3
+  project: terraria-3.3
+  version: 2
+  license: MIT
+  url: https://universe.roboflow.com/tec-h4jb3/terraria-3.3/dataset/2
