@@ -5,13 +5,32 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "TerrariaEyes",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "${workspaceFolder}/yolov5/TerrarianEyes.py",
             "console": "integratedTerminal",
             "justMyCode": false,
             "cwd": "${workspaceFolder}/yolov5",
+        }, 
+        {
+            "name": "Detect",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/yolov5/detect.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "cwd": "${workspaceFolder}/yolov5",
+            "args": [
+                "--source",
+                "../../validation/",
+                "--weights",
+                "./runs/train/yolov5l6-tiles/weights/best.pt",
+                "--name",
+                "vscode",
+                "--data",
+                "../datasets_objects/data.yml",
+            ]
         }
     ]
 }
