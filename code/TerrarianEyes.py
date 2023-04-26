@@ -288,6 +288,7 @@ class TerrarianEyes:
             self.translateTiles(tiles)
             with open("delete.txt","w") as f:
                 f.write(str(self.map))
+                f.write(str(self.inventory))
             #objects = {}
             annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
             final_rectangles = []

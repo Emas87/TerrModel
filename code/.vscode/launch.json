@@ -1,0 +1,45 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "TerrariaEyes",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/TerrarianEyes.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Detect",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/detect.py",
+      "console": "integratedTerminal",
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--source",
+        "../../validation/",
+        "--weights",
+        "./runs/train/yolov5l6-tiles/weights/best.pt",
+        "--name",
+        "vscode",
+        "--data",
+        "../datasets_objects/data.yml"
+      ]
+    }
+  ]
+}

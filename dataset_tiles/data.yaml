@@ -1,0 +1,14 @@
+path: ../dataset_tiles/
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 7
+names: ['dirt', 'heart', 'liquid', 'sand', 'snow', 'stone', 'tree']
+
+roboflow:
+  workspace: tec-h4jb3
+  project: terrariatiles-4ikmz
+  version: 2
+  license: MIT
+  url: https://universe.roboflow.com/tec-h4jb3/terrariatiles-4ikmz/dataset/2
