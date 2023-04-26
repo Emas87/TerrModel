@@ -2,22 +2,28 @@ import cv2 as cv
 import numpy as np
 import os
 import torch
+from math import floor
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
 from utils.torch_utils import select_device
 from models.common import DetectMultiBackend
-from utils.general import (LOGGER, Profile, check_file, check_img_size, check_imshow, check_requirements, colorstr, cv2,
-                           increment_path, non_max_suppression, print_args, scale_boxes, strip_optimizer, xyxy2xywh)
-from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages, LoadScreenshots, LoadStreams
-from utils.augmentations import (Albumentations, augment_hsv, classify_albumentations, classify_transforms, copy_paste,
-                                 letterbox, mixup, random_perspective)
-from utils.plots import Annotator, colors, save_one_box
+from utils.general import (Profile, check_img_size, non_max_suppression, scale_boxes)
+from utils.augmentations import (letterbox)
+from utils.plots import Annotator, colors
+from Inventory import Inventory
+from Map import Map
 
+TILESZ = 16
 
 class TerrarianEyes:
 
     def __init__(self, tiles_weights_path, objects_weights_path) -> None:
+
+
+        # Fast testing
+
+        #
         self.tiles_weights_path = tiles_weights_path
         self.objects_weights_path = objects_weights_path
         self.objects_model = None
@@ -36,26 +42,33 @@ class TerrarianEyes:
         self.classes = None
         self.agnostic_nms = False
         self.max_det = 1000
-        self.line_thickness = 3
+        self.line_thickness = 8
         self.hide_labels = False
         self.hide_conf = False
 
         self.loadModels()
         self.loadImages()
+        self.inventory = Inventory()
+        self.map = Map()
 
-    @staticmethod
-    def matchImage(sourceImage, templateImages):
+    def matchImage(self, sourceImage, templateImages):
         # Match in gray
         img_gray = cv.cvtColor(sourceImage, cv.COLOR_BGR2GRAY)
+
+        # Apply histogram equalization
+        img_gray = cv.equalizeHist(img_gray)
+
         rectangles = []    
 
         for image in templateImages:
-            template = cv.imread(image, cv.IMREAD_GRAYSCALE)
+            template = cv.imread(image)
+            template = cv.cvtColor(template, cv.COLOR_BGR2GRAY)
+            template = cv.equalizeHist(template)
             assert template is not None, "image could not be read, check with os.path.exists()"
             w, h = template.shape[::-1]
             res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
 
-            threshold = 0.8
+            threshold = 0.7
             loc = np.where( res >= threshold)
             for pt in zip(*loc[::-1]):
                 rectangles.append((pt[0], pt[1], w, h))
@@ -72,42 +85,50 @@ class TerrarianEyes:
             w, h = template.shape[0:-1]
             res = cv.matchTemplate(sourceImage, template, cv.TM_CCOEFF_NORMED)
 
-            threshold = 0.8
+            threshold = 0.79
             loc = np.where( res >= threshold)
             for pt in zip(*loc[::-1]):
                 rectangles.append((pt[0], pt[1], w, h))
         return rectangles
 
     def findTiles(self, source):
-        #results = self.infereYoloTiles(source)
-        #df= results.pandas().xyxy[0]
-        #results.show()
         results = self.detectYoloTiles(source)
+        final_results = {}
         img_rgb = source
         final_rectangles = []
         # for each section of tiles look for specific tiles
         for clss, rows in results.items():
-            images = self.templates[clss]
-            for row in rows:                
-                cropped_image = img_rgb[round(row[1]):round(row[1]+row[3]), round(row[0]):round(row[0]+row[2])]
-                rectangles = self.matchImage(cropped_image, images)
-                #rectangles = matchImageColor(cropped_image, grassImages)
+            try:
+                images = self.templates[clss]
+                for row in rows:                
+                    cropped_image = img_rgb[round(row[1]):round(row[1]+row[3]), round(row[0]):round(row[0]+row[2])]
+                    rectangles = self.matchImage(cropped_image, images)
+                    #rectangles = self.matchImageColor(cropped_image, images)
 
-                # convert point from cropped image point to original image point
-                for rectangle in rectangles:
-                    x1 = int(round(row[0]) + rectangle[0])
-                    #x2 = int(round(row.xmin) + rectangle[0] + rectangle[2])
-                    y1 = int(round(row[1]) + rectangle[1])
-                    #y2 = (round(row.ymin) + rectangle[1] + rectangle[3])
-                    #cv.rectangle(img_rgb, (x1, y1), (x2, y2), (0,0,255), 2)
-                    final_rectangles.append((x1,y1,rectangle[2],rectangle[3]))
+                    # convert point from cropped image point to original image point
+                    for rectangle in rectangles:
+                        x1 = int(round(row[0]) + rectangle[0])
+                        #x2 = int(round(row.xmin) + rectangle[0] + rectangle[2])
+                        y1 = int(round(row[1]) + rectangle[1])
+                        #y2 = (round(row.ymin) + rectangle[1] + rectangle[3])
+                        #cv.rectangle(img_rgb, (x1, y1), (x2, y2), (0,0,255), 2)
+                        #final_rectangles.append((x1,y1,rectangle[2],rectangle[3]))
+                        if clss not in final_results:
+                            final_results[clss] = []
+                        final_results[clss].append((x1,y1,rectangle[2],rectangle[3]))
+            except KeyError:
+                for row in rows:
+                    if clss not in final_results:
+                        final_results[clss] = []
+                    final_results[clss].append((row[0],row[1],row[2], row[3]))
 
-        return final_rectangles
+        return final_results
+        #return final_rectangles
 
     def findObjects(self, source):
         results = self.detectYoloObjects(source)
+        return results
         final_rectangles = []
-        # for each section of tiles look for specific tiles
         for clss, rows in results.items():
             for row in rows:
                 final_rectangles.append(row)
@@ -198,7 +219,7 @@ class TerrarianEyes:
         boxes = {}
         for det in pred:  # per image
             im0 = source.copy()
-            annotator = Annotator(im0, line_width=self.line_thickness, example=str(names))
+            #annotator = Annotator(im0, line_width=self.line_thickness, example=str(names))
             if len(det):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
@@ -222,25 +243,12 @@ class TerrarianEyes:
                         boxes[names[c]] = []
                     boxes[names[c]].append([int(xyxy[0]), int(xyxy[1]), int(xyxy[2]-xyxy[0]), int(xyxy[3] - xyxy[1])])
                     # To verify if matchTemplate is curreclty run
-                    annotator.box_label(xyxy, label, color=colors(c, True))
-        im0 = annotator.result()
-        cv2.imshow(str('Matches'), im0)
-        cv2.waitKey(1)  # 1 millisecond
+                    #annotator.box_label(xyxy, label, color=colors(c, True))
+        #im0 = annotator.result()
+        #cv.imshow(str('Matches'), im0)
+        #cv.waitKey(1)  # 1 millisecond
 
         return boxes         
-
-    def infereYoloTiles(self, image):
-        #im = image
-        im = image.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
-        im = np.ascontiguousarray(im)  # contiguous
-        results = self.tiles_model(im)
-        return results
-      
-    def infereYoloObjects(self, image):
-        im = image.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
-        im = np.ascontiguousarray(im)  # contiguous
-        results = self.objects_model(im)
-        return results
 
     def loadImages(self):
         dir = "grass"
@@ -260,14 +268,7 @@ class TerrarianEyes:
 
     def startController(self, window_name):
         # initialize the WindowCapture class
-        try:
-            wincap = WindowCapture(window_name)
-        except Exception:
-            print("ERROR: Window not found")
-            return None
-
-        # load an empty Vision class
-        vision_grass = Vision(None)
+        wincap = WindowCapture(window_name)
 
         loop_time = time()
         while(True):
@@ -276,19 +277,38 @@ class TerrarianEyes:
             screenshot = wincap.get_screenshot()
             #screenshot = self.captureWindow()
             if screenshot is None:
-                print("ERROR: Window is minimized, please maximize it an rerun the script")
+                print("ERROR: Window is minimized or closed, please maximize it or open it and rerun the script")
                 break
 
             # do tiles detection
-            rectangles_tiles = self.findTiles(screenshot)
-            rectangles_objects = self.findObjects(screenshot)
-            rectangles = rectangles_objects + rectangles_tiles
-
+            tiles = self.findTiles(screenshot)
+            #tiles = {}
+            objects = self.findObjects(screenshot)
+            self.translateObjects(objects)
+            self.translateTiles(tiles)
+            with open("delete.txt","w") as f:
+                f.write(str(self.map))
+            #objects = {}
+            annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
+            final_rectangles = []
+            for clss, rows in tiles.items():
+                for row in rows:
+                    final_rectangles.append(row)
+                    annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.tiles_model.names.items() if v == clss), None), True))
+            for clss, rows in objects.items():
+                for row in rows:
+                    final_rectangles.append(row)
+                    annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.objects_model.names.items() if v == clss), None), True))
+            
+            #final_rectangles.append([0,0,10,10])
+            #self.showImage(screenshot)
             # draw the detection results onto the original image
-            detection_image = vision_grass.draw_rectangles(screenshot, rectangles)
+            #detection_image = vision.draw_rectangles(screenshot, final_rectangles, line_type=self.line_thickness)
+
 
             # display the images
-            cv.imshow('Matches', detection_image)
+            cv.imshow('Matches', screenshot)
+            #cv.imshow('Matches', detection_image)
 
             # debug the loop rate
             print('FPS {}'.format(1 / (time() - loop_time)))
@@ -303,9 +323,9 @@ class TerrarianEyes:
 
         print('Done.')
 
-    def startRecorder():
+    def startRecorder(self, window_name):
         # initialize the WindowCapture class
-        wincap = WindowCapture('Terraria')
+        wincap = WindowCapture(window_name)
 
         loop_time = time()
         while(True):
@@ -336,14 +356,119 @@ class TerrarianEyes:
             elif key == ord('n'):
                 cv.imwrite('negative/{}.jpg'.format(loop_time), screenshot)
 
+    def translateObjects(self, obj_dict):
+        # rectangles (x,y,w,h)
+        # center x + w/2, y + h/2
+        for clss, rows in obj_dict.items():
+            for obj_row in rows:
+                x1 = obj_row[0]
+                y1 = obj_row[1]
+                w = obj_row[2]
+                h = obj_row[3]
+                center  = (x1 + w/2, y1 + h/2)
+                inventory_min = (20, 20)
+                inventory_max = (20 + int(9*52.5) + 50, 20 + int(4*52.5) + 50)
+                ammo_min = (587, 115)
+                ammo_max = (587 + 34, 115 + int(3*36.5) + 34)
+                armor_min = (1817, 473)
+                armor_max = (1817 + 50, 473 + int(2*51) + 50)
+                build_min = (24, 420)
+                build_max = (24 + 54, 690 + int(4*54))
+                if center[0] > inventory_min[0] and center[0] < inventory_max[0] and center[1] < inventory_max[1] and center[1] > inventory_min[1]:
+                    #Inventory
+                    center_diff = (center[0]-inventory_min[0], center[1]-inventory_min[1])
+                    slot_size = ((inventory_max[0]-inventory_min[0])/10, (inventory_max[1]-inventory_min[1])/5)
+                    row = floor(center_diff[1]/slot_size[1])
+                    col = floor(center_diff[0]/slot_size[0])
+                    self.inventory.updateInventory(row, col, clss)
+                    
+                elif center[0] > ammo_min[0] and center[0] < ammo_max[0] and center[1] < ammo_max[1] and center[1] > ammo_min[1]:
+                    #Ammo
+                    center_diff = center[1]-ammo_min[1]
+                    slot_size = (ammo_max[1]-ammo_min[1])/4
+                    row = floor(center_diff/slot_size)
+                    self.inventory.updateAmmo(row, clss)
+                    
+                elif center[0] > armor_min[0] and center[0] < armor_max[0] and center[1] < armor_max[1] and center[1] > armor_min[1]:
+                    #Armor
+                    center_diff = center[1]-armor_min[1]
+                    slot_size = (armor_max[1]-armor_min[1])/3
+                    row = floor(center_diff/slot_size)
+                    self.inventory.updateArmor(row, clss)
+
+                elif center[0] > build_min[0] and center[0] < build_max[0] and center[1] < build_max[1] and center[1] > build_min[1]:
+                    #Build
+                    center_diff = center[1]-build_min[1]
+                    slot_size = (build_max[1]-build_min[1])/9
+                    row = floor(center_diff/slot_size)
+                    self.inventory.updateBuild(row, clss)
+                
+                else:
+                    #Enemy or object in the groudn, update
+                    self.map.updateMap(x1, y1, w, h, clss)
+
+    def translateTiles(self, obj_dict):
+        # rectangles (x,y,w,h)
+        # center x + w/2, y + h/2
+        for clss, rows in obj_dict.items():
+            for obj_row in rows:
+                x1 = obj_row[0]
+                y1 = obj_row[1]
+                w = obj_row[2]
+                h = obj_row[3]                
+                self.map.updateMap(x1, y1, w, h, clss)
+
+    # delete if not needed anymore
+    def calcRec(self, image):
+        vision = Vision(None)
+        final_rectangles = []
+        (20,20)
+        # items
+        for i in range(0,10):
+            for j in range(0,5):
+                final_rectangles.append((20 + int(i*52.5), 20 + int(j*52.5), 50, 50))
+        (545,115)
+        # ammo
+        for j in range(0,4):
+            final_rectangles.append((587 , 115 + int(j*36.5), 34, 34))
+        # armor
+        for j in range(0,3):
+            final_rectangles.append((1817 , 473 + int(j*51), 50, 50))
+        # build
+        for j in range(0,4):
+            final_rectangles.append((30 , 420 + int(j*54), 40, 40))
+        final_rectangles.append((24 , 628, 54, 54))
+        for j in range(0,4):
+            final_rectangles.append((30 , 690 + int(j*54), 40, 40))
+        detection_image = vision.draw_rectangles(image, final_rectangles, line_type=self.line_thickness)
+        self.showImage(detection_image)
+
+
 if __name__ == "__main__":
     # Create Instance
-    tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
-    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
+    tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles300', 'weights', 'best.pt')
+    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects600', 'weights', 'best.pt')
     eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
-
+    #eyes = TerrarianEyes("", "")
+    """images = eyes.templates['dirt']
+    img_rgb = cv.imread('positive/trippy.png')
+    rectangles = eyes.matchImage(img_rgb, images)
+    vision = Vision(None)
+    detection_image = vision.draw_rectangles(img_rgb, rectangles, line_type=eyes.line_thickness)
+    # display the images
+    while True:
+        cv.imshow('Matches', detection_image)
+        # press 'q' with the output window focused to exit.
+        # waits 10 ms every loop to process key presses
+        key = cv.waitKey(10)
+        if key == ord('q'):
+            cv.destroyAllWindows()
+            break"""
+    
     #Inference
-    eyes.startController('source - Paint')    
+    #eyes.startController('.*Paint')    
+    eyes.startController('Terraria')    
+    #eyes.startRecorder(None)    
 
     exit()
 

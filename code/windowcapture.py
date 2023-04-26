@@ -1,6 +1,6 @@
 import numpy as np
 import win32gui, win32ui, win32con
-
+import re
 
 class WindowCapture:
 
@@ -17,10 +17,16 @@ class WindowCapture:
     def __init__(self, window_name=None):
         # find the handle for the window we want to capture.
         # if no window name is given, capture the entire screen
+        # Call the Windows API to enumerate all open windows
+        
         if window_name is None:
             self.hwnd = win32gui.GetDesktopWindow()
         else:
-            self.hwnd = win32gui.FindWindow(None, window_name)
+            window_titles = []
+            self.pattern = window_name + r".*"
+
+            win32gui.EnumWindows(self.enum_windows_callback, window_titles)
+            self.hwnd = win32gui.FindWindow(None, window_titles[0])
             if not self.hwnd:
                 raise Exception('Window not found: {}'.format(window_name))
 
@@ -32,10 +38,12 @@ class WindowCapture:
         # account for the window border and titlebar and cut them off
         border_pixels = 8
         titlebar_pixels = 30
-        self.w = self.w - (border_pixels * 2)
-        self.h = self.h - titlebar_pixels - border_pixels
+        #self.w = self.w - (border_pixels * 2)
+        #self.h = self.h - titlebar_pixels - border_pixels
         self.cropped_x = border_pixels
+        self.cropped_x = 0
         self.cropped_y = titlebar_pixels
+        self.cropped_y = 0
 
         # set the cropped coordinates offset so we can translate screenshot
         # images into actual screen positions
@@ -45,7 +53,10 @@ class WindowCapture:
     def get_screenshot(self):
 
         # get the window image data
-        wDC = win32gui.GetWindowDC(self.hwnd)
+        try:
+            wDC = win32gui.GetWindowDC(self.hwnd)
+        except Exception:
+            return None
         dcObj = win32ui.CreateDCFromHandle(wDC)
         cDC = dcObj.CreateCompatibleDC()
         dataBitMap = win32ui.CreateBitmap()
@@ -98,3 +109,13 @@ class WindowCapture:
     # the __init__ constructor.
     def get_screen_position(self, pos):
         return (pos[0] + self.offset_x, pos[1] + self.offset_y)
+    
+    # Loop through all open windows to find the one that matches the pattern
+    def enum_windows_callback(self, hwnd, window_titles):
+        if win32gui.IsWindowVisible(hwnd):
+            window_title = win32gui.GetWindowText(hwnd)
+            if re.match(self.pattern, window_title):
+                window_titles.append(window_title)
+        return True
+
+    
