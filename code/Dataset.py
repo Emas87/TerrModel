@@ -194,14 +194,16 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataset = Dataset(args.dataset)
-    #dataset.deleteMatches()
+    dataset.deleteMatches()
 
-    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects295', 'weights', 'best.pt')
+    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
+    tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
     #dataset.detect(objects_weights_path)
+    dataset.detect(tiles_weights_path)
 
     dataset.balance()
     #deletes = ['anvil','arrow', 'axe', 'bar', 'bow', 'chest', 'cobwebI', 'delete', 'eye', 'furnace', 'gel', 'glowstick', 'lifeC', 'ore', 'pickaxe', 'platform', 'pot', 'potion', 'rope', 'star', 'sword', 'torchT', 'zombie']
-    deletes = ['sand','liquid', 'snow']
+    #deletes = ['sand','liquid', 'snow']
 
     #for delete in deletes:
     #    dataset.delete_class(delete)

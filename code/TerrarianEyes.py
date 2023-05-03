@@ -301,6 +301,8 @@ class TerrarianEyes:
             annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
             final_rectangles = []
             for clss, rows in tiles.items():
+                if clss == 'player':
+                    continue
                 for row in rows:
                     final_rectangles.append(row)
                     annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.tiles_model.names.items() if v == clss), None), True))
@@ -514,12 +516,11 @@ if __name__ == "__main__":
             break"""
     
     #Inference
-    try:
-        #eyes.startController('.*Paint')    
-        eyes.startController('Terraria')    
-        #eyes.startRecorder(None)    
-    except Exception as e:
-        raise Exception() from e
+
+    #eyes.startController('.*Paint')    
+    #eyes.startController('Terraria')    
+    eyes.startRecorder(None)    
+
 
     exit()
 
