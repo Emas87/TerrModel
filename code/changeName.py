@@ -9,7 +9,7 @@ args = parser.parse_args()
 
 files = os.listdir(args.path)
 for i in range(0,len(files)):
-    NewFile = "grass" + str(i)
+    NewFile = str(i)
     file = os.path.join(args.path, files[i])
     NewFile = os.path.join(args.path, NewFile + ".png")
     if file != NewFile:

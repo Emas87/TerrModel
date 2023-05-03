@@ -26,6 +26,8 @@ class WindowCapture:
             self.pattern = window_name + r".*"
 
             win32gui.EnumWindows(self.enum_windows_callback, window_titles)
+            if len(window_titles) == 0:
+                raise Exception('Window not found: {}'.format(window_name))
             self.hwnd = win32gui.FindWindow(None, window_titles[0])
             if not self.hwnd:
                 raise Exception('Window not found: {}'.format(window_name))

@@ -5,6 +5,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Dataset.py",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/code/Dataset.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "cwd": "${workspaceFolder}/code",
+      "args": [
+        "-dataset",
+        "dataset_origin",
+      ]
+    },
+    {
       "name": "Python File",
       "type": "python",
       "request": "launch",

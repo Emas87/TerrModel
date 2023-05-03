@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 import os
 import torch
+import pytesseract
 from math import floor
 from time import time
 from vision import Vision
@@ -51,7 +52,7 @@ class TerrarianEyes:
         self.inventory = Inventory()
         self.map = Map()
 
-    def matchImage(self, sourceImage, templateImages):
+    def matchImage(self, sourceImage, templateImages, threshold = 0.7):
         # Match in gray
         img_gray = cv.cvtColor(sourceImage, cv.COLOR_BGR2GRAY)
 
@@ -61,14 +62,16 @@ class TerrarianEyes:
         rectangles = []    
 
         for image in templateImages:
-            template = cv.imread(image)
+            template = image
             template = cv.cvtColor(template, cv.COLOR_BGR2GRAY)
             template = cv.equalizeHist(template)
             assert template is not None, "image could not be read, check with os.path.exists()"
             w, h = template.shape[::-1]
-            res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
+            try:
+                res = cv.matchTemplate(img_gray, template, cv.TM_CCOEFF_NORMED)
+            except cv.error:
+                res = []
 
-            threshold = 0.7
             loc = np.where( res >= threshold)
             for pt in zip(*loc[::-1]):
                 rectangles.append((pt[0], pt[1], w, h))
@@ -95,7 +98,6 @@ class TerrarianEyes:
         results = self.detectYoloTiles(source)
         final_results = {}
         img_rgb = source
-        final_rectangles = []
         # for each section of tiles look for specific tiles
         for clss, rows in results.items():
             try:
@@ -128,12 +130,7 @@ class TerrarianEyes:
     def findObjects(self, source):
         results = self.detectYoloObjects(source)
         return results
-        final_rectangles = []
-        for clss, rows in results.items():
-            for row in rows:
-                final_rectangles.append(row)
 
-        return final_rectangles
 
     @staticmethod
     def showImage(img_rgb):
@@ -146,8 +143,10 @@ class TerrarianEyes:
                 break
 
     def loadModels(self):
-        self.tiles_model  = DetectMultiBackend([self.tiles_weights_path], device=self.device, dnn=self.dnn, data=self.data_tiles, fp16=self.half)
-        self.objects_model  = DetectMultiBackend([self.objects_weights_path], device=self.device, dnn=self.dnn, data=self.data_objects, fp16=self.half)
+        if self.tiles_weights_path is not None:
+            self.tiles_model  = DetectMultiBackend([self.tiles_weights_path], device=self.device, dnn=self.dnn, data=self.data_tiles, fp16=self.half)
+        if self.objects_weights_path is not None:
+            self.objects_model  = DetectMultiBackend([self.objects_weights_path], device=self.device, dnn=self.dnn, data=self.data_objects, fp16=self.half)
     
     def detectYoloTiles(self, source):
         stride, names, pt = self.tiles_model.stride, self.tiles_model.names, self.tiles_model.pt
@@ -256,23 +255,32 @@ class TerrarianEyes:
         grassImages = []
         for file in files:
             # iterate one by one
-            grassImages.append(os.path.join('.',dir,file))
+            grassImages.append(cv.imread(os.path.join('.',dir,file)))
         dir = "stone"
         files = os.listdir(dir)
         stoneImages = []
         for file in files:
             # iterate one by one
-            stoneImages.append(os.path.join('.',dir,file))
+            stoneImages.append(cv.imread(os.path.join('.',dir,file)))
         
         self.templates = {"dirt": grassImages, "stone": stoneImages}
+        dir = 'numbers'
+        files = os.listdir(dir)
+        for file in files:
+            # iterate one by one
+            name = file.replace('.png','')
+            self.templates[name] = [cv.imread(os.path.join('.',dir,file))]
 
     def startController(self, window_name):
         # initialize the WindowCapture class
-        wincap = WindowCapture(window_name)
+        try:
+            wincap = WindowCapture(window_name)
+        except Exception as e:
+            raise Exception() from e
+
 
         loop_time = time()
         while(True):
-
             # get an updated image of the game
             screenshot = wincap.get_screenshot()
             #screenshot = self.captureWindow()
@@ -284,11 +292,11 @@ class TerrarianEyes:
             tiles = self.findTiles(screenshot)
             #tiles = {}
             objects = self.findObjects(screenshot)
-            self.translateObjects(objects)
+            self.translateObjects(objects, screenshot)
             self.translateTiles(tiles)
-            with open("delete.txt","w") as f:
-                f.write(str(self.map))
+            with open("delete.txt", 'w') as f:
                 f.write(str(self.inventory))
+                f.write(str(self.map))
             #objects = {}
             annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
             final_rectangles = []
@@ -321,8 +329,27 @@ class TerrarianEyes:
             if key == ord('q'):
                 cv.destroyAllWindows()
                 break
+    
+    def updateMap(self, screenshot):
+        #self.showImage(screenshot)
+        # do tiles detection
+        self.map = Map()
+        tiles = self.findTiles(screenshot)
+        self.translateTiles(tiles)
+        """annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
+        final_rectangles = []
+        for clss, rows in tiles.items():
+            for row in rows:
+                final_rectangles.append(row)
+                annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.tiles_model.names.items() if v == clss), None), True))
+        # display the images
+        self.showImage(screenshot)"""
 
-        print('Done.')
+    def updateInventory(self, screenshot):
+        # do objects detection
+        self.inventory = Inventory()
+        objects = self.findObjects(screenshot)
+        self.translateObjects(objects, screenshot)
 
     def startRecorder(self, window_name):
         # initialize the WindowCapture class
@@ -345,7 +372,7 @@ class TerrarianEyes:
             loop_time = time()
 
             # press 'q' with the output window focused to exit.
-            # press 'f' to save screenshot as a positive image, press 'd' to 
+            # press 'P' to save screenshot as a positive image, press 'n' to 
             # save as a negative image.
             # waits 1 ms every loop to process key presses
             key = cv.waitKey(1)
@@ -357,7 +384,7 @@ class TerrarianEyes:
             elif key == ord('n'):
                 cv.imwrite('negative/{}.jpg'.format(loop_time), screenshot)
 
-    def translateObjects(self, obj_dict):
+    def translateObjects(self, obj_dict, screenshot):
         # rectangles (x,y,w,h)
         # center x + w/2, y + h/2
         for clss, rows in obj_dict.items():
@@ -379,31 +406,32 @@ class TerrarianEyes:
                     #Inventory
                     center_diff = (center[0]-inventory_min[0], center[1]-inventory_min[1])
                     slot_size = ((inventory_max[0]-inventory_min[0])/10, (inventory_max[1]-inventory_min[1])/5)
-                    row = floor(center_diff[1]/slot_size[1])
                     col = floor(center_diff[0]/slot_size[0])
-                    self.inventory.updateInventory(row, col, clss)
-                    
+                    row = floor(center_diff[1]/slot_size[1])
+                    count = self.findNumber(screenshot, center[0] - slot_size[0]/2, center[1], slot_size[0], slot_size[1]/2)
+                    self.inventory.updateInventory(row, col, clss, count)                    
                 elif center[0] > ammo_min[0] and center[0] < ammo_max[0] and center[1] < ammo_max[1] and center[1] > ammo_min[1]:
                     #Ammo
                     center_diff = center[1]-ammo_min[1]
                     slot_size = (ammo_max[1]-ammo_min[1])/4
                     row = floor(center_diff/slot_size)
-                    self.inventory.updateAmmo(row, clss)
+                    count = self.findNumber(screenshot, center[0] - slot_size/2, center[1] - slot_size/2, slot_size, slot_size)
+                    self.inventory.updateAmmo(row, clss, count)
                     
                 elif center[0] > armor_min[0] and center[0] < armor_max[0] and center[1] < armor_max[1] and center[1] > armor_min[1]:
                     #Armor
                     center_diff = center[1]-armor_min[1]
                     slot_size = (armor_max[1]-armor_min[1])/3
                     row = floor(center_diff/slot_size)
-                    self.inventory.updateArmor(row, clss)
+                    self.inventory.updateArmor(row, clss, 1)
 
                 elif center[0] > build_min[0] and center[0] < build_max[0] and center[1] < build_max[1] and center[1] > build_min[1]:
                     #Build
                     center_diff = center[1]-build_min[1]
                     slot_size = (build_max[1]-build_min[1])/9
                     row = floor(center_diff/slot_size)
-                    self.inventory.updateBuild(row, clss)
-                
+                    self.inventory.updateBuild(row, clss, 1)
+
                 else:
                     #Enemy or object in the groudn, update
                     self.map.updateMap(x1, y1, w, h, clss)
@@ -411,6 +439,7 @@ class TerrarianEyes:
     def translateTiles(self, obj_dict):
         # rectangles (x,y,w,h)
         # center x + w/2, y + h/2
+        obj_dict["player"] = [(950, 515, 970 - 950, 560 - 515)]
         for clss, rows in obj_dict.items():
             for obj_row in rows:
                 x1 = obj_row[0]
@@ -444,11 +473,29 @@ class TerrarianEyes:
         detection_image = vision.draw_rectangles(image, final_rectangles, line_type=self.line_thickness)
         self.showImage(detection_image)
 
+    def findNumber(self, screenshot, x, y, w, h):
+        # crop only 3/4 of image, to avoid any number related to the inventory order
+        cropped_image = screenshot[round(y):round(y+h), round(x):round(x+w)]
+        numNames = ['0', '1','2','3','4','5','6','7','8','9',]
+        numbers = {}
+        for numName in numNames:
+            images = self.templates[numName]
+            rectangles = self.matchImage(cropped_image, images, threshold = 0.45)
+            for rectangle in rectangles:
+                numbers[int(rectangle[0])] = numName
+        number = ''
+        for key in sorted(numbers):
+            number += str(numbers[key])
+        if number == '':
+            return 1
+        else:
+            return int(number)
+
 
 if __name__ == "__main__":
     # Create Instance
-    tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles300', 'weights', 'best.pt')
-    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects600', 'weights', 'best.pt')
+    tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
+    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
     eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
     #eyes = TerrarianEyes("", "")
     """images = eyes.templates['dirt']
@@ -467,10 +514,12 @@ if __name__ == "__main__":
             break"""
     
     #Inference
-    #eyes.startController('.*Paint')    
-    eyes.startController('Terraria')    
-    #eyes.startRecorder(None)    
+    try:
+        #eyes.startController('.*Paint')    
+        eyes.startController('Terraria')    
+        #eyes.startRecorder(None)    
+    except Exception as e:
+        raise Exception() from e
 
     exit()
 
-    
