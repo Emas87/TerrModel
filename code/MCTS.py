@@ -2,6 +2,7 @@ import math
 import random
 import TerrEnv
 import time
+from State import State
 
 class Node:
     def __init__(self, state, parent=None):
@@ -47,7 +48,7 @@ class MCTS:
         untried_actions = [action for action in actions if not any(child.state.last_action == action for child in node.children)]
         if untried_actions:
             action = random.choice(untried_actions)
-            child_state = self.forward_model(node.state, action)
+            child_state, _ = node.state.run_action(action)
             child_node = node.add_child(child_state)
             return child_node
         else:
@@ -57,8 +58,8 @@ class MCTS:
     def simulate(self, state):
         while not state.is_terminal():
             action = random.choice(state.get_available_actions())
-            state = self.forward_model(state, action)
-        return state.get_result()
+            state, result = state.run_action(state, action)
+        return result
 
     def backpropagate(self, node, result):
         while node is not None:
@@ -76,7 +77,7 @@ class MCTS:
 
 if __name__ == "__main__":
     # Setup
-    mcts = MCTS(forward_model=None)
+    mcts = MCTS(forward_model=State())
     game_state = TerrEnv()  # initialize the game state
     game_state.reset()  # initialize the game state
     num_simulations = 1000  # number of simulations to run

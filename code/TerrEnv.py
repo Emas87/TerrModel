@@ -58,8 +58,8 @@ class TerrEnv(gym.Env):
             # In case we need map or inventory
             if action == 5: # attack
                 # find closest enemy position and check 
-                with open("delete.txt", 'w') as f:
-                    f.write(str(self.eyes.map))
+                #with open("delete.txt", 'w') as f:
+                #    f.write(str(self.eyes.map))
                 attack, x, y= self.eyes.map.isEnemyOnAttackRange()
                 # if is in attack range
                 if attack:
@@ -103,6 +103,7 @@ class TerrEnv(gym.Env):
         # calculate real reward
         info = {}
         return observation, reward, done, info
+        
     
     def reset(self):
         time.sleep(10)
@@ -119,6 +120,9 @@ class TerrEnv(gym.Env):
          
     def close(self):
         cv2.destroyAllWindows()
+    
+    #def _get_obs(self):
+        #return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
 
     def _get_obs(self):
         return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
@@ -183,4 +187,3 @@ class TerrEnv(gym.Env):
             if res in done_strings:
                 done = True
         return done, done_cap
-
