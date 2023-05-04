@@ -1,10 +1,12 @@
 
+import numpy as np
 from math import floor
-
 SLOT_SIZE = (16, 16)
 class Map:
-    def __init__(self) -> None:
-        self.current_map = [[None for j in range(120)] for i in range(67)]
+    def __init__(self, classes) -> None:
+        self.classes = classes
+        #self.current_map = [[self.classes.index('x') for j in range(120)] for i in range(67)]
+        self.current_map = np.full((67, 120), self.classes.index('xxxx'), dtype=np.int8)
         self.max = (1920, 1080)
         self.min = (0,0)
         self.max_tiles = (120, 67)
@@ -20,19 +22,19 @@ class Map:
                 corner_diff = (corner[0]-self.min[0], corner[1]-self.min[1])
                 row = floor(corner_diff[1]/SLOT_SIZE[1] + 0.5) - 1
                 col = floor(corner_diff[0]/SLOT_SIZE[0] + 0.5) - 1
-                self.current_map[row][col] = object
+                self.current_map[row][col] = self.classes.index(object)
     
     def getHealth(self):
         hearts = 0
         for col in self.current_map[0]:
-            if col == 'heart':
+            if self.classes[col] == 'heart':
                 hearts+=1
         hearts = hearts/3
         hearts = hearts + 1
         return hearts
 
     def __str__(self) -> str:
-        str1 = 'Map:\n' + '\n'.join([' '.join([str(item) for item in row]) for row in self.current_map])
+        str1 = 'Map:\n' + '\n'.join([' '.join([self.classes[item][:4] for item in row]) for row in self.current_map])
         return str1
     
     def isEnemyOnAttackRange(self):
@@ -46,11 +48,11 @@ class Map:
         player = (60, 33)
         closest = [0,0]
         min_distance = float('inf')
-        debug_matrix = [[None for j in range(57,60 + 1)] for i in range(30,34 + 1)]
+        debug_matrix = [['x' for j in range(57,60 + 1)] for i in range(30,34 + 1)]
         for i in range(30,34 + 1):
             for j in range(57, 60 + 1):
-                debug_matrix[i-30][j-57] = f'{self.current_map[i][j]} {j} {i}'
-                if self.current_map[i][j] == "slime":
+                debug_matrix[i-30][j-57] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
+                if self.classes[self.current_map[i][j]] == "slime":
                     attack = True
                     distance = abs(i - player[1]) + abs(j - player[0])
                     if distance < min_distance:
@@ -70,11 +72,11 @@ class Map:
         player = (60, 33)
         closest = [0,0]
         min_distance = float('inf')
-        debug_matrix = [[None for j in range(56,61 + 1)] for i in range(29,35 + 1)]
+        debug_matrix = [['x' for j in range(56,61 + 1)] for i in range(29,35 + 1)]
         for i in range(29,35 + 1):
             for j in range(56,61 + 1):
-                debug_matrix[i-29][j-56] = f'{self.current_map[i][j]} {j} {i}'
-                if self.current_map[i][j] == "tree":
+                debug_matrix[i-29][j-56] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
+                if self.classes[self.current_map[i][j]] == "tree":
                     distance = abs(i - player[1]) + abs(j - player[0])
                     if distance < min_distance:
                         cut = True

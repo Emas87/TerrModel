@@ -9,7 +9,7 @@ import time
 from gymnasium import Env
 from gymnasium.spaces import Box, Discrete
 from TerrarianEyes import TerrarianEyes
-
+from TerrEnv import TerrEnv
 class ForwardModel(Env):
     def __init__(self):
         super().__init__()
@@ -26,17 +26,8 @@ class ForwardModel(Env):
             2: 'w', 
             3: 'd', 
             4: 'a', 
-            5: 'h', # heal
             6: 'attack',
             7: 'cut',
-            #8: 'mine up',
-            #9: 'mine down',
-            #10: 'mine left',
-            #11: 'mine right',
-            #12: 'attack bow',
-            #13: 'use torch',
-            #14: 'use rope',
-            #15: 'Esc', # open inventory
         }
         # Create Instance
         tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
@@ -168,14 +159,16 @@ class ForwardModel(Env):
             if res in done_strings:
                 done = True
         return done, done_cap
-    
-env = TerrEnv()
-for episode in range(10): 
-    obs = env.reset()
-    done = False
-    total_reward = 0
-    while not done:
-        action = env.action_space.sample()
-        obs, reward,  done, info =  env.step(env.action_space.sample())
-        total_reward  += reward
-    print('Total Reward for episode {} is {}'.format(episode, total_reward))    
+
+if __name__ == "__main__":
+
+    env = TerrEnv()
+    for episode in range(10): 
+        obs = env.reset()
+        done = False
+        total_reward = 0
+        while not done:
+            action = env.action_space.sample()
+            obs, reward,  done, info =  env.step(env.action_space.sample())
+            total_reward  += reward
+        print('Total Reward for episode {} is {}'.format(episode, total_reward))    

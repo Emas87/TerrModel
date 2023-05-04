@@ -34,8 +34,8 @@ class TerrarianEyes:
         # Yolo model
         self.device = select_device('')
         self.dnn = False
-        self.data_objects = '../datasets_objects/data.yaml'
-        self.data_tiles = '../datasets_tiles/data.yaml'
+        self.data_objects = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset_objects','data.yaml')
+        self.data_tiles = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset_tiles', 'data.yaml')
         self.half = False
         self.imgsz = [640, 640]
         self.conf_thres = 0.25
@@ -49,8 +49,27 @@ class TerrarianEyes:
 
         self.loadModels()
         self.loadImages()
-        self.inventory = Inventory()
-        self.map = Map()
+
+        # Get classes Inventory
+        self.object_classes = []
+        with open(self.data_objects, "r") as f:
+            lines = f.readlines()
+        for line in lines:
+            if "names: " in line:
+                classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '')
+                self.object_classes = classesStr.split(', ')
+
+
+        self.tiles_classes = []
+        with open(self.data_tiles, "r") as f:
+            lines = f.readlines()
+        for line in lines:
+            if "names: " in line:
+                classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '')
+                self.tiles_classes = classesStr.split(', ')
+
+        self.inventory = Inventory(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )
+        self.map = Map(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )
 
     def matchImage(self, sourceImage, templateImages, threshold = 0.7):
         # Match in gray
@@ -335,7 +354,7 @@ class TerrarianEyes:
     def updateMap(self, screenshot):
         #self.showImage(screenshot)
         # do tiles detection
-        self.map = Map()
+        self.map = Map(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )
         tiles = self.findTiles(screenshot)
         self.translateTiles(tiles)
         """annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
@@ -349,7 +368,7 @@ class TerrarianEyes:
 
     def updateInventory(self, screenshot):
         # do objects detection
-        self.inventory = Inventory()
+        self.inventory = Inventory(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )        
         objects = self.findObjects(screenshot)
         self.translateObjects(objects, screenshot)
 
@@ -410,16 +429,16 @@ class TerrarianEyes:
                     slot_size = ((inventory_max[0]-inventory_min[0])/10, (inventory_max[1]-inventory_min[1])/5)
                     col = floor(center_diff[0]/slot_size[0])
                     row = floor(center_diff[1]/slot_size[1])
-                    count = self.findNumber(screenshot, center[0] - slot_size[0]/2, center[1], slot_size[0], slot_size[1]/2)
-                    self.inventory.updateInventory(row, col, clss, count)                    
+                    #count = self.findNumber(screenshot, center[0] - slot_size[0]/2, center[1], slot_size[0], slot_size[1]/2)
+                    self.inventory.updateInventory(row, col, clss)                    
                 elif center[0] > ammo_min[0] and center[0] < ammo_max[0] and center[1] < ammo_max[1] and center[1] > ammo_min[1]:
                     #Ammo
                     center_diff = center[1]-ammo_min[1]
                     slot_size = (ammo_max[1]-ammo_min[1])/4
                     row = floor(center_diff/slot_size)
-                    count = self.findNumber(screenshot, center[0] - slot_size/2, center[1] - slot_size/2, slot_size, slot_size)
-                    self.inventory.updateAmmo(row, clss, count)
-                    
+                    #count = self.findNumber(screenshot, center[0] - slot_size/2, center[1] - slot_size/2, slot_size, slot_size)
+                    self.inventory.updateAmmo(row, clss)
+
                 elif center[0] > armor_min[0] and center[0] < armor_max[0] and center[1] < armor_max[1] and center[1] > armor_min[1]:
                     #Armor
                     center_diff = center[1]-armor_min[1]

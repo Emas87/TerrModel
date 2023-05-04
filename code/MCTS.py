@@ -1,6 +1,7 @@
 import math
 import random
 import TerrEnv
+import time
 
 class Node:
     def __init__(self, state, parent=None):
@@ -73,9 +74,16 @@ class MCTS:
         return max(root_node.children, key=lambda node: node.visits).state.last_action
 
 
-mcts = MCTS(forward_model=None)
+if __name__ == "__main__":
+    # Setup
+    mcts = MCTS(forward_model=None)
+    game_state = TerrEnv()  # initialize the game state
+    game_state.reset()  # initialize the game state
+    num_simulations = 1000  # number of simulations to run
 
-game_state = TerrEnv()  # initialize the game state
-game_state.reset()  # initialize the game state
-num_simulations = 1000  # number of simulations to run
-action = mcts.search(game_state, num_simulations)  # get the recommended action
+    while not game_state.win:
+        time1 = time.time()
+        action = mcts.search(game_state, num_simulations)  # get the recommended action
+        time2 = time.time()
+        print(f'time to take action: {str(time2-time1)}')
+        game_state.step(action)

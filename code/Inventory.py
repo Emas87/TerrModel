@@ -1,56 +1,40 @@
 
+import numpy as np
 class Inventory:
-    def __init__(self):
-        self.inventory = [[None for _ in range(10)] for _ in range(5)]
-        self.ammo = [None for _ in range(4)]
-        self.armor = [None for _ in range(3)]
-        self.build = [None for _ in range(9)]
-        self.inventory[0][0] = 'sword'
-        self.inventory[0][1] = 'pickaxe'
-        self.inventory[0][2] = 'axe'
-    
-    def updateInventory(self, row, column, object, count):
-        self.inventory[row][column] = (object, count)
-    
-    def updateAmmo(self, index, object, count):
-        self.ammo[index] = (object, count)
-    
-    def updateArmor(self, index, object, count):
-        self.armor[index] = (object, count)
-    
-    def updateBuild(self, index, object, count):
-        self.build[index] = (object, count)
+    def __init__(self, classes):
+        # first 5 rows are for inventory
+        # row 6 for ammo
+        # row 7 for armor
+        # row 8 for build
+        self.classes = classes
+        #self.inventory = [[self.classes.index('x') for _ in range(10)] for _ in range(9)]
+        self.inventory = np.full((9, 10), self.classes.index('xxxx'), dtype=np.int8)
 
-    def getInventoryItemCount(self, object):
-        for row in self.inventory:
-            for item in self.inventory[row]:
-                if item[0] == object:
-                    return item[1]
-                
-    def getAmmoItemCount(self, object):
-        for row in self.ammo:
-            for item in self.ammo[row]:
-                if item[0] == object:
-                    return item[1]
-                
-    def getArmorItemCount(self, object):
-        for row in self.armor:
-            for item in self.armor[row]:
-                if item[0] == object:
-                    return item[1]
-                
-    def getBuildItemCount(self, object):
-        for row in self.build:
-            for item in self.build[row]:
-                if item[0] == object:
-                    return item[1]
+        #self.ammo = [None for _ in range(4)]
+        #self.armor = [None for _ in range(3)]
+        #self.build = [None for _ in range(9)]
+        if 'sword' in self.classes:
+            self.inventory[0][0] = self.classes.index('sword')
+        if 'pickaxe' in self.classes:
+            self.inventory[0][1] = self.classes.index('pickaxe')
+        if 'axe' in self.classes:
+            self.inventory[0][2] = self.classes.index('axe')
+    
+    def updateInventory(self, row, column, object):
+        self.inventory[row][column] = self.classes.index(object)
+    
+    def updateAmmo(self, index, object):
+        self.inventory[5][index] = self.classes.index(object)
+    
+    def updateArmor(self, index, object):
+        self.inventory[6][index] = self.classes.index(object)
+    
+    def updateBuild(self, index, object):
+        self.inventory[7][index] = self.classes.index(object)
     
     def __str__(self) -> str:
-        str1 = 'Inventory:\n' + '\n'.join([' '.join([str(item) for item in row]) for row in self.inventory])
-        str2 = '\nAmmo:\n' + ' '.join([str(item) for item in self.ammo])
-        str3 = '\nArmor\n' + ' '.join([str(item) for item in self.armor])
-        str4 = '\nBuild:\n' + ' '.join([str(item) for item in self.build]) + '\n'
-        return str1 + str2 + str3 + str4
+        str1 = 'Inventory:\n' + '\n'.join([' '.join([self.classes[item][:4] for item in row]) for row in self.inventory]) + '\n'
+        return str1
 
 
     

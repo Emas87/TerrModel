@@ -6,16 +6,22 @@ import numpy as np
 import pytesseract
 from matplotlib import pyplot as plt
 import time
-from gymnasium import Env
-from gymnasium.spaces import Box, Discrete
+import gym
+from gym import spaces
 from TerrarianEyes import TerrarianEyes
 
-class TerrEnv(Env):
+class TerrEnv(gym.Env):
+    metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
     def __init__(self):
         super().__init__()
         # Setup spaces
-        self.observation_space = Box(low=0, high=255, shape=(1,1080,1920), dtype=np.uint8)
-        self.action_space = Discrete(8)
+        self.observation_space = spaces.Dict(
+            {
+                'map' :       spaces.Box(low=0, high=11, shape=(67, 120), dtype=np.int8),
+                'inventory' : spaces.Box(low=0, high=11, shape=(9,10), dtype=np.int8),
+            }
+        )
+        self.action_space = spaces.Discrete(7)
         # Capture game frames
         self.cap = mss()
         self.game_location = {'top': 0, 'left': 0, 'width': 1920, 'height': 1080}
@@ -26,39 +32,31 @@ class TerrEnv(Env):
             2: 'w', 
             3: 'd', 
             4: 'a', 
-            5: 'h', # heal
-            6: 'attack',
-            7: 'cut',
-            #8: 'mine up',
-            #9: 'mine down',
-            #10: 'mine left',
-            #11: 'mine right',
-            #12: 'attack bow',
-            #13: 'use torch',
-            #14: 'use rope',
-            #15: 'Esc', # open inventory
+            5: 'attack',
+            6: 'cut'
         }
         # Create Instance
-        tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
+        tiles_weights_path = os.path.join('runs', 'train', 'yolov5s6-tiles', 'weights', 'best.pt')
         objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
         self.eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
-        self.observation = None
         self.timer = None
         self.time_limit = 120
+        self.day_timer = time.time()
+        self.day_limit = 360
            
     def step(self, action):
-        self.eyes.updateMap(self.observation)
+        if self.timer is None:
+            raise AssertionError("Cannot call env.step() before calling reset()")
         # Get current health
         health = self.eyes.map.getHealth()
         if action == 0:
             reward = 0
-        elif action < 6:
+        elif action < 5:
             pydirectinput.press(self.action_map[action])
             reward = 1 
         else: 
-            self.eyes.updateInventory(self.observation)
             # In case we need map or inventory
-            if action == 6: # attack
+            if action == 5: # attack
                 # find closest enemy position and check 
                 with open("delete.txt", 'w') as f:
                     f.write(str(self.eyes.map))
@@ -77,7 +75,7 @@ class TerrEnv(Env):
                 else:
                     # if not
                     reward = 0
-            elif action == 7: # cut wood
+            elif action == 6: # cut wood
                 # find closest tree position and check 
                 # if is in cut range
                 cut, x, y = self.eyes.map.isTreeOnCutRange()
@@ -97,47 +95,21 @@ class TerrEnv(Env):
                     # if not
                     reward = 0
 
-            elif action == 8: # mine up FUTURE WORK
-                # Move mouse above player position
-                pydirectinput.press(self.action_map[2])
-                # Check what was mined
-                reward = 2
-            elif action == 9: # mine down FUTURE WORK
-                # Move mouse below player position
-                pydirectinput.press(self.action_map[2])
-                # Check what was mined
-                reward = 2
-            elif action == 10: # mine left FUTURE WORK
-                # Move mouse left to player position
-                pydirectinput.press(self.action_map[2])
-                # Check what was mined
-                reward = 2
-            elif action == 11: # mine right FUTURE WORK
-                # Move mouse right to player position
-                pydirectinput.press(self.action_map[2])
-                # Check what was mined
-                reward = 2
-            elif action == 12:
-                # Find bow and use it in closest enemy FUTURE WORK
-                pydirectinput.press(self.action_map[4])
-            elif action == 13:
-                # Find torch and use it FUTURE WORK
-                pydirectinput.press(self.action_map[5])
-            elif action == 14:
-                # Find rope and use it FUTURE WORK
-                pydirectinput.press(self.action_map[6])
-
         done, _ = self.get_done() 
         observation = self.get_observation()
+        new_health = self.eyes.map.getHealth()
+        if new_health - health < 0:
+            reward = reward - 2
         # calculate real reward
         info = {}
         return observation, reward, done, info
-        
+    
     def reset(self):
         time.sleep(10)
-        pydirectinput.click(x=150, y=150)
+        pydirectinput.click(x=150, y=250)
         self.timer = time.time()
-        return self.get_observation()
+        observation = self._get_obs()
+        return observation
         
     def render(self):
         cv2.imshow('Game', self.current_frame)
@@ -147,19 +119,62 @@ class TerrEnv(Env):
          
     def close(self):
         cv2.destroyAllWindows()
-    
+
+    def _get_obs(self):
+        return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
+
     def get_observation(self):
         raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
-        self.observation = raw
-        gray = cv2.cvtColor(raw, cv2.COLOR_BGR2GRAY)
-        resized = cv2.resize(gray, (1920,1080))
-        channel = np.reshape(resized, (1,1080,1920))
-        return channel
+        self.eyes.updateMap(raw)
+        self.eyes.updateInventory(raw)
+        #gray = cv2.cvtColor(raw, cv2.COLOR_BGR2GRAY)
+        #resized = cv2.resize(gray, (1920,1080))
+        #channel = np.reshape(resized, (1,1080,1920))
+        return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
     
     def get_done(self):
         done = False
         done_cap = None
-        if self.timer - time.time() > self.time_limit:
+        if time.time() - self.day_timer  > self.day_limit:
+            # reset day
+
+            # Open inventory
+            pydirectinput.press('Esc')
+            # Click Power menu
+            pydirectinput.moveTo(50, 315)
+            # Press the left mouse button
+            pydirectinput.mouseDown(button='left')
+            # Release the left mouse button
+            pydirectinput.mouseUp(button='left')
+
+            #Click other place in the power menu to reset view
+            pydirectinput.moveTo(50, 530)
+            # Press the left mouse button
+            pydirectinput.mouseDown(button='left')
+            # Release the left mouse button
+            pydirectinput.mouseUp(button='left')
+
+            #Click time menu
+            pydirectinput.moveTo(50, 630)
+            # Press the left mouse button
+            pydirectinput.mouseDown(button='left')
+            # Release the left mouse button
+            pydirectinput.mouseUp(button='left')
+
+            #Click dawn
+            pydirectinput.moveTo(115, 655)
+            # Press the left mouse button
+            pydirectinput.mouseDown(button='left')
+            # Release the left mouse button
+            pydirectinput.mouseUp(button='left')
+
+            
+            # Close inventory
+            pydirectinput.press('Esc')
+
+            self.day_timer = time.time()            
+
+        elif time.time() - self.timer  > self.time_limit:
             done = True
         else:
             done_cap = np.array(self.cap.grab(self.done_location))
@@ -168,14 +183,4 @@ class TerrEnv(Env):
             if res in done_strings:
                 done = True
         return done, done_cap
-    
-env = TerrEnv()
-for episode in range(10): 
-    obs = env.reset()
-    done = False
-    total_reward = 0
-    while not done:
-        action = env.action_space.sample()
-        obs, reward,  done, info =  env.step(env.action_space.sample())
-        total_reward  += reward
-    print('Total Reward for episode {} is {}'.format(episode, total_reward))    
+
