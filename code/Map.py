@@ -50,12 +50,13 @@ class Map:
         for i in range(30,34 + 1):
             for j in range(57, 60 + 1):
                 debug_matrix[i-30][j-57] = f'{self.current_map[i][j]} {j} {i}'
-                if self.current_map[i][j] == "slime" or self.current_map[i][j] == "zombie" or self.current_map[i][j] == "eye":
+                if self.current_map[i][j] == "slime":
+                    attack = True
                     distance = abs(i - player[1]) + abs(j - player[0])
                     if distance < min_distance:
-                        attack = True
                         closest = [i,j]
                         min_distance = distance
+                    return attack, closest[1], closest[0]
         return attack, closest[1], closest[0]
 
     def isTreeOnCutRange(self):

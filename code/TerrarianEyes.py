@@ -496,7 +496,9 @@ class TerrarianEyes:
 
 if __name__ == "__main__":
     # Create Instance
-    tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
+    #tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
+    #tiles_weights_path = os.path.join('runs', 'train', 'yolov5m6-tiles', 'weights', 'best.pt')
+    tiles_weights_path = os.path.join('runs', 'train', 'yolov5s6-tiles', 'weights', 'best.pt')
     objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
     eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
     #eyes = TerrarianEyes("", "")
@@ -518,8 +520,8 @@ if __name__ == "__main__":
     #Inference
 
     #eyes.startController('.*Paint')    
-    #eyes.startController('Terraria')    
-    eyes.startRecorder(None)    
+    eyes.startController('Terraria')    
+    #eyes.startRecorder(None)    
 
 
     exit()
