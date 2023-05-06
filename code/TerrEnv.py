@@ -14,6 +14,7 @@ class TerrEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
     def __init__(self):
         super().__init__()
+        self.win = False
         # Setup spaces
         self.observation_space = spaces.Dict(
             {
@@ -29,11 +30,10 @@ class TerrEnv(gym.Env):
         self.action_map = {
             0: 'no_op',
             1: 'space',
-            2: 'w', 
-            3: 'd', 
-            4: 'a', 
-            5: 'attack',
-            6: 'cut'
+            2: 'd', 
+            3: 'a', 
+            4: 'attack',
+            5: 'cut'
         }
         # Create Instance
         tiles_weights_path = os.path.join('runs', 'train', 'yolov5s6-tiles', 'weights', 'best.pt')
@@ -51,12 +51,12 @@ class TerrEnv(gym.Env):
         health = self.eyes.map.getHealth()
         if action == 0:
             reward = 0
-        elif action < 5:
+        elif action < 4:
             pydirectinput.press(self.action_map[action])
             reward = 1 
         else: 
             # In case we need map or inventory
-            if action == 5: # attack
+            if action == 4: # attack
                 # find closest enemy position and check 
                 #with open("delete.txt", 'w') as f:
                 #    f.write(str(self.eyes.map))
@@ -75,7 +75,7 @@ class TerrEnv(gym.Env):
                 else:
                     # if not
                     reward = 0
-            elif action == 6: # cut wood
+            elif action == 5: # cut wood
                 # find closest tree position and check 
                 # if is in cut range
                 cut, x, y = self.eyes.map.isTreeOnCutRange()
@@ -104,7 +104,6 @@ class TerrEnv(gym.Env):
         info = {}
         return observation, reward, done, info
         
-    
     def reset(self):
         time.sleep(10)
         pydirectinput.click(x=150, y=250)

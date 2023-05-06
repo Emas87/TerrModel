@@ -1,6 +1,6 @@
 import math
 import random
-import TerrEnv
+from TerrEnv import TerrEnv
 import time
 from State import State
 
@@ -85,11 +85,12 @@ class MCTS:
 if __name__ == "__main__":
     # Setup
     mcts = MCTS(forward_model=State())
-    game_state = TerrEnv()  # initialize the game state
-    game_state.reset()  # initialize the game state
+    state = State()
+    game_env = TerrEnv()  # initialize the game state
+    game_env.reset()  # initialize the game state
     num_simulations = 1000  # number of simulations to run
 
-    while not game_state.win:
+    while not state.is_terminal():
         time1 = time.time()
         action = mcts.search(game_state, max_iterations=num_simulations)  # get the recommended action
         time2 = time.time()
