@@ -51,11 +51,10 @@ class State():
         self.action_map = {
             0: 'no_op',
             1: 'space',
-            2: 'w', 
-            3: 'd', 
-            4: 'a', 
-            5: 'attack',
-            6: 'cut'
+            2: 'd', 
+            3: 'a', 
+            4: 'attack',
+            5: 'cut'
         }
 
         self.classes = classes
@@ -63,64 +62,62 @@ class State():
         self.map = map
     
     def run_action(self, action):
-        new_state = {"map": self.map.current_map, "inventory": self.inventory.inventory}
+        new_state = State()
 
         # Get current health
         health = self.map.getHealth()
-        if action == 0:
-            reward = 0
-        elif action == 1: # space
+        reward = 0
+        if action == 1: # space
+            if self.map.canJump():
+                # Move map downward
+                self.map.moveMap(new_state.map.current_map, new_i=1)
+                reward = 1
             pass
-        elif action == 2: # w
+        elif action == 2: # d
+            if self.map.canMove(right=True):
+                # Move map left
+                self.moveMap(new_state.map.current_map, new_j=-1)
+                reward = 1
+        elif action == 3: # a
+            if self.map.canMove(right=False):
+                self.map.moveMap(new_state.map.current_map, new_j=1)
+                # Move map left
+                reward = 1
             pass
-        elif action == 3: # d
-            pass
-        elif action == 4: # a
-            pass
-        elif action == 5: # attack
+        elif action == 4: # attack
             # find closest enemy position and check 
             with open("delete.txt", 'w') as f:
-                f.write(str(self.eyes.map))
-            attack, x, y= self.eyes.map.isEnemyOnAttackRange()
+                f.write(str(self.map))
+            attack, x, y = self.map.isEnemyOnAttackRange()
             # if is in attack range
             if attack:
-                # Move mouse to enemy position
-                pydirectinput.moveTo((x+1)*16 + 16, y*16 + 8)
-                # attack
-                pydirectinput.press('1')
-                # Press the left mouse button
-                pydirectinput.mouseDown(button='left')
-                # Release the left mouse button
-                pydirectinput.mouseUp(button='left')
+                # delete slime tiles from map accroding to x and y
+                self.map.deleteTileAt(x, y, self.classes.index('slime'))
                 reward = 2
             else:
                 # if not
                 reward = 0
-        elif action == 6: # cut wood
+        elif action == 5: # cut wood
             # find closest tree position and check 
             # if is in cut range
-            cut, x, y = self.eyes.map.isTreeOnCutRange()
+            cut, x, y = self.map.isTreeOnCutRange()
             # if is in attack range
             if cut:
-                # Move mouse to enemy position
-                pydirectinput.moveTo((x+1)*16 + 8, y*16 + 8)
-                
-                # attack
-                pydirectinput.press('3')
-                # Press the left mouse button
-                pydirectinput.mouseDown(button='left')
-                # Release the left mouse button
-                pydirectinput.mouseUp(button='left')
+                # delete tree tiles from map accroding to x and y
+                self.map.deleteTileAt(x, y, self.classes.index('tree'))       
                 reward = 3
             else:
                 # if not
                 reward = 0
-        new_health = new_state['map'].map.getHealth()
-        if new_health - health < 0:
-            reward = reward - 2
 
-        new_state = State(new_state['map'], new_state['inventory'])
         new_state.last_action = action
+        # Apply effects of the map, gravity attack by an enemy
+        new_state.map.fixMap(action == 1)
+
+        new_health = new_state.map.getHealth()
+        if new_health - health < 0:
+            reward = reward - 3
+
         return new_state, reward
 
     def get_current_state(self):
@@ -139,7 +136,19 @@ class State():
         return done
 
     def get_available_actions(self, state):
-        pass
+        actions = [0]
+        if self.map.canJump():
+            actions.append(1)
+        if self.map.canMove(right=True):
+            actions.append(2)
+        if self.map.canMove(right=False):
+            actions.append(3)
+        if self.map.isEnemyOnAttackRange()[0]:
+            actions.append(4)
+        if self.map.isTreeOnCutRange()[0]:
+            actions.append(5)
+        return actions       
+
 
 if __name__ == "__main__":
     env = TerrEnv()
@@ -148,10 +157,13 @@ if __name__ == "__main__":
     state.map = obs['map']
     state.inventory = obs['inventory']
 
-    with open("old_state.txt", 'w') as f:
-        f.write(str(state.map))
-    state, reward = state.run_action(0)
-
-    with open("old_state.txt", 'w') as f:
-        f.write(str(state.map))
+    while True:
+        action = input("Enter action: ")
+        if action == 'q':
+            break
+        with open("old_state.txt", 'w') as f:
+            f.write(str(state.map))
+        state, reward = state.run_action(int(action))
+        with open("old_state.txt", 'w') as f:
+            f.write(str(state.map))
   

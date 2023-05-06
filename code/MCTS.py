@@ -66,12 +66,19 @@ class MCTS:
             node.update(result)
             node = node.parent
 
-    def search(self, state, num_simulations):
+    def search(self, state, max_time=40, max_iterations=None):
         root_node = Node(state)
-        for i in range(num_simulations):
+        start_time = time.time()
+        iterations = 0
+        while True:
+            iterations += 1
             node = self.select(root_node)
             result = self.simulate(node.state)
             self.backpropagate(node, result)
+            if time.time() - start_time >= max_time:
+                break
+            if max_iterations and iterations >= max_iterations:
+                break
         return max(root_node.children, key=lambda node: node.visits).state.last_action
 
 
@@ -84,7 +91,7 @@ if __name__ == "__main__":
 
     while not game_state.win:
         time1 = time.time()
-        action = mcts.search(game_state, num_simulations)  # get the recommended action
+        action = mcts.search(game_state, max_iterations=num_simulations)  # get the recommended action
         time2 = time.time()
         print(f'time to take action: {str(time2-time1)}')
         game_state.step(action)
