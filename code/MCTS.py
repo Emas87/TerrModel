@@ -22,7 +22,8 @@ class Node:
         self.visits += 1
 
     def fully_expanded(self):
-        return len(self.children) == len(self.state.get_available_actions())
+        actions = self.state.get_available_actions()
+        return len(self.children) == len(actions), actions
 
     def best_child(self, exploration):
         def ucb(node):
@@ -30,21 +31,23 @@ class Node:
         return max(self.children, key=ucb)
 
 class MCTS:
-    def __init__(self, forward_model, exploration=1.0):
-        self.forward_model = forward_model
+    def __init__(self, exploration=1.0):
         self.exploration = exploration
 
     def select(self, root_node):
         node = root_node
+        fully = False
         while not node.state.is_terminal():
-            if not node.fully_expanded():
-                return self.expand(node)
+            full, actions = node.fully_expanded()
+            if not full:
+                return self.expand(node, actions),  fully
             else:
                 node = node.best_child(self.exploration)
-        return node
+                fully = True
+        return node, fully
 
-    def expand(self, node):
-        actions = node.state.get_available_actions()
+    def expand(self, node, actions):
+        #actions = node.state.get_available_actions()
         untried_actions = [action for action in actions if not any(child.state.last_action == action for child in node.children)]
         if untried_actions:
             action = random.choice(untried_actions)
@@ -55,11 +58,18 @@ class MCTS:
             child_node = random.choice(node.children)
             return child_node
 
-    def simulate(self, state):
-        while not state.is_terminal():
+    def simulate(self, state, max_iterations=None):
+        iterations = 0
+        actions = []
+        #result = 0
+        while not state.is_terminal() and ((max_iterations is None) or (iterations < max_iterations)):
             action = random.choice(state.get_available_actions())
-            state, result = state.run_action(state, action)
-        return result
+            actions.append(action)
+            state, _ = state.run_action(action)
+            #result += reward
+            iterations += 1
+        return state.score, actions
+        #return result, actions
 
     def backpropagate(self, node, result):
         while node is not None:
@@ -69,30 +79,52 @@ class MCTS:
     def search(self, state, max_time=40, max_iterations=None):
         root_node = Node(state)
         start_time = time.time()
-        iterations = 0
-        while True:
-            iterations += 1
-            node = self.select(root_node)
-            result = self.simulate(node.state)
+        while not state.is_terminal():
+            node, fully_expanded = self.select(root_node)
+            #if fully_expanded:
+            #    break
+            result, actions = self.simulate(node.state, max_iterations)
+            print(f"simulate with {node.state.last_action}, result: {result}, with these actions {str(actions)}, initial score {node.state.score}")
             self.backpropagate(node, result)
             if time.time() - start_time >= max_time:
                 break
-            if max_iterations and iterations >= max_iterations:
-                break
-        return max(root_node.children, key=lambda node: node.visits).state.last_action
+        if len(root_node.children) == 0:
+            return 0
+        action =  max(root_node.children, key=lambda node: node.wins).state.last_action
+        #action =  max(root_node.children, key=lambda node: node.state.score).state.last_action
+        if action == 6:
+            print()
+            pass        
+        return action
 
 
 if __name__ == "__main__":
     # Setup
-    mcts = MCTS(forward_model=State())
-    state = State()
+    mcts = MCTS(exploration=3)
     game_env = TerrEnv()  # initialize the game state
     game_env.reset()  # initialize the game state
-    num_simulations = 1000  # number of simulations to run
+    num_simulations = 1  # number of simulations to run
+    iterations = 4
+    state = State()
 
-    while not state.is_terminal():
+    # Get number of wood and if it is higher than 100 build
+    while not game_env.finished():
+        # get a observation every 4 actions, it takes too much time
+        if iterations > 3:
+            iterations = 0
+            observation = game_env.get_observation()
+            state.map.current_map = observation['map']
+            state.inventory.inventory = observation['inventory']
+        else:
+            observation = game_env.get_objects()
+            state.map.current_map = observation['map']
+            state.inventory.inventory = observation['inventory']
+        #state = State()
+        state.cut_tree = 0
         time1 = time.time()
-        action = mcts.search(game_state, max_iterations=num_simulations)  # get the recommended action
+        action = mcts.search(state, max_iterations=num_simulations, max_time=1)  # get the recommended action
+        state.run_action(action)
         time2 = time.time()
-        print(f'time to take action: {str(time2-time1)}')
-        game_state.step(action)
+        print(f'time to plan action: {str(time2-time1)}, selected:> {action}')
+        game_env.step(action)
+        iterations += 1

@@ -17,7 +17,7 @@ class Dataset:
             lines = f.readlines()
         for line in lines:
             if "names: " in line:
-                classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '')
+                classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '').strip()
                 self.classes = classesStr.split(', ')
         
         # Get labels
@@ -51,8 +51,8 @@ class Dataset:
             cv.imwrite(image_file, image)
 
     # run detect on the new images
-    def detect(self, objects_weights_path):
-        eyes = TerrarianEyes(None, objects_weights_path)
+    def detect(self, objects_weights_path=None, tiles_weights_path=None):
+        eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
         if not os.path.exists("images_tmp_delete"):
             print("ERROR: images_tmp_delete don't exist")
             return None
@@ -60,15 +60,27 @@ class Dataset:
             image_file = os.path.join("images_tmp_delete", key + ".jpg")
             image = cv.imread(image_file)
             height, width = image.shape[:2]
-            objects = eyes.findObjects(image)
-            for clss, rows in objects.items():
-                for row in rows:
-                    # centerx, centery, w, h
-                    centerx = (row[0] + row[2]/2)/width
-                    centery = (row[1] + row[3]/2)/height
-                    w = (row[2])/width
-                    h = (row[3])/height
-                    value.append([str(self.classes.index(clss)), str(centerx), str(centery), str(w), str(h)])
+            if objects_weights_path is not None:
+                objects = eyes.findObjects(image)
+                for clss, rows in objects.items():
+                    for row in rows:
+                        # centerx, centery, w, h
+                        centerx = (row[0] + row[2]/2)/width
+                        centery = (row[1] + row[3]/2)/height
+                        w = (row[2])/width
+                        h = (row[3])/height
+                        value.append([str(self.classes.index(clss)), str(centerx), str(centery), str(w), str(h)])
+
+            if tiles_weights_path is not None:
+                tiles = eyes.findTiles(image, post_processing=False)
+                for clss, rows in tiles.items():
+                    for row in rows:
+                        # centerx, centery, w, h
+                        centerx = (row[0] + row[2]/2)/width
+                        centery = (row[1] + row[3]/2)/height
+                        w = (row[2])/width
+                        h = (row[3])/height
+                        value.append([str(self.classes.index(clss)), str(centerx), str(centery), str(w), str(h)])
             # save the new matches as dataset in the original labels
             label_file = os.path.join(self.origin, 'train', 'labels', key + ".txt")
             # to Test use label_file = os.path.join("images_tmp_delete",'labels', key + ".txt")
@@ -186,6 +198,101 @@ class Dataset:
                 lines.append(f'{row[0]} {row[1]} {row[2]} {row[3]} {row[4]}\n'.replace("\n\n","\n"))
             with open(label_file, "w") as f:
                 f.writelines(lines)
+    
+    def merge_dataset(self, other_dataset_path, own_weights, other_weights):
+        offset = len(self.classes)
+        tiles_dataset = Dataset(other_dataset_path)
+
+        # merge classes
+        self.classes = self.classes + tiles_dataset.classes
+        with open(os.path.join(self.origin, "data.yaml"), "r") as f:
+            lines = f.readlines()
+        for i in range(len(lines)):
+            if "nc: " in lines[i]:
+                lines[i] = f'nc: {len(self.classes)}\n'
+            elif "names: " in lines[i]:
+                lines[i] = f'names: [ {", ".join(self.classes)} ]\n'
+
+        if os.path.exists("merge_dataset"):
+            shutil.rmtree("merge_dataset")
+        shutil.copytree(os.path.join(self.origin), "merge_dataset")
+
+        # write new data file
+        with open(os.path.join('merge_dataset', "data.yaml"), "w") as f:
+            f.writelines(lines)
+
+        #Translate classes to other_datasert
+        if os.path.exists("merge_dataset_delete"):
+            shutil.rmtree("merge_dataset_delete")
+        
+        shutil.copytree(os.path.join(other_dataset_path), "merge_dataset_delete")
+
+        label_files = os.listdir(os.path.join("merge_dataset_delete", "train", 'labels'))
+        for label_file in label_files:
+            with open(os.path.join("merge_dataset_delete", "train", 'labels', label_file), "r") as f:
+                lines = f.readlines()
+            for i in range(len(lines)):
+                annotation = lines[i].split(" ")
+                annotation[0] = str(int(annotation[0]) + offset)
+                lines[i] = ' '.join(annotation)
+            with open(os.path.join("merge_dataset_delete", "train", 'labels', label_file), "w") as f:
+                f.writelines(lines)
+
+        #merge images and labels
+        label_files = os.listdir(os.path.join("merge_dataset_delete", "train", 'labels'))
+        for label_file in label_files:
+            shutil.copy(os.path.join("merge_dataset_delete", "train", "labels", label_file), os.path.join("merge_dataset", "train", "labels"))
+        image_files = os.listdir(os.path.join("merge_dataset_delete", "train", 'images'))
+        for image_file in image_files: 
+            shutil.copy(os.path.join("merge_dataset_delete", "train", "images", image_file), os.path.join("merge_dataset", "train", "images"))
+        
+        if os.path.exists("merge_dataset_delete"):
+            shutil.rmtree("merge_dataset_delete")
+        
+        # Delete already found matches
+        dataset = Dataset("merge_dataset")
+        dataset.deleteMatches()
+
+        #Find new labels
+        dataset.detect(own_weights, other_weights)
+
+    def addToDataset(self, dir_path, tiles_weights_path=None, objects_weights_path=None):
+        eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
+        image_files = os.listdir(os.path.join(dir_path))
+        for image_file in image_files:
+            value = []
+            file_name = os.path.splitext(image_file)[0]
+            label_file = os.path.join(self.origin, "train", "labels", file_name + ".txt")
+            image = cv.imread(os.path.join(dir_path,image_file))
+            height, width = image.shape[:2]
+            if objects_weights_path is not None:
+                objects = eyes.findObjects(image)
+                for clss, rows in objects.items():
+                    for row in rows:
+                        # centerx, centery, w, h
+                        centerx = (row[0] + row[2]/2)/width
+                        centery = (row[1] + row[3]/2)/height
+                        w = (row[2])/width
+                        h = (row[3])/height
+                        value.append([str(self.classes.index(clss)), str(centerx), str(centery), str(w), str(h)])
+
+            if tiles_weights_path is not None:
+                tiles = eyes.findTiles(image, post_processing=False)
+                for clss, rows in tiles.items():
+                    for row in rows:
+                        # centerx, centery, w, h
+                        centerx = (row[0] + row[2]/2)/width
+                        centery = (row[1] + row[3]/2)/height
+                        w = (row[2])/width
+                        h = (row[3])/height
+                        value.append([str(self.classes.index(clss)), str(centerx), str(centery), str(w), str(h)])
+            # save the new matches as dataset in the original labels
+            lines = []
+            for row in value:
+                lines.append(f'{row[0]} {row[1]} {row[2]} {row[3]} {row[4]}\n'.replace("\n\n","\n"))
+            with open(label_file, "w") as f:
+                f.writelines(lines)
+            shutil.copy(os.path.join(dir_path,image_file), os.path.join(self.origin, "train", "images"))
 
 
 if __name__ == "__main__":
@@ -194,14 +301,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dataset = Dataset(args.dataset)
-    dataset.deleteMatches()
+    #dataset = Dataset("dataset_objects_delete")
+    #dataset.deleteMatches()
 
     objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
     tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
-    #dataset.detect(objects_weights_path)
-    dataset.detect(tiles_weights_path)
 
-    dataset.balance()
+    dataset.addToDataset( "positive", objects_weights_path, tiles_weights_path)
+
+    #dataset.merge_dataset('dataset_tiles_delete', objects_weights_path, tiles_weights_path)
+    
+    #dataset.detect(objects_weights_path)
+    #dataset.detect(tiles_weights_path)
+
+    #dataset.balance()
     #deletes = ['anvil','arrow', 'axe', 'bar', 'bow', 'chest', 'cobwebI', 'delete', 'eye', 'furnace', 'gel', 'glowstick', 'lifeC', 'ore', 'pickaxe', 'platform', 'pot', 'potion', 'rope', 'star', 'sword', 'torchT', 'zombie']
     #deletes = ['sand','liquid', 'snow']
 

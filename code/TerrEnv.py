@@ -49,10 +49,15 @@ class TerrEnv(gym.Env):
             raise AssertionError("Cannot call env.step() before calling reset()")
         # Get current health
         health = self.eyes.map.getHealth()
-        if action == 0:
-            reward = 0
-        elif action < 4:
-            pydirectinput.press(self.action_map[action])
+        reward = 0
+        if action < 4:
+            # press 'action' key and hold it down
+            pydirectinput.keyDown(self.action_map[action])
+
+            # keep the key pressed for 2 seconds
+            time.sleep(0.3)
+            # release the 'action' key
+            pydirectinput.keyUp(self.action_map[action])
             reward = 1 
         else: 
             # In case we need map or inventory
@@ -66,15 +71,13 @@ class TerrEnv(gym.Env):
                     # Move mouse to enemy position
                     pydirectinput.moveTo((x+1)*16 + 16, y*16 + 8)
                     # attack
-                    pydirectinput.press('1')
+                    pydirectinput.press('3')
                     # Press the left mouse button
                     pydirectinput.mouseDown(button='left')
+                    time.sleep(2)
                     # Release the left mouse button
                     pydirectinput.mouseUp(button='left')
-                    reward = 2
-                else:
-                    # if not
-                    reward = 0
+                    reward = 11
             elif action == 5: # cut wood
                 # find closest tree position and check 
                 # if is in cut range
@@ -82,19 +85,40 @@ class TerrEnv(gym.Env):
                 # if is in attack range
                 if cut:
                     # Move mouse to enemy position
-                    pydirectinput.moveTo((x+1)*16 + 8, y*16 + 8)
+                    pydirectinput.moveTo((x+1)*16 + 16, y*16 + 8)
                     
                     # attack
                     pydirectinput.press('3')
                     # Press the left mouse button
                     pydirectinput.mouseDown(button='left')
-                    # Release the left mouse button
+                    time.sleep(2)
+                    # Release the left mouse button3
                     pydirectinput.mouseUp(button='left')
-                    reward = 3
-                else:
-                    # if not
-                    reward = 0
+                    reward = 10
+            elif action == 6: # closer
+                reward = 4
+                closest = self.eyes.map.getCloser()
+                if closest - 58 > 0:
+                    # press '2' key and hold it down
+                    pydirectinput.keyDown(self.action_map[2])
 
+                    # keep the key pressed for 2 seconds
+                    time.sleep(0.3)
+                    # release the '2' key
+                    pydirectinput.keyUp(self.action_map[2])
+                    #action = 2
+                else:
+                    # press '3' key and hold it down
+                    pydirectinput.keyDown(self.action_map[3])
+
+                    # keep the key pressed for 2 seconds
+                    time.sleep(0.3)
+                    # release the '3' key
+                    pydirectinput.keyUp(self.action_map[3])
+                    #action = 3
+            elif action == 10: # Build
+                # TODO
+                pass
         done, _ = self.get_done() 
         observation = self.get_observation()
         new_health = self.eyes.map.getHealth()
@@ -106,9 +130,11 @@ class TerrEnv(gym.Env):
         
     def reset(self):
         time.sleep(10)
-        pydirectinput.click(x=150, y=250)
+        #pydirectinput.click(x=150, y=250)
+        pydirectinput.click(x=930, y=512)
+        pydirectinput.press('ctrl')
         self.timer = time.time()
-        observation = self._get_obs()
+        observation = self.get_observation()
         return observation
         
     def render(self):
@@ -130,9 +156,16 @@ class TerrEnv(gym.Env):
         raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
         self.eyes.updateMap(raw)
         self.eyes.updateInventory(raw)
+        #with open("delete.txt", 'w') as f:
+        #    f.write(str(self.eyes.map))
         #gray = cv2.cvtColor(raw, cv2.COLOR_BGR2GRAY)
         #resized = cv2.resize(gray, (1920,1080))
         #channel = np.reshape(resized, (1,1080,1920))
+        return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
+    
+    def get_objects(self):
+        raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
+        self.eyes.updateInventory(raw)
         return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
     
     def get_done(self):
@@ -186,3 +219,20 @@ class TerrEnv(gym.Env):
             if res in done_strings:
                 done = True
         return done, done_cap
+    
+    def finished(self):
+        # TODO
+        # find wood in inventory and get coordinates
+        wood, col, row = self.eyes.inventory.getWood()
+        # find number
+        if wood:
+            x, y, w, h = self.eyes.inventory.convertCoords(col, row)
+            location = {'top': x, 'left': y + h/2, 'width': w, 'height': h/2}
+            raw = np.array(self.cap.grab(location))[:,:,:3].astype(np.uint8)
+            count = self.findNumber(raw, x, y + h/2, w, h/2)
+            # is bigger than 100
+            if count > 100:
+                # build
+                self.step(10) 
+                return True
+        return False

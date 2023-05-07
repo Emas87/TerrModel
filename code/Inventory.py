@@ -36,5 +36,22 @@ class Inventory:
         str1 = 'Inventory:\n' + '\n'.join([' '.join([self.classes[item][:4] for item in row]) for row in self.inventory]) + '\n'
         return str1
 
+    def getWood(self):
+        for i in range(len(self.inventory)):
+            for j in range(len(self.inventory[i])):
+                if self.inventory[i][j] == self.classes.index('wood'):
+                    return True, j, i
+        return False, 0, 0
+    
+    def convertCoords(self, col, row):        
+        inventory_min = (20, 20)
+        inventory_max = (20 + int(9*52.5) + 50, 20 + int(4*52.5) + 50)
+        slot_size = ((inventory_max[0]-inventory_min[0])/10, (inventory_max[1]-inventory_min[1])/5)
+        center_diff = (col*slot_size[0], row*slot_size[1])
+        center = (center_diff[0] + inventory_min[0], center_diff[1] + inventory_min[1] )
+        x = center[0] - slot_size[0]/2
+        y = center[1]
+        return x, y, slot_size[0], slot_size[1]
+        # result center[0] - slot_size[0]/2, center[1], slot_size[0], slot_size[1]/2
 
     

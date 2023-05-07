@@ -113,8 +113,10 @@ class TerrarianEyes:
                 rectangles.append((pt[0], pt[1], w, h))
         return rectangles
 
-    def findTiles(self, source):
+    def findTiles(self, source, post_processing=True):
         results = self.detectYoloTiles(source)
+        if not post_processing:
+            return results
         final_results = {}
         img_rgb = source
         # for each section of tiles look for specific tiles
@@ -396,6 +398,8 @@ class TerrarianEyes:
             # press 'P' to save screenshot as a positive image, press 'n' to 
             # save as a negative image.
             # waits 1 ms every loop to process key presses
+            cv.imwrite('positive/{}.jpg'.format(loop_time), screenshot)
+            time.sleep(5)
             key = cv.waitKey(1)
             if key == ord('q'):
                 cv.destroyAllWindows()
@@ -444,14 +448,14 @@ class TerrarianEyes:
                     center_diff = center[1]-armor_min[1]
                     slot_size = (armor_max[1]-armor_min[1])/3
                     row = floor(center_diff/slot_size)
-                    self.inventory.updateArmor(row, clss, 1)
+                    self.inventory.updateArmor(row, clss)
 
                 elif center[0] > build_min[0] and center[0] < build_max[0] and center[1] < build_max[1] and center[1] > build_min[1]:
                     #Build
                     center_diff = center[1]-build_min[1]
                     slot_size = (build_max[1]-build_min[1])/9
                     row = floor(center_diff/slot_size)
-                    self.inventory.updateBuild(row, clss, 1)
+                    self.inventory.updateBuild(row, clss)
 
                 else:
                     #Enemy or object in the groudn, update
@@ -539,8 +543,8 @@ if __name__ == "__main__":
     #Inference
 
     #eyes.startController('.*Paint')    
-    eyes.startController('Terraria')    
-    #eyes.startRecorder(None)    
+    #eyes.startController('Terraria')    
+    eyes.startRecorder(None)    
 
 
     exit()

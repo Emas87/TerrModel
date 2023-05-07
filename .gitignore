@@ -6,6 +6,7 @@ code/*.png
 code/*.jpg
 code/delete*
 code/logs/*
+code/*dataset*
 
 
 # Byte-compiled / optimized / DLL files

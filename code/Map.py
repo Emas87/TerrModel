@@ -49,10 +49,10 @@ class Map:
         player = (58, 31)
         closest = [0,0]
         min_distance = float('inf')
-        debug_matrix = [['x' for j in range(56,61 + 1)] for i in range(29,35 + 1)]
-        for i in range(29,35 + 1):
-            for j in range(56,61 + 1):
-                debug_matrix[i-29][j-56] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
+        debug_matrix = [['x' for j in range(55,62 + 1)] for i in range(28,36 + 1)]
+        for i in range(28,36 + 1):
+            for j in range(55,62 + 1):
+                debug_matrix[i-28][j-55] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
                 if self.classes[self.current_map[i][j]] == "slime":
                     distance = abs(i - player[1]) + abs(j - player[0])
                     if distance < min_distance:
@@ -113,7 +113,7 @@ class Map:
 
     def deleteTileAt(self, x, y, clss):
         # delete recursively
-        if x < 0 or y < 0 or x == len(self.current_map[y]) or y == len(self.current_map):
+        if x < 0 or y < 0 or x == len(self.current_map) or y == len(self.current_map):
             return
         if self.current_map[y][x] != clss:
             return
@@ -146,25 +146,27 @@ class Map:
         for slime in slimes:
             if len(slime) < 4:
                 # delete slime
-                for i in slime:
+                for i in range(len(slime)):
                     self.current_map[slime[i][1]][slime[i][0]] = self.classes.index('xxxx')
                 continue
             # if close enough to do damage do not move, check every tile surrounding slime
-            is_player_close =  False
-            is_player_close = is_player_close or self.current_map[slime[0][1]][slime[0][0]-1] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[0][1]-1][slime[0][0]] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[0][1]-1][slime[0][0]-1] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[1][1]][slime[1][0]+1] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[1][1]-1][slime[1][0]] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[1][1]-1][slime[1][0]+1] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[2][1]][slime[2][0]+1] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[2][1]+1][slime[2][0]] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[2][1]+1][slime[2][0]+1] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[3][1]][slime[3][0]-1] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[3][1]+1][slime[3][0]] == self.classes.index('player')
-            is_player_close = is_player_close or self.current_map[slime[3][1]+1][slime[3][0]-1] == self.classes.index('player')
-            if is_player_close:
-                continue
+            # slime has to be close to hew center of the screen
+            if slime[0][0] > 56 and slime[0][0] < 61:
+                is_player_close =  False
+                is_player_close = is_player_close or self.current_map[slime[0][1]][slime[0][0]-1] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[0][1]-1][slime[0][0]] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[0][1]-1][slime[0][0]-1] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[1][1]][slime[1][0]+1] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[1][1]-1][slime[1][0]] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[1][1]-1][slime[1][0]+1] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[2][1]][slime[2][0]+1] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[2][1]+1][slime[2][0]] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[2][1]+1][slime[2][0]+1] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[3][1]][slime[3][0]-1] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[3][1]+1][slime[3][0]] == self.classes.index('player')
+                is_player_close = is_player_close or self.current_map[slime[3][1]+1][slime[3][0]-1] == self.classes.index('player')
+                if is_player_close:
+                    continue
 
             if slime[0][0] < 58:
                 tiles_right = self.classes[self.current_map[slime[1][1]][slime[1][0]+1]] == 'dirt'
@@ -214,14 +216,22 @@ class Map:
                 self.current_map[slime[1][1]][slime[1][0]] = self.classes.index('xxxx')
 
     def fixTrees(self, trees):
+
+        closest = 0
+        min_distance = float('inf')
         # fix any floating tree left to player
         for j in trees:
             found_tree = False
+            distance = abs(j - 58)
+            if distance < min_distance:
+                closest = j
+                min_distance = distance
             for i  in range(67):
                 if self.classes[self.current_map[i][j]] == 'tree':
                     found_tree = True
                 elif found_tree and self.classes[self.current_map[i][j]] == 'xxxx':
                     self.current_map[i][j] = self.classes.index('tree')
+
                 elif self.classes[self.current_map[i][j]] == 'dirt' or self.classes[self.current_map[i][j]] == 'player' :
                     break
 
@@ -234,7 +244,6 @@ class Map:
                 new_map = np.full((67, 120), self.classes.index('xxxx'), dtype=np.int8)
                 self.moveMap(new_map, new_i=-1)
                 self.current_map = new_map.copy()
-        # TODO if player fall from the dirt platform
         
         # find all slimes and trees
         slimes = []
@@ -260,7 +269,8 @@ class Map:
         self.fixTrees(trees)
         
     def apply_damage(self):
-        if self.isEnemyOnAttackRange():
+        close, _, _ = self.isEnemyOnAttackRange()
+        if close:
             # enemy is close to player and will hit him, delete 3 heart 
             for j in range(len(self.current_map[0])-1, 0, -1):
                 if self.classes[self.current_map[0][j]] == "heart":
@@ -271,7 +281,7 @@ class Map:
 
     def findTiles(self, x, y, clss, positions = []):
         # delete recursively
-        if x < 0 or y < 0 or x == len(self.current_map[y]) or y == len(self.current_map):
+        if x < 0 or y < 0 or y == len(self.current_map) or x == len(self.current_map[y]):
             return positions
         if self.current_map[y][x] != clss:
             return positions
@@ -283,3 +293,21 @@ class Map:
         for sibling in siblings:
             positions = self.findTiles(sibling[0], sibling[1], clss, positions=positions)
         return positions
+
+    
+    def getCloser(self):
+        closest = 0
+        min_distance = float('inf')
+        rows = [8, 16, 24, 32, 40, 48, 56, 64]
+        for i in rows:
+            for j in range(len(self.current_map[i])):
+                if self.current_map[i][j] == self.classes.index('tree'):
+                    distance = abs(j - 58)
+                    if distance < min_distance:
+                        closest = j
+                        min_distance = distance
+        return closest
+
+    def print(self):
+        with open("delete.txt", 'w') as f:
+            f.write(str(self.map))
