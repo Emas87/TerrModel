@@ -22,6 +22,10 @@ class Map:
                 corner_diff = (corner[0]-self.min[0], corner[1]-self.min[1])
                 row = floor(corner_diff[1]/SLOT_SIZE[1] + 0.5) - 1
                 col = floor(corner_diff[0]/SLOT_SIZE[0] + 0.5) - 1
+                if row >= 67:
+                    row = 66
+                if col >= 120:
+                    col = 119
                 self.current_map[row][col] = self.classes.index(object)
     
     def getHealth(self):
@@ -49,28 +53,16 @@ class Map:
         player = (58, 31)
         closest = [0,0]
         min_distance = float('inf')
-        debug_matrix = [['x' for j in range(55,62 + 1)] for i in range(28,36 + 1)]
-        for i in range(28,36 + 1):
-            for j in range(55,62 + 1):
-                debug_matrix[i-28][j-55] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
+        debug_matrix = [['x' for j in range(54,63 + 1)] for i in range(27,37 + 1)]
+        for i in range(27,37 + 1):
+            for j in range(54,63 + 1):
+                debug_matrix[i-27][j-54] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
                 if self.classes[self.current_map[i][j]] == "slime":
                     distance = abs(i - player[1]) + abs(j - player[0])
                     if distance < min_distance:
                         attack = True
                         closest = [i,j]
                         min_distance = distance
-
-        """debug_matrix = [['x' for j in range(57,60 + 1)] for i in range(30,34 + 1)]
-        for i in range(30,34 + 1):
-            for j in range(57, 60 + 1):
-                debug_matrix[i-30][j-57] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
-                if self.classes[self.current_map[i][j]] == "slime":
-                    distance = abs(i - player[1]) + abs(j - player[0])
-                    if distance < min_distance:
-                        attack = True
-                        closest = [i,j]
-                        min_distance = distance
-                    return attack, closest[1], closest[0]"""
         return attack, closest[1], closest[0]
 
     def isTreeOnCutRange(self):
@@ -216,22 +208,14 @@ class Map:
                 self.current_map[slime[1][1]][slime[1][0]] = self.classes.index('xxxx')
 
     def fixTrees(self, trees):
-
-        closest = 0
-        min_distance = float('inf')
         # fix any floating tree left to player
         for j in trees:
             found_tree = False
-            distance = abs(j - 58)
-            if distance < min_distance:
-                closest = j
-                min_distance = distance
             for i  in range(67):
                 if self.classes[self.current_map[i][j]] == 'tree':
                     found_tree = True
                 elif found_tree and self.classes[self.current_map[i][j]] == 'xxxx':
                     self.current_map[i][j] = self.classes.index('tree')
-
                 elif self.classes[self.current_map[i][j]] == 'dirt' or self.classes[self.current_map[i][j]] == 'player' :
                     break
 
@@ -247,7 +231,6 @@ class Map:
         
         # find all slimes and trees
         slimes = []
-        trees = []
         trees = []
         positions = []
         for i in range(len(self.current_map)):

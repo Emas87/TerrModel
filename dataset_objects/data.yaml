@@ -8,7 +8,7 @@ names: ['breastplate', 'helmet', 'legs', 'slime', 'wood', 'workbench']
 
 roboflow:
   workspace: tec-h4jb3
-  project: tesiso
-  version: 2
+  project: terrariaobjects
+  version: 1
   license: MIT
-  url: https://universe.roboflow.com/tec-h4jb3/tesiso/dataset/2
+  url: https://universe.roboflow.com/tec-h4jb3/terrariaobjects/dataset/1

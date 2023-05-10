@@ -5,6 +5,7 @@ import torch
 import pytesseract
 from math import floor
 from time import time
+from time import sleep
 from vision import Vision
 from windowcapture import WindowCapture
 from utils.torch_utils import select_device
@@ -98,20 +99,22 @@ class TerrarianEyes:
 
     # Takes twice to finish
     @staticmethod
-    def matchImageColor(sourceImage, templateImages):
-        rectangles = []    
+    def matchImageColor(sourceImage, templateImages, threshold = 0.79):
+        rectangles = []   
+        confidences = [] 
 
         for image in templateImages:
-            template = cv.imread(image, cv.IMREAD_COLOR)
+            #template = cv.imread(image, cv.IMREAD_COLOR)
+            template = image
             assert template is not None, "image could not be read, check with os.path.exists()"
             w, h = template.shape[0:-1]
             res = cv.matchTemplate(sourceImage, template, cv.TM_CCOEFF_NORMED)
 
-            threshold = 0.79
             loc = np.where( res >= threshold)
             for pt in zip(*loc[::-1]):
                 rectangles.append((pt[0], pt[1], w, h))
-        return rectangles
+                confidences.append(res[pt[1], pt[0]])
+        return rectangles, confidences
 
     def findTiles(self, source, post_processing=True):
         results = self.detectYoloTiles(source)
@@ -126,7 +129,6 @@ class TerrarianEyes:
                 for row in rows:                
                     cropped_image = img_rgb[round(row[1]):round(row[1]+row[3]), round(row[0]):round(row[0]+row[2])]
                     rectangles = self.matchImage(cropped_image, images)
-                    #rectangles = self.matchImageColor(cropped_image, images)
 
                     # convert point from cropped image point to original image point
                     for rectangle in rectangles:
@@ -151,7 +153,6 @@ class TerrarianEyes:
     def findObjects(self, source):
         results = self.detectYoloObjects(source)
         return results
-
 
     @staticmethod
     def showImage(img_rgb):
@@ -399,7 +400,7 @@ class TerrarianEyes:
             # save as a negative image.
             # waits 1 ms every loop to process key presses
             cv.imwrite('positive/{}.jpg'.format(loop_time), screenshot)
-            time.sleep(5)
+            sleep(5)
             key = cv.waitKey(1)
             if key == ord('q'):
                 cv.destroyAllWindows()
@@ -501,21 +502,53 @@ class TerrarianEyes:
     def findNumber(self, screenshot, x, y, w, h):
         # crop only 3/4 of image, to avoid any number related to the inventory order
         cropped_image = screenshot[round(y):round(y+h), round(x):round(x+w)]
+        #self.showImage(cropped_image)
         numNames = ['0', '1','2','3','4','5','6','7','8','9',]
         numbers = {}
         for numName in numNames:
             images = self.templates[numName]
-            rectangles = self.matchImage(cropped_image, images, threshold = 0.45)
-            for rectangle in rectangles:
-                numbers[int(rectangle[0])] = numName
+            #rectangles = self.matchImage(cropped_image, images, threshold = 0.535)
+            #rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.62)
+            rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.5)
+            for i in range(len(rectangles)):
+                if int(rectangles[i][0]) > 30:
+                    continue
+                numbers[int(rectangles[i][0])] = (numName, rectangles[i], confidences[i])
+        # TODO delete rectangles that overlap more than %50
+        key_sorted = sorted(numbers)
+        for i in range(len(key_sorted)-1,-1,-1):
+            for j in range(len(key_sorted)-1, -1, -1):
+                # '1' only has 6 pixel wide
+                if i != j and abs(key_sorted[i]-key_sorted[j]) < 6:
+                    #min_tuple = min(numbers[key_sorted[i]] + numbers[key_sorted[j]], key=lambda x: x[2])
+                    min_tuple = min([k for k in numbers.keys() if k in [key_sorted[i],key_sorted[j]]], key=lambda x: numbers[x][2])
+                    index_delete = key_sorted.index(min_tuple)
+                    key_sorted.pop(index_delete)
+                    break
+
         number = ''
-        for key in sorted(numbers):
-            number += str(numbers[key])
+        for key in key_sorted:
+            number += str(numbers[key][0])
         if number == '':
             return 1
         else:
             return int(number)
 
+    def rectangles_overlap(x1, y1, w1, h1, x2, y2, w2, h2):
+        # Calculate the intersection rectangle
+        inter_x = max(x1, x2)
+        inter_y = max(y1, y2)
+        inter_w = min(x1 + w1, x2 + w2) - inter_x
+        inter_h = min(y1 + h1, y2 + h2) - inter_y
+        # Check if there is an intersection
+        if inter_w <= 0 or inter_h <= 0:
+            return False
+        # Calculate the areas of the two rectangles and the intersection rectangle
+        rect1_area = w1 * h1
+        rect2_area = w2 * h2
+        inter_area = inter_w * inter_h
+        # Check if the rectangles overlap by more than 50%
+        return inter_area / min(rect1_area, rect2_area) <= 0.5
 
 if __name__ == "__main__":
     # Create Instance
@@ -540,11 +573,16 @@ if __name__ == "__main__":
             cv.destroyAllWindows()
             break"""
     
-    #Inference
+    #Inference 
+    img = cv.imread("delete.png") 
+    rectangles, confidences = eyes.findNumber(img,0,0,30,22)
+    print()
 
     #eyes.startController('.*Paint')    
     #eyes.startController('Terraria')    
-    eyes.startRecorder(None)    
+    #eyes.startController(None)   
+
+    #eyes.startRecorder(None)    
 
 
     exit()

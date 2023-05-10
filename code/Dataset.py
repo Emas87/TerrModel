@@ -307,14 +307,14 @@ if __name__ == "__main__":
     objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
     tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
 
-    dataset.addToDataset( "positive", objects_weights_path, tiles_weights_path)
+    #dataset.addToDataset("positive", objects_weights_path, None)
 
     #dataset.merge_dataset('dataset_tiles_delete', objects_weights_path, tiles_weights_path)
     
     #dataset.detect(objects_weights_path)
     #dataset.detect(tiles_weights_path)
 
-    #dataset.balance()
+    dataset.balance()
     #deletes = ['anvil','arrow', 'axe', 'bar', 'bow', 'chest', 'cobwebI', 'delete', 'eye', 'furnace', 'gel', 'glowstick', 'lifeC', 'ore', 'pickaxe', 'platform', 'pot', 'potion', 'rope', 'star', 'sword', 'torchT', 'zombie']
     #deletes = ['sand','liquid', 'snow']
 

@@ -43,15 +43,42 @@ class Inventory:
                     return True, j, i
         return False, 0, 0
     
+    def getBuild(self, item):
+        for j in range(len(self.inventory[7])):
+            if self.inventory[7][j] == self.classes.index(item):
+                return True, j
+        return False, 0
+    
     def convertCoords(self, col, row):        
         inventory_min = (20, 20)
         inventory_max = (20 + int(9*52.5) + 50, 20 + int(4*52.5) + 50)
-        slot_size = ((inventory_max[0]-inventory_min[0])/10, (inventory_max[1]-inventory_min[1])/5)
+        slot_size = (int((inventory_max[0]-inventory_min[0])/10), int((inventory_max[1]-inventory_min[1])/5))
         center_diff = (col*slot_size[0], row*slot_size[1])
         center = (center_diff[0] + inventory_min[0], center_diff[1] + inventory_min[1] )
-        x = center[0] - slot_size[0]/2
+        #x = int(center[0] - slot_size[0]/2)
+        #y = int(center[1] - slot_size[1]/2)
+        x = center[0]
         y = center[1]
         return x, y, slot_size[0], slot_size[1]
+        # result center[0] - slot_size[0]/2, center[1], slot_size[0], slot_size[1]/2
+        center_diff = (center[0]-inventory_min[0], center[1]-inventory_min[1])
+        slot_size = ((inventory_max[0]-inventory_min[0])/10, (inventory_max[1]-inventory_min[1])/5)
+        col = floor(center_diff[0]/slot_size[0])
+        row = floor(center_diff[1]/slot_size[1])
+
+    def convertCoordsBuild(self, row):
+        
+        build_min = (24, 420)
+        build_max = (24 + 54, 690 + int(4*54))    
+
+        slot_size = (build_max[1]-build_min[1])/9
+        center_diff = slot_size*row
+        center = center_diff + build_min[1]
+        x = int(30)
+        y = int(center - slot_size/2)
+        w = slot_size
+        h = slot_size
+        return x, y, w, h
         # result center[0] - slot_size[0]/2, center[1], slot_size[0], slot_size[1]/2
 
     

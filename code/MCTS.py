@@ -1,7 +1,7 @@
 import math
 import random
-from TerrEnv import TerrEnv
 import time
+from TerrEnv import TerrEnv
 from State import State
 
 class Node:
@@ -33,6 +33,8 @@ class Node:
 class MCTS:
     def __init__(self, exploration=1.0):
         self.exploration = exploration
+        self.game_env = TerrEnv()  # initialize the game state
+
 
     def select(self, root_node):
         node = root_node
@@ -97,26 +99,52 @@ class MCTS:
             pass        
         return action
 
+    def run(self, seed, max_time=1):
+        # Setup
+        self.game_env.reset()  # initialize the game state
+        num_simulations = 1  # number of simulations to run
+        iterations = 4
+        state = State()
+        time1 = time.time()
+        # Get number of wood and if it is higher than 100 build
+        while not self.game_env.finished():
+            # get a observation every 4 actions, it takes too much time
+            if iterations > 3:
+                iterations = 0
+                observation = self.game_env.get_observation()
+                state.map.current_map = observation['map']
+                state.inventory.inventory = observation['inventory']
+            else:
+                observation = self.game_env.get_objects()
+                state.map.current_map = observation['map']
+                state.inventory.inventory = observation['inventory']
+            state.cut_tree = 0
+            action = mcts.search(state, max_iterations=num_simulations, max_time=max_time)  # get the recommended action
+            state.run_action(action)
+            self.game_env.step(action)
+            iterations += 1
+        time2 = time.time()
+        print(f'time to finish {str(time2-time1)}')
+        return float(time2 - time1)
 
 if __name__ == "__main__":
     # Setup
     mcts = MCTS(exploration=3)
-    game_env = TerrEnv()  # initialize the game state
-    game_env.reset()  # initialize the game state
+    mcts.game_env.reset()  # initialize the game state
     num_simulations = 1  # number of simulations to run
     iterations = 4
     state = State()
 
     # Get number of wood and if it is higher than 100 build
-    while not game_env.finished():
+    while not mcts.game_env.finished():
         # get a observation every 4 actions, it takes too much time
         if iterations > 3:
             iterations = 0
-            observation = game_env.get_observation()
+            observation = mcts.game_env.get_observation()
             state.map.current_map = observation['map']
             state.inventory.inventory = observation['inventory']
         else:
-            observation = game_env.get_objects()
+            observation = mcts.game_env.get_objects()
             state.map.current_map = observation['map']
             state.inventory.inventory = observation['inventory']
         #state = State()
@@ -126,5 +154,6 @@ if __name__ == "__main__":
         state.run_action(action)
         time2 = time.time()
         print(f'time to plan action: {str(time2-time1)}, selected:> {action}')
-        game_env.step(action)
+        mcts.game_env.step(action)
         iterations += 1
+    mcts.game_env.end()
