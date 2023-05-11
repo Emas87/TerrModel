@@ -101,11 +101,14 @@ class MCTS:
 
     def run(self, seed, max_time=1):
         # Setup
-        self.game_env.reset()  # initialize the game state
-        num_simulations = 1  # number of simulations to run
         iterations = 4
         state = State()
+        num_simulations = 1  # number of simulations to run
+
+        self.game_env.start(seed)
+        self.game_env.reset()  # initialize the game state
         time1 = time.time()
+
         # Get number of wood and if it is higher than 100 build
         while not self.game_env.finished():
             # get a observation every 4 actions, it takes too much time
@@ -119,7 +122,7 @@ class MCTS:
                 state.map.current_map = observation['map']
                 state.inventory.inventory = observation['inventory']
             state.cut_tree = 0
-            action = mcts.search(state, max_iterations=num_simulations, max_time=max_time)  # get the recommended action
+            action = self.search(state, max_iterations=num_simulations, max_time=max_time)  # get the recommended action
             state.run_action(action)
             self.game_env.step(action)
             iterations += 1

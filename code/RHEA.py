@@ -52,31 +52,30 @@ class RHEA:
         state = State()
 
         # start
-        rhea.game_env.start(seed)
-        rhea.game_env.reset()  # initialize the game state
+        self.game_env.start(seed)
+        self.game_env.reset()  # initialize the game state
         time1 = time.time()
 
-
         # Get number of wood and if it is higher than 100 build
-        while not rhea.game_env.finished():
+        while not self.game_env.finished():
             # get a observation every 4 actions, it takes too much time
             if iterations > 3:
                 iterations = 0
-                observation = rhea.game_env.get_observation()
+                observation = self.game_env.get_observation()
                 state.map.current_map = observation['map']
                 state.inventory.inventory = observation['inventory']
             else:
-                observation = rhea.game_env.get_objects()
+                observation = self.game_env.get_objects()
                 state.map.current_map = observation['map']
                 state.inventory.inventory = observation['inventory']
             #state = State()
             state.cut_tree = 0
             time1 = time.time()
-            action = rhea.search(state, max_time)  # get the recommended action
+            action = self.search(state, max_time)  # get the recommended action
             state.run_action(action)
             time2 = time.time()
             print(f'time to plan action: {str(time2-time1)}, selected:> {action}')
-            rhea.game_env.step(action)
+            self.game_env.step(action)
             iterations += 1
         time2 = time.time()
         print(f'time to finish {str(time2-time1)}')
