@@ -524,9 +524,13 @@ class TerrarianEyes:
             for j in range(len(key_sorted)-1, -1, -1):
                 # '1' only has 6 pixel wide
                 if i != j and abs(key_sorted[i]-key_sorted[j]) < 6:
-                    #if abs(key_sorted[i]-key_sorted[j]) >= 3 and (numbers[key_sorted[i]][0] == '1' or numbers[key_sorted[j]][0]):
-                    #    continue
-                    #min_tuple = min(numbers[key_sorted[i]] + numbers[key_sorted[j]], key=lambda x: x[2])
+                    if abs(key_sorted[i]-key_sorted[j]) >= 3 and (numbers[key_sorted[i]][0] == '1' or numbers[key_sorted[j]][0] == '1'):
+                        if not self.check_overlap(numbers[key_sorted[i]][1][0],numbers[key_sorted[i]][1][3],numbers[key_sorted[j]][1][0],numbers[key_sorted[j]][1][3]):
+                            continue
+                        #annotator = Annotator(np.ascontiguousarray(cropped_image), line_width=1, font_size = 5)
+                        #annotator.box_label((numbers[key_sorted[i]][1][0], numbers[key_sorted[i]][1][1], numbers[key_sorted[i]][1][1] + numbers[key_sorted[i]][1][3], numbers[key_sorted[i]][1][0] + numbers[key_sorted[i]][1][2]),  color=(255, 255, 255))
+                        #annotator.box_label((numbers[key_sorted[j]][1][0], numbers[key_sorted[j]][1][1], numbers[key_sorted[j]][1][1] + numbers[key_sorted[j]][1][3], numbers[key_sorted[j]][1][0] + numbers[key_sorted[j]][1][2]),  color=(255, 255, 255))
+                        #self.showImage(annotator.result())
                     min_tuple = min([k for k in numbers.keys() if k in [key_sorted[i],key_sorted[j]]], key=lambda x: numbers[x][2])
                     index_delete = key_sorted.index(min_tuple)
                     key_sorted.pop(index_delete)
@@ -541,21 +545,26 @@ class TerrarianEyes:
         else:
             return int(number)
 
-    def rectangles_overlap(x1, y1, w1, h1, x2, y2, w2, h2):
-        # Calculate the intersection rectangle
-        inter_x = max(x1, x2)
-        inter_y = max(y1, y2)
-        inter_w = min(x1 + w1, x2 + w2) - inter_x
-        inter_h = min(y1 + h1, y2 + h2) - inter_y
-        # Check if there is an intersection
-        if inter_w <= 0 or inter_h <= 0:
+    @staticmethod
+    def check_overlap(x1, w1, x2, w2):
+        # calculate the end points of the two ranges
+        end1 = x1 + w1
+        end2 = x2 + w2
+
+        # calculate the length of the intersection between the two ranges
+        overlap = min(end1, end2) - max(x1, x2)
+
+        # calculate the length of the union of the two ranges
+        union = max(end1, end2) - min(x1, x2)
+
+        # calculate the percentage of overlap
+        overlap_percent = overlap / union * 100
+
+        # check if the percentage of overlap is more than 50%
+        if overlap_percent > 50:
+            return True
+        else:
             return False
-        # Calculate the areas of the two rectangles and the intersection rectangle
-        rect1_area = w1 * h1
-        rect2_area = w2 * h2
-        inter_area = inter_w * inter_h
-        # Check if the rectangles overlap by more than 50%
-        return inter_area / min(rect1_area, rect2_area) <= 0.5
 
 if __name__ == "__main__":
     # Create Instance
@@ -582,7 +591,7 @@ if __name__ == "__main__":
     
     #Inference 
     img = cv.imread("delete.png") 
-    rectangles, confidences = eyes.findNumber(img,0,0,30,22)
+    number = eyes.findNumber(img,0,0,30,22)
 
     #eyes.startController('.*Paint')    
     #eyes.startController('Terraria')    

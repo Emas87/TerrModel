@@ -8,12 +8,13 @@ from configure_logging import configure_logging
 logger = configure_logging('run_experiments.log')
 
 if __name__ == "__main__":
+    experiment_file = "experiments1.txt"
     game_env = TerrEnv()
     mcts = MCTS(game_env, exploration=3)
     rhea = RHEA(game_env, horizon=1, rollouts_per_step=2)
     #mcts = None
     #rhea = None
-    with open("experiments1.txt") as f:
+    with open(experiment_file) as f:
         lines = f.readlines()
     # format: Algorithm seed time result
 
@@ -32,7 +33,7 @@ if __name__ == "__main__":
         elif algorithm == 'rhea':
             result = rhea.run(int(seed), int(max_time))
             lines[i] = lines[i].strip() + f' {str(result)}\n'
-        with open("experiments.txt", "w") as f:
+        with open(experiment_file, "w") as f:
             f.writelines(lines)
 
     

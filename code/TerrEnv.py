@@ -143,10 +143,15 @@ class TerrEnv(gym.Env):
                     self.win = True
                     reward = 100
         done= self.get_done() 
-        observation = self.get_observation()
-        new_health = self.eyes.map.getHealth()
-        if new_health - health < 0:
-            reward = reward - 2
+        died= self.died() 
+        if died:
+            observation = self.reset()
+            reward = reward - 5
+        else:
+            observation = self.get_observation()
+            new_health = self.eyes.map.getHealth()
+            if new_health - health < 0:
+                reward = reward - 2
         # calculate real reward
         info = {}
         return observation, reward, done, info
@@ -155,8 +160,6 @@ class TerrEnv(gym.Env):
         self.win = False
         time.sleep(10)
         #pydirectinput.click(x=150, y=250)
-        pydirectinput.click(x=930, y=512)
-        pydirectinput.press('ctrl')
         # Press Esc
         pydirectinput.keyDown('esc')
         time.sleep(0.2)
@@ -206,8 +209,9 @@ class TerrEnv(gym.Env):
     
     def get_done(self):
         if self.win:
-            return True, None
+            return True
         
+    def died(self):
         done = False        
         done_cap = np.array(self.cap.grab(self.done_location))
         done_strings = ['You', 'You ']
@@ -294,8 +298,38 @@ class TerrEnv(gym.Env):
         pydirectinput.mouseDown(button='left')
         time.sleep(0.2)
         pydirectinput.mouseUp(button='left')
+        time.sleep(3)
+        pydirectinput.click(x=930, y=512)        
 
-        time.sleep(3)        
+        # delete any rest of wood in case player died in previous experiments
+        pydirectinput.keyDown('esc')
+        time.sleep(0.2)
+        pydirectinput.keyUp('esc')
+
+        pydirectinput.keyDown('ctrl')
+        pydirectinput.moveTo(x=205, y=45)
+        pydirectinput.mouseDown(button='left')
+        time.sleep(0.1)
+        pydirectinput.mouseUp(button='left')
+
+        pydirectinput.moveTo(x=255, y=45)
+        pydirectinput.mouseDown(button='left')
+        time.sleep(0.1)
+        pydirectinput.mouseUp(button='left')
+
+        pydirectinput.moveTo(x=305, y=45)        
+        pydirectinput.mouseDown(button='left')
+        time.sleep(0.1)
+        pydirectinput.mouseUp(button='left')
+
+        pydirectinput.keyUp('ctrl')
+
+        pydirectinput.keyDown('esc')
+        time.sleep(0.2)
+        pydirectinput.keyUp('esc')
+
+        pydirectinput.press('ctrl')   
+
 
     def end(self):
         pydirectinput.keyDown('alt')
@@ -309,7 +343,7 @@ if __name__ == "__main__":
     
     game_env = TerrEnv()  # initialize the game state
     #game_env.reset()  # initialize the game state
-    #game_env.restart(7)
+    game_env.start(7)
     game_env.reset()
     while True:
         game_env.get_observation()
