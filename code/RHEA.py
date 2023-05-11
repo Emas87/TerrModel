@@ -5,8 +5,8 @@ from TerrEnv import TerrEnv
 from State import State
 
 class RHEA:
-    def __init__(self, horizon, rollouts_per_step):
-        self.game_env = TerrEnv()  # initialize the game state
+    def __init__(self, game_env, horizon, rollouts_per_step):
+        self.game_env = game_env  # initialize the game state
         self.action_space = self.game_env.action_map  # the action space
         self.horizon = horizon  # the planning horizon
         self.rollouts_per_step = rollouts_per_step  # number of rollouts per planning step
@@ -21,6 +21,8 @@ class RHEA:
             scores = []
             #for a in self.action_space:
             for a in state.get_available_actions():
+                if time.time() - start_time >= max_time:  # check if 2 seconds have elapsed
+                    break
                 score = 0
                 for i in range(self.rollouts_per_step):
                     rollout_score = self.rollout(state, a)
@@ -70,24 +72,23 @@ class RHEA:
                 state.inventory.inventory = observation['inventory']
             #state = State()
             state.cut_tree = 0
-            time1 = time.time()
             action = self.search(state, max_time)  # get the recommended action
             state.run_action(action)
-            time2 = time.time()
-            print(f'time to plan action: {str(time2-time1)}, selected:> {action}')
+            print(f'Action, selected: {action}')
             self.game_env.step(action)
             iterations += 1
         time2 = time.time()
         print(f'time to finish {str(time2-time1)}')
-        return float(time2 - time1)
-    
+        self.game_env.end()
+        return float(time2 - time1)    
 
 if __name__ == "__main__":
     # Setup
+    game_env = TerrEnv()
     num_simulations = 1  # number of simulations to run
     iterations = 4
     state = State()
-    rhea = RHEA(horizon=1, rollouts_per_step=2)
+    rhea = RHEA(horizon=2, rollouts_per_step=2)
     rhea.game_env.reset()  # initialize the game state
 
     # Get number of wood and if it is higher than 100 build
@@ -105,7 +106,7 @@ if __name__ == "__main__":
         #state = State()
         state.cut_tree = 0
         time1 = time.time()
-        action = rhea.search(state)  # get the recommended action
+        action = rhea.search(state, 1)  # get the recommended action
         state.run_action(action)
         time2 = time.time()
         print(f'time to plan action: {str(time2-time1)}, selected:> {action}')

@@ -223,13 +223,11 @@ class TerrEnv(gym.Env):
             raw = np.array(self.cap.grab(location))[:,:,:3].astype(np.uint8)
             count = self.eyes.findNumber(raw, x, int(y + h/2), w, int(h/2))
             # is bigger than 100
+            print(f"wood: {count}")
             if count > 100:
                 # build
                 self.step(10) 
                 return True
-            else:
-                print(f"wood: {count}")
-
         return False
     
     def start(self, seed):
@@ -237,7 +235,7 @@ class TerrEnv(gym.Env):
         pydirectinput.click(345, 435, clicks = 2)
 
         # wait until is opened
-        time.sleep(20)
+        time.sleep(25)
 
         # Click 'Single Palyer' 945, 300
         pydirectinput.moveTo(945, 300)
@@ -297,6 +295,7 @@ class TerrEnv(gym.Env):
         pydirectinput.keyDown('alt')
         pydirectinput.press('f4')
         pydirectinput.keyUp('alt')
+        time.sleep(2)
 
 if __name__ == "__main__":
     

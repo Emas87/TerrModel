@@ -1,9 +1,11 @@
 from MCTS import MCTS
 from RHEA import RHEA
+from TerrEnv import TerrEnv
 
 if __name__ == "__main__":
-    mcts = MCTS(exploration=3)
-    rhea = RHEA(horizon=1, rollouts_per_step=2)
+    game_env = TerrEnv()
+    mcts = MCTS(game_env, exploration=3)
+    rhea = RHEA(game_env, horizon=1, rollouts_per_step=2)
     #mcts = None
     #rhea = None
     with open("experiments.txt") as f:

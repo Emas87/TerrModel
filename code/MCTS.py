@@ -31,10 +31,9 @@ class Node:
         return max(self.children, key=ucb)
 
 class MCTS:
-    def __init__(self, exploration=1.0):
+    def __init__(self, game_env, exploration=1.0):
         self.exploration = exploration
-        self.game_env = TerrEnv()  # initialize the game state
-
+        self.game_env = game_env  # initialize the game state
 
     def select(self, root_node):
         node = root_node
@@ -86,7 +85,7 @@ class MCTS:
             #if fully_expanded:
             #    break
             result, actions = self.simulate(node.state, max_iterations)
-            print(f"simulate with {node.state.last_action}, result: {result}, with these actions {str(actions)}, initial score {node.state.score}")
+            #print(f"simulate with {node.state.last_action}, result: {result}, with these actions {str(actions)}, initial score {node.state.score}")
             self.backpropagate(node, result)
             if time.time() - start_time >= max_time:
                 break
@@ -94,9 +93,6 @@ class MCTS:
             return 0
         action =  max(root_node.children, key=lambda node: node.wins).state.last_action
         #action =  max(root_node.children, key=lambda node: node.state.score).state.last_action
-        if action == 6:
-            print()
-            pass        
         return action
 
     def run(self, seed, max_time=1):
@@ -123,16 +119,20 @@ class MCTS:
                 state.inventory.inventory = observation['inventory']
             state.cut_tree = 0
             action = self.search(state, max_iterations=num_simulations, max_time=max_time)  # get the recommended action
-            state.run_action(action)
+            state.run_action(action)            
+            print(f'Action, selected: {action}')
             self.game_env.step(action)
             iterations += 1
         time2 = time.time()
         print(f'time to finish {str(time2-time1)}')
+        self.game_env.end()
+
         return float(time2 - time1)
 
 if __name__ == "__main__":
     # Setup
-    mcts = MCTS(exploration=3)
+    game_env = TerrEnv()
+    mcts = MCTS(game_env, exploration=3)
     mcts.game_env.reset()  # initialize the game state
     num_simulations = 1  # number of simulations to run
     iterations = 4

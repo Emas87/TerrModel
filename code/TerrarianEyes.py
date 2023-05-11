@@ -509,7 +509,7 @@ class TerrarianEyes:
             images = self.templates[numName]
             #rectangles = self.matchImage(cropped_image, images, threshold = 0.535)
             #rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.62)
-            rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.5)
+            rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.6)
             for i in range(len(rectangles)):
                 if int(rectangles[i][0]) > 30:
                     continue
@@ -520,6 +520,8 @@ class TerrarianEyes:
             for j in range(len(key_sorted)-1, -1, -1):
                 # '1' only has 6 pixel wide
                 if i != j and abs(key_sorted[i]-key_sorted[j]) < 6:
+                    if abs(key_sorted[i]-key_sorted[j]) >= 3 and (numbers[key_sorted[i]][0] == '1' or numbers[key_sorted[j]][0]):
+                        continue
                     #min_tuple = min(numbers[key_sorted[i]] + numbers[key_sorted[j]], key=lambda x: x[2])
                     min_tuple = min([k for k in numbers.keys() if k in [key_sorted[i],key_sorted[j]]], key=lambda x: numbers[x][2])
                     index_delete = key_sorted.index(min_tuple)
@@ -529,6 +531,7 @@ class TerrarianEyes:
         number = ''
         for key in key_sorted:
             number += str(numbers[key][0])
+
         if number == '':
             return 1
         else:

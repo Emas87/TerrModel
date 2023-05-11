@@ -1,33 +1,33 @@
 Algorithm seed time result
-rhea 1 2
-mcts 4 2
+rhea 0 2 
+rhea 7 2 132.36329412460327
+rhea 3 2 
+mcts 2 3 157.24831557273865
+rhea 7 3 104.43805265426636
+mcts 4 3 
+rhea 5 3 53.10491180419922
+mcts 5 3 61.52632665634155
+mcts 3 3 190.25089383125305
+rhea 6 3 
+mcts 7 2 138.95021796226501
+mcts 1 2 
+rhea 3 3 128.41008877754211
+rhea 4 3 76.99304223060608
+rhea 6 2 57.74101209640503
+mcts 3 2 164.53577542304993
+rhea 5 2 
+mcts 5 2 
+rhea 2 3 
+mcts 2 2 141.0228033065796
+mcts 0 3 121.57051062583923
+rhea 1 2 
+mcts 6 3
+rhea 0 3
 mcts 0 2
 rhea 2 2
-mcts 1 1
-mcts 5 1
-mcts 7 1
-rhea 0 2
-mcts 2 1
-rhea 7 2
-rhea 7 1
 rhea 4 2
-mcts 0 1
-rhea 1 1
-rhea 5 1
-mcts 2 2
-mcts 4 1
+rhea 1 3
+mcts 7 3
+mcts 4 2
 mcts 6 2
-rhea 3 1
-mcts 3 1
-rhea 5 2
-mcts 5 2
-rhea 6 2
-rhea 3 2
-mcts 7 2
-mcts 3 2
-mcts 1 2
-rhea 2 1
-rhea 0 1
-rhea 4 1
-mcts 6 1
-rhea 6 1
+mcts 1 3
