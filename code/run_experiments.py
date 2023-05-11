@@ -1,6 +1,11 @@
+import logging
 from MCTS import MCTS
 from RHEA import RHEA
 from TerrEnv import TerrEnv
+from configure_logging import configure_logging
+
+# Configure the shared logger
+logger = configure_logging('run_experiments.log')
 
 if __name__ == "__main__":
     game_env = TerrEnv()
@@ -8,7 +13,7 @@ if __name__ == "__main__":
     rhea = RHEA(game_env, horizon=1, rollouts_per_step=2)
     #mcts = None
     #rhea = None
-    with open("experiments.txt") as f:
+    with open("experiments1.txt") as f:
         lines = f.readlines()
     # format: Algorithm seed time result
 
@@ -19,7 +24,7 @@ if __name__ == "__main__":
         algorithm = experiment[0]
         seed = experiment[1]
         max_time = experiment[2]
-        print(f'Running {algorithm} {seed} {max_time}')
+        logger.info(f'Running {algorithm} {seed} {max_time}')
         #lunch experiment
         if algorithm == 'mcts':
             result = mcts.run(int(seed), int(max_time))

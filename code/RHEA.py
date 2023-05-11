@@ -1,8 +1,13 @@
 import random
 import TerrEnv
 import time
+import logging
 from TerrEnv import TerrEnv
 from State import State
+from configure_logging import configure_logging
+
+# Configure the shared logger
+logger = configure_logging('run_experiments.log')
 
 class RHEA:
     def __init__(self, game_env, horizon, rollouts_per_step):
@@ -10,6 +15,7 @@ class RHEA:
         self.action_space = self.game_env.action_map  # the action space
         self.horizon = horizon  # the planning horizon
         self.rollouts_per_step = rollouts_per_step  # number of rollouts per planning step
+        self.logger = logger
 
 
     def search(self, state, max_time=2):
@@ -74,11 +80,11 @@ class RHEA:
             state.cut_tree = 0
             action = self.search(state, max_time)  # get the recommended action
             state.run_action(action)
-            print(f'Action, selected: {action}')
+            self.logger.info(f'Action, selected: {action}')
             self.game_env.step(action)
             iterations += 1
         time2 = time.time()
-        print(f'time to finish {str(time2-time1)}')
+        self.logger.info(f'time to finish {str(time2-time1)}')
         self.game_env.end()
         return float(time2 - time1)    
 

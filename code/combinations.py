@@ -11,14 +11,14 @@ a = ('mcts', 'rhea')
 b = (0,1,2,3,4,5,6,7)
 c = (2, 3)
 
-lines = ["Algorithm seed time result\n"]
-for _ in [0,1,2,3,4]:
+for i in [1,2,3,4,5]:
+    lines = ["Algorithm seed time result\n"]
     combinations = get_all_combinations(a, b, c)
     for combination in combinations:
         lines.append(f'{combination[0]} {combination[1]} {combination[2]}\n')
 
-with open('experiments.txt', 'w') as f:
-    f.writelines(lines)
+    with open(f'experiments{i}.txt', 'w') as f:
+        f.writelines(lines)
 
-print(combinations)
-print(len(combinations))
+    print(combinations)
+    print(len(combinations))

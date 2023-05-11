@@ -15,6 +15,11 @@ from utils.augmentations import (letterbox)
 from utils.plots import Annotator, colors
 from Inventory import Inventory
 from Map import Map
+import logging
+from configure_logging import configure_logging
+
+# Configure the shared logger
+logger = configure_logging('run_experiments.log')
 
 TILESZ = 16
 
@@ -22,8 +27,7 @@ class TerrarianEyes:
 
     def __init__(self, tiles_weights_path, objects_weights_path) -> None:
 
-
-        # Fast testing
+        self.logger = logger
 
         #
         self.tiles_weights_path = tiles_weights_path
@@ -307,7 +311,7 @@ class TerrarianEyes:
             screenshot = wincap.get_screenshot()
             #screenshot = self.captureWindow()
             if screenshot is None:
-                print("ERROR: Window is minimized or closed, please maximize it or open it and rerun the script")
+                self.logger.error("ERROR: Window is minimized or closed, please maximize it or open it and rerun the script")
                 break
 
             # do tiles detection
@@ -344,7 +348,7 @@ class TerrarianEyes:
             #cv.imshow('Matches', detection_image)
 
             # debug the loop rate
-            print('FPS {}'.format(1 / (time() - loop_time)))
+            self.logger.info('FPS {}'.format(1 / (time() - loop_time)))
             loop_time = time()
 
             # press 'q' with the output window focused to exit.
@@ -385,14 +389,14 @@ class TerrarianEyes:
             # get an updated image of the game
             screenshot = wincap.get_screenshot()
             if screenshot is None:
-                print("ERROR: Window is minimized, please maximize it an rerun the script")
+                self.logger.error("ERROR: Window is minimized, please maximize it an rerun the script")
                 break
 
             # display the images
             cv.imshow('Matches', screenshot)
 
             # debug the loop rate
-            print('FPS {}'.format(1 / (time() - loop_time)))
+            self.logger.info('FPS {}'.format(1 / (time() - loop_time)))
             loop_time = time()
 
             # press 'q' with the output window focused to exit.
@@ -520,8 +524,8 @@ class TerrarianEyes:
             for j in range(len(key_sorted)-1, -1, -1):
                 # '1' only has 6 pixel wide
                 if i != j and abs(key_sorted[i]-key_sorted[j]) < 6:
-                    if abs(key_sorted[i]-key_sorted[j]) >= 3 and (numbers[key_sorted[i]][0] == '1' or numbers[key_sorted[j]][0]):
-                        continue
+                    #if abs(key_sorted[i]-key_sorted[j]) >= 3 and (numbers[key_sorted[i]][0] == '1' or numbers[key_sorted[j]][0]):
+                    #    continue
                     #min_tuple = min(numbers[key_sorted[i]] + numbers[key_sorted[j]], key=lambda x: x[2])
                     min_tuple = min([k for k in numbers.keys() if k in [key_sorted[i],key_sorted[j]]], key=lambda x: numbers[x][2])
                     index_delete = key_sorted.index(min_tuple)
@@ -579,7 +583,6 @@ if __name__ == "__main__":
     #Inference 
     img = cv.imread("delete.png") 
     rectangles, confidences = eyes.findNumber(img,0,0,30,22)
-    print()
 
     #eyes.startController('.*Paint')    
     #eyes.startController('Terraria')    
