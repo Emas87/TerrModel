@@ -8,7 +8,8 @@ from configure_logging import configure_logging
 logger = configure_logging('run_experiments.log')
 
 if __name__ == "__main__":
-    experiment_file = "experiments1.txt"
+    i = 2
+    experiment_file = f"experiments{i}.txt"
     game_env = TerrEnv()
     mcts = MCTS(game_env, exploration=3)
     rhea = RHEA(game_env, horizon=1, rollouts_per_step=2)
