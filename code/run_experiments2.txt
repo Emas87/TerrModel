@@ -1,0 +1,1337 @@
+2023-05-11 22:40:56,713 - my_logger - INFO - Running rhea 7 2
+2023-05-11 22:41:42,300 - my_logger - INFO - wood: 1
+2023-05-11 22:41:44,085 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:41:45,707 - my_logger - INFO - wood: 1
+2023-05-11 22:41:47,236 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:41:52,664 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:41:56,266 - my_logger - INFO - wood: 16
+2023-05-11 22:41:57,573 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:41:59,054 - my_logger - INFO - wood: 3
+2023-05-11 22:42:01,391 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:02,857 - my_logger - INFO - wood: 3
+2023-05-11 22:42:04,294 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:05,644 - my_logger - INFO - wood: 3
+2023-05-11 22:42:07,079 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:42:10,815 - my_logger - INFO - wood: 3
+2023-05-11 22:42:12,221 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:42:15,955 - my_logger - INFO - wood: 57
+2023-05-11 22:42:17,776 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:19,159 - my_logger - INFO - wood: 57
+2023-05-11 22:42:20,608 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:22,161 - my_logger - INFO - wood: 57
+2023-05-11 22:42:24,157 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:42:27,919 - my_logger - INFO - wood: 57
+2023-05-11 22:42:29,923 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:42:33,641 - my_logger - INFO - wood: 74
+2023-05-11 22:42:35,870 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:37,361 - my_logger - INFO - wood: 74
+2023-05-11 22:42:39,188 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:40,632 - my_logger - INFO - wood: 74
+2023-05-11 22:42:42,077 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:42:45,737 - my_logger - INFO - wood: 75
+2023-05-11 22:42:47,157 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:42:50,845 - my_logger - INFO - wood: 87
+2023-05-11 22:42:52,772 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:54,348 - my_logger - INFO - wood: 87
+2023-05-11 22:42:55,666 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:42:57,018 - my_logger - INFO - wood: 87
+2023-05-11 22:42:58,451 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:43:02,107 - my_logger - INFO - wood: 87
+2023-05-11 22:43:03,711 - my_logger - INFO - Action, selected: 4
+2023-05-11 22:43:11,501 - my_logger - INFO - wood: 98
+2023-05-11 22:43:13,342 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:43:14,721 - my_logger - INFO - wood: 98
+2023-05-11 22:43:16,060 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:43:17,557 - my_logger - INFO - wood: 98
+2023-05-11 22:43:19,569 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:43:23,215 - my_logger - INFO - wood: 98
+2023-05-11 22:43:25,331 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:43:29,004 - my_logger - INFO - wood: 115
+2023-05-11 22:43:30,871 - my_logger - INFO - time to finish 108.6063597202301
+2023-05-11 22:43:33,421 - my_logger - INFO - Running rhea 5 3
+2023-05-11 22:44:19,027 - my_logger - INFO - wood: 1
+2023-05-11 22:44:20,839 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:44:23,703 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:44:28,709 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:44:32,409 - my_logger - INFO - wood: 13
+2023-05-11 22:44:34,323 - my_logger - INFO - Action, selected: 4
+2023-05-11 22:44:42,019 - my_logger - INFO - wood: 68
+2023-05-11 22:44:43,943 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:44:47,594 - my_logger - INFO - wood: 68
+2023-05-11 22:44:49,185 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:44:52,848 - my_logger - INFO - wood: 115
+2023-05-11 22:44:54,681 - my_logger - INFO - time to finish 35.69115614891052
+2023-05-11 22:44:57,249 - my_logger - INFO - Running mcts 1 3
+2023-05-11 22:45:46,195 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:45:50,885 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:45:55,607 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:46:02,353 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:46:05,997 - my_logger - INFO - wood: 21
+2023-05-11 22:46:09,709 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:46:11,221 - my_logger - INFO - wood: 45
+2023-05-11 22:46:14,429 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:46:15,940 - my_logger - INFO - wood: 45
+2023-05-11 22:46:19,148 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:46:22,882 - my_logger - INFO - wood: 45
+2023-05-11 22:46:26,078 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:46:29,690 - my_logger - INFO - wood: 67
+2023-05-11 22:46:33,417 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:46:34,895 - my_logger - INFO - wood: 90
+2023-05-11 22:46:38,151 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:46:39,651 - my_logger - INFO - wood: 90
+2023-05-11 22:46:42,833 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:46:46,525 - my_logger - INFO - wood: 90
+2023-05-11 22:46:49,724 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:46:53,350 - my_logger - INFO - wood: 10
+2023-05-11 22:46:57,085 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:46:58,558 - my_logger - INFO - wood: 135
+2023-05-11 22:47:00,377 - my_logger - INFO - time to finish 77.9771180152893
+2023-05-11 22:47:02,925 - my_logger - INFO - Running mcts 3 3
+2023-05-11 22:47:47,979 - my_logger - INFO - wood: 1
+2023-05-11 22:47:51,661 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:47:58,640 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:48:02,362 - my_logger - INFO - wood: 16
+2023-05-11 22:48:05,743 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:48:07,300 - my_logger - INFO - wood: 26
+2023-05-11 22:48:10,503 - my_logger - INFO - Action, selected: 2
+2023-05-11 22:48:11,940 - my_logger - INFO - wood: 26
+2023-05-11 22:48:15,752 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:48:19,313 - my_logger - INFO - wood: 26
+2023-05-11 22:48:22,647 - my_logger - INFO - Action, selected: 4
+2023-05-11 22:48:30,377 - my_logger - INFO - wood: 42
+2023-05-11 22:48:33,793 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:48:35,399 - my_logger - INFO - wood: 42
+2023-05-11 22:48:38,724 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:48:40,222 - my_logger - INFO - wood: 42
+2023-05-11 22:48:44,054 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:48:45,580 - my_logger - INFO - wood: 42
+2023-05-11 22:48:48,835 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:48:50,400 - my_logger - INFO - wood: 42
+2023-05-11 22:48:53,792 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:48:57,488 - my_logger - INFO - wood: 42
+2023-05-11 22:49:00,628 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:49:04,431 - my_logger - INFO - wood: 56
+2023-05-11 22:49:08,133 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:49:09,637 - my_logger - INFO - wood: 56
+2023-05-11 22:49:12,996 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:49:14,458 - my_logger - INFO - wood: 56
+2023-05-11 22:49:17,616 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:49:21,283 - my_logger - INFO - wood: 56
+2023-05-11 22:49:24,634 - my_logger - INFO - Action, selected: 2
+2023-05-11 22:49:26,157 - my_logger - INFO - wood: 62
+2023-05-11 22:49:30,022 - my_logger - INFO - Action, selected: 4
+2023-05-11 22:49:37,817 - my_logger - INFO - wood: 9
+2023-05-11 22:49:41,037 - my_logger - INFO - Action, selected: 4
+2023-05-11 22:49:48,780 - my_logger - INFO - wood: 119
+2023-05-11 22:49:50,490 - my_logger - INFO - time to finish 122.55584073066711
+2023-05-11 22:49:53,044 - my_logger - INFO - Running rhea 2 2
+2023-05-11 22:50:38,136 - my_logger - INFO - wood: 1
+2023-05-11 22:50:40,100 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:50:43,101 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:50:46,862 - my_logger - INFO - wood: 1
+2023-05-11 22:50:48,460 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:50:52,217 - my_logger - INFO - wood: 13
+2023-05-11 22:50:53,542 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:50:54,974 - my_logger - INFO - wood: 13
+2023-05-11 22:50:57,112 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:50:58,744 - my_logger - INFO - wood: 13
+2023-05-11 22:51:00,072 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:01,529 - my_logger - INFO - wood: 13
+2023-05-11 22:51:02,897 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:04,416 - my_logger - INFO - wood: 13
+2023-05-11 22:51:06,329 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:51:10,006 - my_logger - INFO - wood: 13
+2023-05-11 22:51:11,907 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:51:15,529 - my_logger - INFO - wood: 30
+2023-05-11 22:51:16,848 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:18,265 - my_logger - INFO - wood: 38
+2023-05-11 22:51:19,607 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:21,152 - my_logger - INFO - wood: 38
+2023-05-11 22:51:22,473 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:23,888 - my_logger - INFO - wood: 38
+2023-05-11 22:51:25,717 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:27,259 - my_logger - INFO - wood: 38
+2023-05-11 22:51:28,623 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:30,195 - my_logger - INFO - wood: 38
+2023-05-11 22:51:32,011 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:33,415 - my_logger - INFO - wood: 38
+2023-05-11 22:51:34,775 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:36,352 - my_logger - INFO - wood: 38
+2023-05-11 22:51:38,324 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:39,806 - my_logger - INFO - wood: 38
+2023-05-11 22:51:41,212 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:51:44,929 - my_logger - INFO - wood: 38
+2023-05-11 22:51:46,322 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:51:49,999 - my_logger - INFO - wood: 49
+2023-05-11 22:51:51,317 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:52,737 - my_logger - INFO - wood: 50
+2023-05-11 22:51:54,816 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:51:56,240 - my_logger - INFO - wood: 50
+2023-05-11 22:51:57,685 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:52:01,380 - my_logger - INFO - wood: 50
+2023-05-11 22:52:02,787 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:52:06,618 - my_logger - INFO - wood: 78
+2023-05-11 22:52:07,934 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:52:09,355 - my_logger - INFO - wood: 80
+2023-05-11 22:52:11,336 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:52:14,962 - my_logger - INFO - wood: 80
+2023-05-11 22:52:16,376 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:52:20,101 - my_logger - INFO - wood: 88
+2023-05-11 22:52:21,530 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:52:22,986 - my_logger - INFO - wood: 101
+2023-05-11 22:52:24,541 - my_logger - INFO - time to finish 106.44907450675964
+2023-05-11 22:52:27,089 - my_logger - INFO - Running rhea 1 3
+2023-05-11 22:53:14,032 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:53:16,788 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:53:20,121 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:53:25,855 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:53:29,513 - my_logger - INFO - wood: 13
+2023-05-11 22:53:31,798 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:53:33,217 - my_logger - INFO - wood: 40
+2023-05-11 22:53:34,681 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:53:36,121 - my_logger - INFO - wood: 40
+2023-05-11 22:53:37,529 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:53:41,142 - my_logger - INFO - wood: 4
+2023-05-11 22:53:42,556 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:53:46,216 - my_logger - INFO - wood: 65
+2023-05-11 22:53:47,988 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:53:49,436 - my_logger - INFO - wood: 86
+2023-05-11 22:53:50,773 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:53:52,256 - my_logger - INFO - wood: 86
+2023-05-11 22:53:53,944 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:53:57,679 - my_logger - INFO - wood: 86
+2023-05-11 22:53:59,701 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:54:03,249 - my_logger - INFO - wood: 100
+2023-05-11 22:54:04,965 - my_logger - INFO - time to finish 52.74167346954346
+2023-05-11 22:54:07,517 - my_logger - INFO - Running mcts 7 2
+2023-05-11 22:54:53,240 - my_logger - INFO - wood: 1
+2023-05-11 22:54:55,968 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:54:59,617 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:55:05,534 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:55:09,307 - my_logger - INFO - wood: 19
+2023-05-11 22:55:11,529 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:55:13,013 - my_logger - INFO - wood: 28
+2023-05-11 22:55:15,746 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:55:17,317 - my_logger - INFO - wood: 28
+2023-05-11 22:55:19,537 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:55:20,903 - my_logger - INFO - wood: 28
+2023-05-11 22:55:23,088 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:55:26,878 - my_logger - INFO - wood: 30
+2023-05-11 22:55:29,025 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:55:32,733 - my_logger - INFO - wood: 54
+2023-05-11 22:55:35,506 - my_logger - INFO - Action, selected: 3
+2023-05-11 22:55:36,973 - my_logger - INFO - wood: 54
+2023-05-11 22:55:39,305 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:55:40,826 - my_logger - INFO - wood: 54
+2023-05-11 22:55:43,210 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:55:44,696 - my_logger - INFO - wood: 54
+2023-05-11 22:55:46,870 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:55:50,404 - my_logger - INFO - wood: 54
+2023-05-11 22:55:53,081 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:55:56,795 - my_logger - INFO - wood: 74
+2023-05-11 22:55:59,111 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:56:00,666 - my_logger - INFO - wood: 74
+2023-05-11 22:56:02,899 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:56:06,572 - my_logger - INFO - wood: 74
+2023-05-11 22:56:08,782 - my_logger - INFO - Action, selected: 4
+2023-05-11 22:56:16,515 - my_logger - INFO - wood: 92
+2023-05-11 22:56:19,330 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:56:20,822 - my_logger - INFO - wood: 99
+2023-05-11 22:56:23,091 - my_logger - INFO - Action, selected: 4
+2023-05-11 22:56:30,915 - my_logger - INFO - wood: 108
+2023-05-11 22:56:32,763 - my_logger - INFO - time to finish 99.5571665763855
+2023-05-11 22:56:35,322 - my_logger - INFO - Running rhea 3 3
+2023-05-11 22:57:20,405 - my_logger - INFO - wood: 1
+2023-05-11 22:57:22,676 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:57:28,313 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:57:31,902 - my_logger - INFO - wood: 9
+2023-05-11 22:57:33,715 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:57:35,073 - my_logger - INFO - wood: 22
+2023-05-11 22:57:36,480 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:57:37,891 - my_logger - INFO - wood: 22
+2023-05-11 22:57:39,753 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:57:43,381 - my_logger - INFO - wood: 22
+2023-05-11 22:57:44,812 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:57:46,133 - my_logger - INFO - wood: 22
+2023-05-11 22:57:47,575 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:57:51,339 - my_logger - INFO - wood: 22
+2023-05-11 22:57:53,232 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:57:56,928 - my_logger - INFO - wood: 33
+2023-05-11 22:57:58,813 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:58:02,485 - my_logger - INFO - wood: 58
+2023-05-11 22:58:03,993 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:05,323 - my_logger - INFO - wood: 59
+2023-05-11 22:58:06,958 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:08,442 - my_logger - INFO - wood: 59
+2023-05-11 22:58:09,858 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:11,161 - my_logger - INFO - wood: 59
+2023-05-11 22:58:13,010 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:14,451 - my_logger - INFO - wood: 59
+2023-05-11 22:58:15,858 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:17,200 - my_logger - INFO - wood: 59
+2023-05-11 22:58:19,117 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:58:22,741 - my_logger - INFO - wood: 59
+2023-05-11 22:58:24,646 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:58:28,329 - my_logger - INFO - wood: 73
+2023-05-11 22:58:30,543 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:31,867 - my_logger - INFO - wood: 76
+2023-05-11 22:58:33,301 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:34,807 - my_logger - INFO - wood: 76
+2023-05-11 22:58:36,509 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:58:40,212 - my_logger - INFO - wood: 76
+2023-05-11 22:58:42,079 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:58:45,751 - my_logger - INFO - wood: 86
+2023-05-11 22:58:47,661 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:49,171 - my_logger - INFO - wood: 86
+2023-05-11 22:58:50,605 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:58:52,072 - my_logger - INFO - wood: 86
+2023-05-11 22:58:53,673 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:58:57,295 - my_logger - INFO - wood: 86
+2023-05-11 22:58:58,699 - my_logger - INFO - Action, selected: 5
+2023-05-11 22:59:02,468 - my_logger - INFO - wood: 10
+2023-05-11 22:59:04,352 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:59:05,772 - my_logger - INFO - wood: 109
+2023-05-11 22:59:07,623 - my_logger - INFO - time to finish 107.258296251297
+2023-05-11 22:59:10,178 - my_logger - INFO - Running rhea 4 2
+2023-05-11 22:59:55,449 - my_logger - INFO - wood: 1
+2023-05-11 22:59:57,331 - my_logger - INFO - Action, selected: 6
+2023-05-11 22:59:58,917 - my_logger - INFO - wood: 1
+2023-05-11 23:00:00,278 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:03,958 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:00:09,647 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:00:13,449 - my_logger - INFO - wood: 17
+2023-05-11 23:00:15,876 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:17,437 - my_logger - INFO - wood: 18
+2023-05-11 23:00:18,742 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:20,107 - my_logger - INFO - wood: 19
+2023-05-11 23:00:21,444 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:23,044 - my_logger - INFO - wood: 19
+2023-05-11 23:00:24,360 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:25,948 - my_logger - INFO - wood: 19
+2023-05-11 23:00:28,499 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:00:32,372 - my_logger - INFO - wood: 19
+2023-05-11 23:00:34,350 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:00:38,145 - my_logger - INFO - wood: 4
+2023-05-11 23:00:40,053 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:41,514 - my_logger - INFO - wood: 42
+2023-05-11 23:00:42,868 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:44,351 - my_logger - INFO - wood: 42
+2023-05-11 23:00:46,215 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:00:47,722 - my_logger - INFO - wood: 42
+2023-05-11 23:00:49,235 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:00:52,843 - my_logger - INFO - wood: 42
+2023-05-11 23:00:54,249 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:00:57,832 - my_logger - INFO - wood: 50
+2023-05-11 23:00:59,146 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:01:00,601 - my_logger - INFO - wood: 63
+2023-05-11 23:01:02,488 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:01:06,177 - my_logger - INFO - wood: 63
+2023-05-11 23:01:07,579 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:01:11,130 - my_logger - INFO - wood: 8
+2023-05-11 23:01:12,447 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:01:13,751 - my_logger - INFO - wood: 95
+2023-05-11 23:01:15,080 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:01:16,620 - my_logger - INFO - wood: 95
+2023-05-11 23:01:19,124 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:01:22,810 - my_logger - INFO - wood: 95
+2023-05-11 23:01:24,763 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:01:28,416 - my_logger - INFO - wood: 104
+2023-05-11 23:01:30,102 - my_logger - INFO - time to finish 94.69349694252014
+2023-05-11 23:01:32,668 - my_logger - INFO - Running rhea 1 2
+2023-05-11 23:02:19,464 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:02:22,083 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:02:25,565 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:02:31,302 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:02:35,009 - my_logger - INFO - wood: 24
+2023-05-11 23:02:37,275 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:02:38,680 - my_logger - INFO - wood: 38
+2023-05-11 23:02:40,135 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:02:41,514 - my_logger - INFO - wood: 38
+2023-05-11 23:02:43,095 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:02:46,706 - my_logger - INFO - wood: 38
+2023-05-11 23:02:48,308 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:02:51,844 - my_logger - INFO - wood: 43
+2023-05-11 23:02:53,575 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:02:54,913 - my_logger - INFO - wood: 81
+2023-05-11 23:02:56,228 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:02:57,719 - my_logger - INFO - wood: 81
+2023-05-11 23:02:59,313 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:03:02,890 - my_logger - INFO - wood: 81
+2023-05-11 23:03:04,496 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:03:08,213 - my_logger - INFO - wood: 95
+2023-05-11 23:03:10,318 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:03:11,699 - my_logger - INFO - wood: 127
+2023-05-11 23:03:13,559 - my_logger - INFO - time to finish 55.89291763305664
+2023-05-11 23:03:16,118 - my_logger - INFO - Running mcts 4 3
+2023-05-11 23:04:01,372 - my_logger - INFO - wood: 1
+2023-05-11 23:04:05,153 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:04:10,026 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:04:14,948 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:04:19,694 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:04:27,210 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:04:30,872 - my_logger - INFO - wood: 2
+2023-05-11 23:04:34,080 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:04:35,576 - my_logger - INFO - wood: 2
+2023-05-11 23:04:38,776 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:04:40,282 - my_logger - INFO - wood: 2
+2023-05-11 23:04:43,604 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:04:45,221 - my_logger - INFO - wood: 2
+2023-05-11 23:04:49,217 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:04:52,945 - my_logger - INFO - wood: 2
+2023-05-11 23:04:56,244 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:05:04,007 - my_logger - INFO - wood: 33
+2023-05-11 23:05:07,220 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:05:08,698 - my_logger - INFO - wood: 4
+2023-05-11 23:05:11,904 - my_logger - INFO - Action, selected: 3
+2023-05-11 23:05:13,504 - my_logger - INFO - wood: 4
+2023-05-11 23:05:17,316 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:05:25,165 - my_logger - INFO - wood: 4
+2023-05-11 23:05:28,423 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:05:29,937 - my_logger - INFO - wood: 4
+2023-05-11 23:05:33,111 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:05:34,611 - my_logger - INFO - wood: 4
+2023-05-11 23:05:37,949 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:05:39,598 - my_logger - INFO - wood: 4
+2023-05-11 23:05:43,312 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:05:44,920 - my_logger - INFO - wood: 4
+2023-05-11 23:05:48,130 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:05:49,627 - my_logger - INFO - wood: 4
+2023-05-11 23:05:52,873 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:06:00,457 - my_logger - INFO - wood: 7
+2023-05-11 23:06:03,728 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:06:05,261 - my_logger - INFO - wood: 7
+2023-05-11 23:06:09,022 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:06:12,653 - my_logger - INFO - wood: 7
+2023-05-11 23:06:15,820 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:06:19,427 - my_logger - INFO - wood: 86
+2023-05-11 23:06:22,707 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:06:24,216 - my_logger - INFO - wood: 86
+2023-05-11 23:06:27,529 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:06:29,056 - my_logger - INFO - wood: 87
+2023-05-11 23:06:32,790 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:06:34,328 - my_logger - INFO - wood: 87
+2023-05-11 23:06:37,526 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:06:41,184 - my_logger - INFO - wood: 87
+2023-05-11 23:06:44,396 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:06:48,026 - my_logger - INFO - wood: 101
+2023-05-11 23:06:49,820 - my_logger - INFO - time to finish 168.48306107521057
+2023-05-11 23:06:52,369 - my_logger - INFO - Running mcts 2 3
+2023-05-11 23:07:41,245 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:07:45,984 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:07:47,509 - my_logger - INFO - wood: 1
+2023-05-11 23:07:50,747 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:07:57,607 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:08:01,309 - my_logger - INFO - wood: 14
+2023-05-11 23:08:05,169 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:08:06,715 - my_logger - INFO - wood: 14
+2023-05-11 23:08:09,953 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:08:11,655 - my_logger - INFO - wood: 14
+2023-05-11 23:08:14,914 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:08:16,426 - my_logger - INFO - wood: 14
+2023-05-11 23:08:19,563 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:08:23,333 - my_logger - INFO - wood: 14
+2023-05-11 23:08:26,998 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:08:30,607 - my_logger - INFO - wood: 33
+2023-05-11 23:08:33,888 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:08:35,546 - my_logger - INFO - wood: 40
+2023-05-11 23:08:38,686 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:08:46,490 - my_logger - INFO - wood: 40
+2023-05-11 23:08:49,799 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:08:51,313 - my_logger - INFO - wood: 40
+2023-05-11 23:08:55,029 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:08:56,604 - my_logger - INFO - wood: 40
+2023-05-11 23:08:59,999 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:09:01,593 - my_logger - INFO - wood: 40
+2023-05-11 23:09:04,843 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:09:08,666 - my_logger - INFO - wood: 40
+2023-05-11 23:09:11,810 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:09:15,560 - my_logger - INFO - wood: 45
+2023-05-11 23:09:19,456 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:09:21,113 - my_logger - INFO - wood: 5
+2023-05-11 23:09:24,299 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:09:25,885 - my_logger - INFO - wood: 5
+2023-05-11 23:09:29,124 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:09:32,846 - my_logger - INFO - wood: 5
+2023-05-11 23:09:36,029 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:09:39,667 - my_logger - INFO - wood: 68
+2023-05-11 23:09:43,464 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:09:45,106 - my_logger - INFO - wood: 77
+2023-05-11 23:09:48,299 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:09:51,932 - my_logger - INFO - wood: 77
+2023-05-11 23:09:55,129 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:09:58,790 - my_logger - INFO - wood: 85
+2023-05-11 23:10:02,044 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:10:03,644 - my_logger - INFO - wood: 95
+2023-05-11 23:10:07,418 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:10:09,019 - my_logger - INFO - wood: 95
+2023-05-11 23:10:12,202 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:10:15,792 - my_logger - INFO - wood: 95
+2023-05-11 23:10:19,086 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:10:22,850 - my_logger - INFO - wood: 116
+2023-05-11 23:10:24,576 - my_logger - INFO - time to finish 167.13138484954834
+2023-05-11 23:10:27,124 - my_logger - INFO - Running mcts 6 2
+2023-05-11 23:11:15,425 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:11:19,032 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:11:24,968 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:11:28,524 - my_logger - INFO - wood: 7
+2023-05-11 23:11:30,802 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:11:32,246 - my_logger - INFO - wood: 18
+2023-05-11 23:11:34,978 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:11:36,534 - my_logger - INFO - wood: 18
+2023-05-11 23:11:38,882 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:11:42,574 - my_logger - INFO - wood: 18
+2023-05-11 23:11:44,756 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:11:48,363 - my_logger - INFO - wood: 28
+2023-05-11 23:11:50,656 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:11:52,135 - my_logger - INFO - wood: 30
+2023-05-11 23:11:54,947 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:11:56,472 - my_logger - INFO - wood: 30
+2023-05-11 23:11:58,594 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:12:02,279 - my_logger - INFO - wood: 30
+2023-05-11 23:12:04,462 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:12:12,155 - my_logger - INFO - wood: 30
+2023-05-11 23:12:14,424 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:12:15,826 - my_logger - INFO - wood: 30
+2023-05-11 23:12:18,673 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:12:20,131 - my_logger - INFO - wood: 30
+2023-05-11 23:12:22,373 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:12:25,940 - my_logger - INFO - wood: 44
+2023-05-11 23:12:28,254 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:12:29,694 - my_logger - INFO - wood: 48
+2023-05-11 23:12:31,959 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:12:33,397 - my_logger - INFO - wood: 48
+2023-05-11 23:12:35,996 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:12:39,655 - my_logger - INFO - wood: 48
+2023-05-11 23:12:41,834 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:12:45,460 - my_logger - INFO - wood: 60
+2023-05-11 23:12:47,669 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:12:49,016 - my_logger - INFO - wood: 74
+2023-05-11 23:12:51,326 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:12:58,875 - my_logger - INFO - wood: 74
+2023-05-11 23:13:01,557 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:13:02,914 - my_logger - INFO - wood: 74
+2023-05-11 23:13:05,258 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:13:06,568 - my_logger - INFO - wood: 74
+2023-05-11 23:13:08,788 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:13:10,221 - my_logger - INFO - wood: 74
+2023-05-11 23:13:12,401 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:13:16,065 - my_logger - INFO - wood: 74
+2023-05-11 23:13:18,748 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:13:22,454 - my_logger - INFO - wood: 84
+2023-05-11 23:13:24,731 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:13:26,073 - my_logger - INFO - wood: 84
+2023-05-11 23:13:28,392 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:13:29,860 - my_logger - INFO - wood: 84
+2023-05-11 23:13:32,181 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:13:35,850 - my_logger - INFO - wood: 87
+2023-05-11 23:13:38,529 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:13:42,241 - my_logger - INFO - wood: 101
+2023-05-11 23:13:43,960 - my_logger - INFO - time to finish 151.28718209266663
+2023-05-11 23:13:46,527 - my_logger - INFO - Running rhea 7 3
+2023-05-11 23:14:32,114 - my_logger - INFO - wood: 1
+2023-05-11 23:14:33,927 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:14:35,385 - my_logger - INFO - wood: 1
+2023-05-11 23:14:36,787 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:14:42,388 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:14:46,065 - my_logger - INFO - wood: 19
+2023-05-11 23:14:47,488 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:14:48,884 - my_logger - INFO - wood: 29
+2023-05-11 23:14:51,237 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:14:52,771 - my_logger - INFO - wood: 29
+2023-05-11 23:14:54,131 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:14:55,677 - my_logger - INFO - wood: 29
+2023-05-11 23:14:57,232 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:00,980 - my_logger - INFO - wood: 29
+2023-05-11 23:15:02,423 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:06,120 - my_logger - INFO - wood: 52
+2023-05-11 23:15:07,919 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:15:09,340 - my_logger - INFO - wood: 53
+2023-05-11 23:15:10,659 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:15:12,175 - my_logger - INFO - wood: 53
+2023-05-11 23:15:13,776 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:17,467 - my_logger - INFO - wood: 53
+2023-05-11 23:15:19,210 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:22,939 - my_logger - INFO - wood: 59
+2023-05-11 23:15:25,092 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:15:26,509 - my_logger - INFO - wood: 70
+2023-05-11 23:15:28,333 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:15:29,863 - my_logger - INFO - wood: 70
+2023-05-11 23:15:31,373 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:35,102 - my_logger - INFO - wood: 70
+2023-05-11 23:15:36,502 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:40,174 - my_logger - INFO - wood: 78
+2023-05-11 23:15:42,028 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:15:43,561 - my_logger - INFO - wood: 78
+2023-05-11 23:15:44,871 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:15:46,264 - my_logger - INFO - wood: 78
+2023-05-11 23:15:47,688 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:51,303 - my_logger - INFO - wood: 78
+2023-05-11 23:15:52,710 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:15:56,357 - my_logger - INFO - wood: 87
+2023-05-11 23:15:58,170 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:15:59,745 - my_logger - INFO - wood: 87
+2023-05-11 23:16:01,030 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:16:02,415 - my_logger - INFO - wood: 87
+2023-05-11 23:16:04,447 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:16:08,071 - my_logger - INFO - wood: 87
+2023-05-11 23:16:10,071 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:16:13,794 - my_logger - INFO - wood: 87
+2023-05-11 23:16:15,619 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:16:17,132 - my_logger - INFO - wood: 87
+2023-05-11 23:16:18,447 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:16:19,786 - my_logger - INFO - wood: 87
+2023-05-11 23:16:21,224 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:16:24,857 - my_logger - INFO - wood: 101
+2023-05-11 23:16:26,550 - my_logger - INFO - time to finish 114.47497797012329
+2023-05-11 23:16:29,108 - my_logger - INFO - Running mcts 7 3
+2023-05-11 23:17:14,647 - my_logger - INFO - wood: 1
+2023-05-11 23:17:18,407 - my_logger - INFO - Action, selected: 3
+2023-05-11 23:17:19,987 - my_logger - INFO - wood: 1
+2023-05-11 23:17:23,302 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:17:30,165 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:17:33,816 - my_logger - INFO - wood: 22
+2023-05-11 23:17:37,068 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:17:44,646 - my_logger - INFO - wood: 47
+2023-05-11 23:17:48,323 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:17:49,820 - my_logger - INFO - wood: 47
+2023-05-11 23:17:53,190 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:18:00,866 - my_logger - INFO - wood: 47
+2023-05-11 23:18:04,077 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:18:11,894 - my_logger - INFO - wood: 47
+2023-05-11 23:18:15,245 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:18:16,766 - my_logger - INFO - wood: 47
+2023-05-11 23:18:20,585 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:18:22,122 - my_logger - INFO - wood: 47
+2023-05-11 23:18:25,365 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:18:26,879 - my_logger - INFO - wood: 47
+2023-05-11 23:18:30,172 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:18:31,716 - my_logger - INFO - wood: 47
+2023-05-11 23:18:34,906 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:18:36,455 - my_logger - INFO - wood: 47
+2023-05-11 23:18:40,152 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:18:43,814 - my_logger - INFO - wood: 47
+2023-05-11 23:18:47,072 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:18:50,855 - my_logger - INFO - wood: 70
+2023-05-11 23:18:54,063 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:18:55,744 - my_logger - INFO - wood: 70
+2023-05-11 23:18:59,006 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:00,567 - my_logger - INFO - wood: 70
+2023-05-11 23:19:04,350 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:05,939 - my_logger - INFO - wood: 70
+2023-05-11 23:19:09,288 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:10,845 - my_logger - INFO - wood: 70
+2023-05-11 23:19:14,203 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:15,698 - my_logger - INFO - wood: 70
+2023-05-11 23:19:19,064 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:20,655 - my_logger - INFO - wood: 70
+2023-05-11 23:19:24,395 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:25,876 - my_logger - INFO - wood: 70
+2023-05-11 23:19:29,068 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:30,548 - my_logger - INFO - wood: 70
+2023-05-11 23:19:33,922 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:35,537 - my_logger - INFO - wood: 70
+2023-05-11 23:19:38,820 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:19:42,496 - my_logger - INFO - wood: 70
+2023-05-11 23:19:46,284 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:47,817 - my_logger - INFO - wood: 70
+2023-05-11 23:19:51,081 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:19:54,844 - my_logger - INFO - wood: 93
+2023-05-11 23:19:58,182 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:19:59,800 - my_logger - INFO - wood: 93
+2023-05-11 23:20:03,085 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:20:06,824 - my_logger - INFO - wood: 93
+2023-05-11 23:20:10,629 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:20:14,248 - my_logger - INFO - wood: 104
+2023-05-11 23:20:16,037 - my_logger - INFO - time to finish 181.43094491958618
+2023-05-11 23:20:18,592 - my_logger - INFO - Running rhea 3 2
+2023-05-11 23:21:06,071 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:21:11,491 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:21:15,184 - my_logger - INFO - wood: 15
+2023-05-11 23:21:17,116 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:21:18,605 - my_logger - INFO - wood: 23
+2023-05-11 23:21:19,923 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:21:21,240 - my_logger - INFO - wood: 23
+2023-05-11 23:21:23,113 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:21:26,729 - my_logger - INFO - wood: 23
+2023-05-11 23:21:28,140 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:21:35,723 - my_logger - INFO - wood: 35
+2023-05-11 23:21:37,121 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:21:44,700 - my_logger - INFO - wood: 36
+2023-05-11 23:21:46,021 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:21:47,437 - my_logger - INFO - wood: 36
+2023-05-11 23:21:49,288 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:21:52,876 - my_logger - INFO - wood: 36
+2023-05-11 23:21:54,889 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:21:58,584 - my_logger - INFO - wood: 48
+2023-05-11 23:22:00,402 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:22:01,851 - my_logger - INFO - wood: 52
+2023-05-11 23:22:03,261 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:22:04,589 - my_logger - INFO - wood: 52
+2023-05-11 23:22:06,473 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:22:10,096 - my_logger - INFO - wood: 52
+2023-05-11 23:22:11,507 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:22:15,151 - my_logger - INFO - wood: 52
+2023-05-11 23:22:16,672 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:22:20,341 - my_logger - INFO - wood: 62
+2023-05-11 23:22:21,760 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:22:23,078 - my_logger - INFO - wood: 62
+2023-05-11 23:22:24,874 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:22:26,414 - my_logger - INFO - wood: 62
+2023-05-11 23:22:28,221 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:22:31,903 - my_logger - INFO - wood: 76
+2023-05-11 23:22:33,268 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:22:34,792 - my_logger - INFO - wood: 87
+2023-05-11 23:22:36,120 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:22:37,592 - my_logger - INFO - wood: 87
+2023-05-11 23:22:39,626 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:22:43,433 - my_logger - INFO - wood: 87
+2023-05-11 23:22:45,147 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:22:48,921 - my_logger - INFO - wood: 101
+2023-05-11 23:22:50,801 - my_logger - INFO - time to finish 107.03808307647705
+2023-05-11 23:22:53,362 - my_logger - INFO - Running rhea 4 3
+2023-05-11 23:23:40,475 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:23:43,294 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:23:46,344 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:23:49,322 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:23:54,955 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:23:58,617 - my_logger - INFO - wood: 13
+2023-05-11 23:23:59,938 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:01,420 - my_logger - INFO - wood: 22
+2023-05-11 23:24:02,740 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:04,190 - my_logger - INFO - wood: 22
+2023-05-11 23:24:05,526 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:07,193 - my_logger - INFO - wood: 22
+2023-05-11 23:24:09,230 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:24:12,952 - my_logger - INFO - wood: 22
+2023-05-11 23:24:14,367 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:24:21,942 - my_logger - INFO - wood: 22
+2023-05-11 23:24:23,349 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:24:31,003 - my_logger - INFO - wood: 22
+2023-05-11 23:24:32,297 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:33,842 - my_logger - INFO - wood: 22
+2023-05-11 23:24:35,723 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:37,279 - my_logger - INFO - wood: 22
+2023-05-11 23:24:38,645 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:40,265 - my_logger - INFO - wood: 22
+2023-05-11 23:24:41,926 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:43,570 - my_logger - INFO - wood: 22
+2023-05-11 23:24:45,093 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:24:48,824 - my_logger - INFO - wood: 22
+2023-05-11 23:24:50,894 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:24:54,646 - my_logger - INFO - wood: 44
+2023-05-11 23:24:56,062 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:24:57,399 - my_logger - INFO - wood: 44
+2023-05-11 23:24:58,735 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:25:00,203 - my_logger - INFO - wood: 44
+2023-05-11 23:25:01,609 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:25:05,208 - my_logger - INFO - wood: 44
+2023-05-11 23:25:07,096 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:25:10,698 - my_logger - INFO - wood: 59
+2023-05-11 23:25:12,014 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:25:13,334 - my_logger - INFO - wood: 59
+2023-05-11 23:25:14,666 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:25:16,156 - my_logger - INFO - wood: 59
+2023-05-11 23:25:17,560 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:25:21,192 - my_logger - INFO - wood: 59
+2023-05-11 23:25:23,071 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:25:26,750 - my_logger - INFO - wood: 87
+2023-05-11 23:25:28,079 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:25:29,520 - my_logger - INFO - wood: 92
+2023-05-11 23:25:30,844 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:25:32,189 - my_logger - INFO - wood: 92
+2023-05-11 23:25:34,225 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:25:37,960 - my_logger - INFO - wood: 92
+2023-05-11 23:25:40,441 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:25:44,218 - my_logger - INFO - wood: 116
+2023-05-11 23:25:45,917 - my_logger - INFO - time to finish 127.32624077796936
+2023-05-11 23:25:48,479 - my_logger - INFO - Running rhea 5 2
+2023-05-11 23:26:34,092 - my_logger - INFO - wood: 1
+2023-05-11 23:26:35,911 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:26:38,674 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:26:43,651 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:26:47,407 - my_logger - INFO - wood: 12
+2023-05-11 23:26:49,224 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:26:50,644 - my_logger - INFO - wood: 39
+2023-05-11 23:26:52,570 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:26:56,352 - my_logger - INFO - wood: 39
+2023-05-11 23:26:58,348 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:27:02,059 - my_logger - INFO - wood: 5
+2023-05-11 23:27:03,993 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:27:05,394 - my_logger - INFO - wood: 90
+2023-05-11 23:27:06,960 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:27:08,532 - my_logger - INFO - wood: 90
+2023-05-11 23:27:10,763 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:27:14,604 - my_logger - INFO - wood: 90
+2023-05-11 23:27:16,013 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:27:19,712 - my_logger - INFO - wood: 102
+2023-05-11 23:27:21,413 - my_logger - INFO - time to finish 47.360020875930786
+2023-05-11 23:27:23,968 - my_logger - INFO - Running mcts 4 2
+2023-05-11 23:28:09,132 - my_logger - INFO - wood: 1
+2023-05-11 23:28:11,902 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:28:15,741 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:28:19,540 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:28:25,679 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:28:30,057 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:28:35,993 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:28:39,716 - my_logger - INFO - wood: 14
+2023-05-11 23:28:41,929 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:28:43,422 - my_logger - INFO - wood: 22
+2023-05-11 23:28:45,805 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:28:47,326 - my_logger - INFO - wood: 22
+2023-05-11 23:28:50,073 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:28:51,665 - my_logger - INFO - wood: 22
+2023-05-11 23:28:53,898 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:28:57,769 - my_logger - INFO - wood: 22
+2023-05-11 23:28:59,955 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:29:03,742 - my_logger - INFO - wood: 29
+2023-05-11 23:29:06,031 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:29:07,698 - my_logger - INFO - wood: 42
+2023-05-11 23:29:10,588 - my_logger - INFO - Action, selected: 3
+2023-05-11 23:29:12,121 - my_logger - INFO - wood: 42
+2023-05-11 23:29:14,497 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:29:16,307 - my_logger - INFO - wood: 42
+2023-05-11 23:29:18,491 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:29:19,879 - my_logger - INFO - wood: 42
+2023-05-11 23:29:22,104 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:29:23,766 - my_logger - INFO - wood: 42
+2023-05-11 23:29:26,480 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:29:30,039 - my_logger - INFO - wood: 42
+2023-05-11 23:29:32,263 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:29:36,013 - my_logger - INFO - wood: 42
+2023-05-11 23:29:38,195 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:29:41,803 - my_logger - INFO - wood: 42
+2023-05-11 23:29:44,016 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:29:47,709 - my_logger - INFO - wood: 58
+2023-05-11 23:29:50,384 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:29:51,882 - my_logger - INFO - wood: 84
+2023-05-11 23:29:54,137 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:29:57,854 - my_logger - INFO - wood: 84
+2023-05-11 23:29:59,975 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:30:03,645 - my_logger - INFO - wood: 95
+2023-05-11 23:30:05,872 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:30:07,398 - my_logger - INFO - wood: 104
+2023-05-11 23:30:09,268 - my_logger - INFO - time to finish 120.17152571678162
+2023-05-11 23:30:11,813 - my_logger - INFO - Running rhea 6 3
+2023-05-11 23:30:57,371 - my_logger - INFO - wood: 1
+2023-05-11 23:30:59,646 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:31:02,987 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:31:08,451 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:31:12,088 - my_logger - INFO - wood: 16
+2023-05-11 23:31:13,807 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:31:15,158 - my_logger - INFO - wood: 20
+2023-05-11 23:31:17,450 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:31:19,063 - my_logger - INFO - wood: 20
+2023-05-11 23:31:21,072 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:31:24,801 - my_logger - INFO - wood: 20
+2023-05-11 23:31:26,916 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:31:30,691 - my_logger - INFO - wood: 33
+2023-05-11 23:31:32,508 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:31:33,913 - my_logger - INFO - wood: 33
+2023-05-11 23:31:35,957 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:31:37,299 - my_logger - INFO - wood: 33
+2023-05-11 23:31:38,749 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:31:42,372 - my_logger - INFO - wood: 33
+2023-05-11 23:31:43,880 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:31:47,479 - my_logger - INFO - wood: 48
+2023-05-11 23:31:48,778 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:31:50,230 - my_logger - INFO - wood: 48
+2023-05-11 23:31:52,159 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:31:53,636 - my_logger - INFO - wood: 48
+2023-05-11 23:31:55,041 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:31:58,708 - my_logger - INFO - wood: 48
+2023-05-11 23:32:00,176 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:32:03,913 - my_logger - INFO - wood: 76
+2023-05-11 23:32:05,683 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:32:07,066 - my_logger - INFO - wood: 76
+2023-05-11 23:32:08,820 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:32:10,170 - my_logger - INFO - wood: 76
+2023-05-11 23:32:11,601 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:32:13,072 - my_logger - INFO - wood: 76
+2023-05-11 23:32:14,480 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:32:18,077 - my_logger - INFO - wood: 76
+2023-05-11 23:32:19,483 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:32:23,067 - my_logger - INFO - wood: 88
+2023-05-11 23:32:24,845 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:32:26,271 - my_logger - INFO - wood: 88
+2023-05-11 23:32:27,666 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:32:31,259 - my_logger - INFO - wood: 88
+2023-05-11 23:32:33,259 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:32:36,864 - my_logger - INFO - wood: 102
+2023-05-11 23:32:38,534 - my_logger - INFO - time to finish 101.1959719657898
+2023-05-11 23:32:41,098 - my_logger - INFO - Running mcts 5 2
+2023-05-11 23:33:29,424 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:33:33,109 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:33:38,971 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:33:42,590 - my_logger - INFO - wood: 11
+2023-05-11 23:33:44,865 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:33:46,411 - my_logger - INFO - wood: 38
+2023-05-11 23:33:49,153 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:33:52,768 - my_logger - INFO - wood: 38
+2023-05-11 23:33:54,966 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:33:58,591 - my_logger - INFO - wood: 56
+2023-05-11 23:34:00,837 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:34:02,295 - my_logger - INFO - wood: 90
+2023-05-11 23:34:04,549 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:34:08,219 - my_logger - INFO - wood: 90
+2023-05-11 23:34:10,914 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:34:14,675 - my_logger - INFO - wood: 90
+2023-05-11 23:34:16,908 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:34:20,667 - my_logger - INFO - wood: 106
+2023-05-11 23:34:22,403 - my_logger - INFO - time to finish 55.711244106292725
+2023-05-11 23:34:24,964 - my_logger - INFO - Running mcts 0 2
+2023-05-11 23:35:10,122 - my_logger - INFO - wood: 1
+2023-05-11 23:35:12,923 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:35:14,427 - my_logger - INFO - wood: 1
+2023-05-11 23:35:16,648 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:35:20,377 - my_logger - INFO - Action, selected: 3
+2023-05-11 23:35:21,919 - my_logger - INFO - wood: 1
+2023-05-11 23:35:24,308 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:35:28,433 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:35:32,188 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:35:36,071 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:35:39,805 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:35:46,225 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:35:50,000 - my_logger - INFO - wood: 29
+2023-05-11 23:35:52,271 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:35:53,756 - my_logger - INFO - wood: 50
+2023-05-11 23:35:55,937 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:35:57,425 - my_logger - INFO - wood: 50
+2023-05-11 23:35:59,643 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:36:03,314 - my_logger - INFO - wood: 50
+2023-05-11 23:36:05,955 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:36:13,560 - my_logger - INFO - wood: 50
+2023-05-11 23:36:15,747 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:36:17,281 - my_logger - INFO - wood: 50
+2023-05-11 23:36:19,550 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:36:23,170 - my_logger - INFO - wood: 50
+2023-05-11 23:36:25,486 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:36:33,164 - my_logger - INFO - wood: 94
+2023-05-11 23:36:35,910 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:36:37,437 - my_logger - INFO - wood: 103
+2023-05-11 23:36:39,305 - my_logger - INFO - time to finish 89.22618007659912
+2023-05-11 23:36:41,854 - my_logger - INFO - Running rhea 0 3
+2023-05-11 23:37:26,957 - my_logger - INFO - wood: 1
+2023-05-11 23:37:28,818 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:37:31,650 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:37:32,997 - my_logger - INFO - wood: 1
+2023-05-11 23:37:34,360 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:37:35,918 - my_logger - INFO - wood: 1
+2023-05-11 23:37:37,233 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:37:38,570 - my_logger - INFO - wood: 1
+2023-05-11 23:37:40,723 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:37:43,683 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:37:48,738 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:37:52,368 - my_logger - INFO - wood: 15
+2023-05-11 23:37:53,683 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:37:55,123 - my_logger - INFO - wood: 45
+2023-05-11 23:37:57,003 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:38:00,680 - my_logger - INFO - wood: 45
+2023-05-11 23:38:02,195 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:38:05,869 - my_logger - INFO - wood: 56
+2023-05-11 23:38:07,304 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:38:08,770 - my_logger - INFO - wood: 95
+2023-05-11 23:38:10,184 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:38:11,524 - my_logger - INFO - wood: 99
+2023-05-11 23:38:13,434 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:38:17,063 - my_logger - INFO - wood: 99
+2023-05-11 23:38:18,461 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:38:22,119 - my_logger - INFO - wood: 121
+2023-05-11 23:38:23,824 - my_logger - INFO - time to finish 56.904011726379395
+2023-05-11 23:38:26,384 - my_logger - INFO - Running mcts 5 3
+2023-05-11 23:39:15,624 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:39:20,368 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:39:27,335 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:39:31,030 - my_logger - INFO - wood: 18
+2023-05-11 23:39:34,203 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:39:35,734 - my_logger - INFO - wood: 38
+2023-05-11 23:39:39,449 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:39:43,176 - my_logger - INFO - wood: 38
+2023-05-11 23:39:46,492 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:39:48,100 - my_logger - INFO - wood: 38
+2023-05-11 23:39:51,309 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:39:55,091 - my_logger - INFO - wood: 38
+2023-05-11 23:39:58,320 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:39:59,912 - my_logger - INFO - wood: 38
+2023-05-11 23:40:03,560 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:40:07,220 - my_logger - INFO - wood: 67
+2023-05-11 23:40:10,598 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:40:12,176 - my_logger - INFO - wood: 99
+2023-05-11 23:40:15,389 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:40:23,054 - my_logger - INFO - wood: 99
+2023-05-11 23:40:26,257 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:40:29,863 - my_logger - INFO - wood: 99
+2023-05-11 23:40:33,577 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:40:37,237 - my_logger - INFO - wood: 115
+2023-05-11 23:40:39,079 - my_logger - INFO - time to finish 87.25414037704468
+2023-05-11 23:40:41,632 - my_logger - INFO - Running rhea 2 3
+2023-05-11 23:41:26,676 - my_logger - INFO - wood: 1
+2023-05-11 23:41:28,631 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:41:30,081 - my_logger - INFO - wood: 1
+2023-05-11 23:41:31,541 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:41:37,055 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:41:40,892 - my_logger - INFO - wood: 14
+2023-05-11 23:41:42,701 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:41:44,278 - my_logger - INFO - wood: 14
+2023-05-11 23:41:46,173 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:41:47,699 - my_logger - INFO - wood: 14
+2023-05-11 23:41:49,008 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:41:50,469 - my_logger - INFO - wood: 14
+2023-05-11 23:41:51,802 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:41:53,272 - my_logger - INFO - wood: 14
+2023-05-11 23:41:54,870 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:41:58,496 - my_logger - INFO - wood: 14
+2023-05-11 23:42:00,502 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:42:04,152 - my_logger - INFO - wood: 35
+2023-05-11 23:42:05,511 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:07,088 - my_logger - INFO - wood: 44
+2023-05-11 23:42:08,399 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:09,858 - my_logger - INFO - wood: 44
+2023-05-11 23:42:11,484 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:13,095 - my_logger - INFO - wood: 44
+2023-05-11 23:42:14,976 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:16,417 - my_logger - INFO - wood: 44
+2023-05-11 23:42:17,836 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:19,235 - my_logger - INFO - wood: 44
+2023-05-11 23:42:20,663 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:42:24,474 - my_logger - INFO - wood: 44
+2023-05-11 23:42:25,877 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:42:29,564 - my_logger - INFO - wood: 69
+2023-05-11 23:42:31,424 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:32,751 - my_logger - INFO - wood: 77
+2023-05-11 23:42:35,083 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:42:42,878 - my_logger - INFO - wood: 77
+2023-05-11 23:42:44,292 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:42:52,072 - my_logger - INFO - wood: 77
+2023-05-11 23:42:53,480 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:54,725 - my_logger - INFO - wood: 77
+2023-05-11 23:42:56,915 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:42:58,513 - my_logger - INFO - wood: 77
+2023-05-11 23:42:59,908 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:43:07,590 - my_logger - INFO - wood: 77
+2023-05-11 23:43:08,911 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:43:10,142 - my_logger - INFO - wood: 78
+2023-05-11 23:43:12,123 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:43:15,832 - my_logger - INFO - wood: 78
+2023-05-11 23:43:17,796 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:43:21,471 - my_logger - INFO - wood: 9
+2023-05-11 23:43:22,783 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:43:24,192 - my_logger - INFO - wood: 9
+2023-05-11 23:43:25,524 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:43:27,062 - my_logger - INFO - wood: 9
+2023-05-11 23:43:28,466 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:43:36,271 - my_logger - INFO - wood: 9
+2023-05-11 23:43:38,540 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:43:39,992 - my_logger - INFO - wood: 110
+2023-05-11 23:43:41,989 - my_logger - INFO - time to finish 135.35331010818481
+2023-05-11 23:43:44,558 - my_logger - INFO - Running rhea 0 2
+2023-05-11 23:44:29,632 - my_logger - INFO - wood: 1
+2023-05-11 23:44:31,499 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:44:32,868 - my_logger - INFO - wood: 1
+2023-05-11 23:44:34,217 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:44:35,722 - my_logger - INFO - wood: 1
+2023-05-11 23:44:37,146 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:44:38,657 - my_logger - INFO - wood: 1
+2023-05-11 23:44:39,971 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:44:43,527 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:44:45,048 - my_logger - INFO - wood: 1
+2023-05-11 23:44:46,461 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:44:51,656 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:44:55,361 - my_logger - INFO - wood: 26
+2023-05-11 23:44:56,799 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:44:58,181 - my_logger - INFO - wood: 50
+2023-05-11 23:45:00,055 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:45:01,567 - my_logger - INFO - wood: 50
+2023-05-11 23:45:03,368 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:45:07,040 - my_logger - INFO - wood: 50
+2023-05-11 23:45:08,935 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:45:12,614 - my_logger - INFO - wood: 6
+2023-05-11 23:45:14,423 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:45:15,918 - my_logger - INFO - wood: 97
+2023-05-11 23:45:17,832 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:45:21,574 - my_logger - INFO - wood: 97
+2023-05-11 23:45:22,973 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:45:26,562 - my_logger - INFO - wood: 10
+2023-05-11 23:45:27,879 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:45:29,232 - my_logger - INFO - wood: 150
+2023-05-11 23:45:31,047 - my_logger - INFO - time to finish 61.44936919212341
+2023-05-11 23:45:33,609 - my_logger - INFO - Running mcts 6 3
+2023-05-11 23:46:19,105 - my_logger - INFO - wood: 1
+2023-05-11 23:46:22,817 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:46:27,601 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:46:34,391 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:46:38,128 - my_logger - INFO - wood: 20
+2023-05-11 23:46:41,358 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:46:42,933 - my_logger - INFO - wood: 24
+2023-05-11 23:46:46,645 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:46:48,137 - my_logger - INFO - wood: 24
+2023-05-11 23:46:51,327 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:46:54,945 - my_logger - INFO - wood: 24
+2023-05-11 23:46:58,081 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:47:01,736 - my_logger - INFO - wood: 29
+2023-05-11 23:47:05,026 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:47:06,574 - my_logger - INFO - wood: 35
+2023-05-11 23:47:10,231 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:47:11,663 - my_logger - INFO - wood: 35
+2023-05-11 23:47:14,910 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:47:18,489 - my_logger - INFO - wood: 35
+2023-05-11 23:47:21,624 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:47:25,247 - my_logger - INFO - wood: 50
+2023-05-11 23:47:28,490 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:47:29,936 - my_logger - INFO - wood: 50
+2023-05-11 23:47:33,583 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:47:34,973 - my_logger - INFO - wood: 50
+2023-05-11 23:47:38,166 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:47:41,848 - my_logger - INFO - wood: 50
+2023-05-11 23:47:45,077 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:47:48,656 - my_logger - INFO - wood: 68
+2023-05-11 23:47:51,900 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:47:53,346 - my_logger - INFO - wood: 73
+2023-05-11 23:47:56,962 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:47:58,400 - my_logger - INFO - wood: 73
+2023-05-11 23:48:01,582 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:48:05,242 - my_logger - INFO - wood: 73
+2023-05-11 23:48:08,519 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:48:12,065 - my_logger - INFO - wood: 83
+2023-05-11 23:48:15,305 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:48:16,770 - my_logger - INFO - wood: 84
+2023-05-11 23:48:20,511 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:48:22,026 - my_logger - INFO - wood: 84
+2023-05-11 23:48:25,215 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:48:28,950 - my_logger - INFO - wood: 86
+2023-05-11 23:48:32,242 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:48:35,926 - my_logger - INFO - wood: 94
+2023-05-11 23:48:39,202 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:48:40,731 - my_logger - INFO - wood: 101
+2023-05-11 23:48:42,398 - my_logger - INFO - time to finish 143.3251929283142
+2023-05-11 23:48:44,950 - my_logger - INFO - Running mcts 3 2
+2023-05-11 23:49:30,053 - my_logger - INFO - wood: 1
+2023-05-11 23:49:32,735 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:49:38,583 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:49:42,199 - my_logger - INFO - wood: 10
+2023-05-11 23:49:44,469 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:49:45,854 - my_logger - INFO - wood: 15
+2023-05-11 23:49:48,024 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:49:55,631 - my_logger - INFO - wood: 28
+2023-05-11 23:49:58,296 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:49:59,736 - my_logger - INFO - wood: 28
+2023-05-11 23:50:01,946 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:50:03,357 - my_logger - INFO - wood: 28
+2023-05-11 23:50:05,615 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:50:07,081 - my_logger - INFO - wood: 28
+2023-05-11 23:50:09,240 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:50:16,839 - my_logger - INFO - wood: 28
+2023-05-11 23:50:19,480 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:50:20,893 - my_logger - INFO - wood: 28
+2023-05-11 23:50:23,191 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:50:26,884 - my_logger - INFO - wood: 28
+2023-05-11 23:50:29,283 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:50:32,806 - my_logger - INFO - wood: 33
+2023-05-11 23:50:35,034 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:50:42,602 - my_logger - INFO - wood: 33
+2023-05-11 23:50:45,320 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:50:46,672 - my_logger - INFO - wood: 35
+2023-05-11 23:50:48,976 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:50:50,326 - my_logger - INFO - wood: 36
+2023-05-11 23:50:52,541 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:50:54,049 - my_logger - INFO - wood: 36
+2023-05-11 23:50:56,295 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:51:03,841 - my_logger - INFO - wood: 54
+2023-05-11 23:51:06,593 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:51:08,081 - my_logger - INFO - wood: 54
+2023-05-11 23:51:10,298 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:51:11,733 - my_logger - INFO - wood: 54
+2023-05-11 23:51:13,917 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:51:15,407 - my_logger - INFO - wood: 54
+2023-05-11 23:51:17,771 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:51:21,447 - my_logger - INFO - wood: 54
+2023-05-11 23:51:24,327 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:51:28,086 - my_logger - INFO - wood: 73
+2023-05-11 23:51:30,369 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:51:31,807 - my_logger - INFO - wood: 76
+2023-05-11 23:51:34,013 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:51:35,510 - my_logger - INFO - wood: 76
+2023-05-11 23:51:37,722 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:51:41,400 - my_logger - INFO - wood: 76
+2023-05-11 23:51:44,203 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:51:47,891 - my_logger - INFO - wood: 88
+2023-05-11 23:51:50,077 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:51:51,512 - my_logger - INFO - wood: 88
+2023-05-11 23:51:53,694 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:51:55,184 - my_logger - INFO - wood: 88
+2023-05-11 23:51:57,457 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:51:58,988 - my_logger - INFO - wood: 88
+2023-05-11 23:52:01,743 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:52:05,510 - my_logger - INFO - wood: 88
+2023-05-11 23:52:07,715 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:52:11,317 - my_logger - INFO - wood: 100
+2023-05-11 23:52:13,018 - my_logger - INFO - time to finish 162.9954378604889
+2023-05-11 23:52:15,573 - my_logger - INFO - Running mcts 0 3
+2023-05-11 23:53:00,625 - my_logger - INFO - wood: 1
+2023-05-11 23:53:04,436 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:53:05,966 - my_logger - INFO - wood: 1
+2023-05-11 23:53:09,358 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:53:10,903 - my_logger - INFO - wood: 1
+2023-05-11 23:53:14,124 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:53:18,893 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:53:24,093 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:53:31,893 - my_logger - INFO - wood: 46
+2023-05-11 23:53:35,088 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:53:38,836 - my_logger - INFO - wood: 46
+2023-05-11 23:53:41,988 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:53:45,658 - my_logger - INFO - wood: 76
+2023-05-11 23:53:48,956 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:53:50,497 - my_logger - INFO - wood: 77
+2023-05-11 23:53:54,257 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:53:57,855 - my_logger - INFO - wood: 78
+2023-05-11 23:54:01,140 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:54:04,863 - my_logger - INFO - wood: 92
+2023-05-11 23:54:08,223 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:54:09,852 - my_logger - INFO - wood: 116
+2023-05-11 23:54:11,632 - my_logger - INFO - time to finish 71.03875589370728
+2023-05-11 23:54:14,188 - my_logger - INFO - Running rhea 6 2
+2023-05-11 23:55:02,006 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:55:03,463 - my_logger - INFO - wood: 1
+2023-05-11 23:55:04,970 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:55:10,678 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:55:14,360 - my_logger - INFO - wood: 7
+2023-05-11 23:55:16,210 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:55:17,562 - my_logger - INFO - wood: 17
+2023-05-11 23:55:19,838 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:55:21,417 - my_logger - INFO - wood: 17
+2023-05-11 23:55:23,417 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:55:27,006 - my_logger - INFO - wood: 17
+2023-05-11 23:55:29,017 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:55:32,730 - my_logger - INFO - wood: 31
+2023-05-11 23:55:34,636 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:55:36,033 - my_logger - INFO - wood: 31
+2023-05-11 23:55:37,867 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:55:39,371 - my_logger - INFO - wood: 31
+2023-05-11 23:55:41,083 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:55:44,675 - my_logger - INFO - wood: 31
+2023-05-11 23:55:46,092 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:55:49,664 - my_logger - INFO - wood: 43
+2023-05-11 23:55:50,978 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:55:52,301 - my_logger - INFO - wood: 58
+2023-05-11 23:55:54,282 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:55:57,943 - my_logger - INFO - wood: 58
+2023-05-11 23:56:00,073 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:56:03,664 - my_logger - INFO - wood: 71
+2023-05-11 23:56:05,475 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:56:06,785 - my_logger - INFO - wood: 71
+2023-05-11 23:56:08,216 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:56:09,721 - my_logger - INFO - wood: 71
+2023-05-11 23:56:12,218 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:56:15,962 - my_logger - INFO - wood: 71
+2023-05-11 23:56:17,963 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:56:21,583 - my_logger - INFO - wood: 82
+2023-05-11 23:56:22,906 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:56:24,236 - my_logger - INFO - wood: 82
+2023-05-11 23:56:25,663 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:56:33,330 - my_logger - INFO - wood: 82
+2023-05-11 23:56:35,076 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:56:36,519 - my_logger - INFO - wood: 82
+2023-05-11 23:56:38,530 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:56:42,105 - my_logger - INFO - wood: 82
+2023-05-11 23:56:44,410 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:56:52,169 - my_logger - INFO - wood: 82
+2023-05-11 23:56:53,580 - my_logger - INFO - Action, selected: 4
+2023-05-11 23:57:01,329 - my_logger - INFO - wood: 82
+2023-05-11 23:57:03,130 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:57:04,633 - my_logger - INFO - wood: 82
+2023-05-11 23:57:05,949 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:57:07,386 - my_logger - INFO - wood: 82
+2023-05-11 23:57:09,293 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:57:12,960 - my_logger - INFO - wood: 90
+2023-05-11 23:57:14,693 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:57:16,147 - my_logger - INFO - wood: 90
+2023-05-11 23:57:18,049 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:57:21,634 - my_logger - INFO - wood: 90
+2023-05-11 23:57:23,011 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:57:26,623 - my_logger - INFO - wood: 112
+2023-05-11 23:57:28,341 - my_logger - INFO - time to finish 148.63651084899902
+2023-05-11 23:57:30,890 - my_logger - INFO - Running mcts 1 2
+2023-05-11 23:58:18,711 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:58:22,531 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:58:26,410 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:58:30,129 - my_logger - INFO - wood: 2
+2023-05-11 23:58:32,465 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:58:36,235 - my_logger - INFO - wood: 26
+2023-05-11 23:58:38,938 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:58:40,389 - my_logger - INFO - wood: 43
+2023-05-11 23:58:42,566 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:58:43,977 - my_logger - INFO - wood: 43
+2023-05-11 23:58:46,139 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:58:49,835 - my_logger - INFO - wood: 43
+2023-05-11 23:58:51,958 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:58:55,590 - my_logger - INFO - wood: 67
+2023-05-11 23:58:58,210 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:58:59,695 - my_logger - INFO - wood: 85
+2023-05-11 23:59:02,029 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:59:03,399 - my_logger - INFO - wood: 85
+2023-05-11 23:59:05,609 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:59:09,207 - my_logger - INFO - wood: 85
+2023-05-11 23:59:11,493 - my_logger - INFO - Action, selected: 6
+2023-05-11 23:59:12,960 - my_logger - INFO - wood: 85
+2023-05-11 23:59:15,614 - my_logger - INFO - Action, selected: 5
+2023-05-11 23:59:19,234 - my_logger - INFO - wood: 98
+2023-05-11 23:59:21,456 - my_logger - INFO - Action, selected: 2
+2023-05-11 23:59:22,905 - my_logger - INFO - wood: 128
+2023-05-11 23:59:24,583 - my_logger - INFO - time to finish 68.694983959198
+2023-05-11 23:59:27,140 - my_logger - INFO - Running mcts 2 2
+2023-05-12 00:00:12,311 - my_logger - INFO - wood: 1
+2023-05-12 00:00:15,052 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:00:16,566 - my_logger - INFO - wood: 1
+2023-05-12 00:00:18,878 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:00:20,456 - my_logger - INFO - wood: 1
+2023-05-12 00:00:22,846 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:00:28,687 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:00:32,366 - my_logger - INFO - wood: 13
+2023-05-12 00:00:35,192 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:00:36,772 - my_logger - INFO - wood: 13
+2023-05-12 00:00:39,041 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:00:40,559 - my_logger - INFO - wood: 13
+2023-05-12 00:00:42,798 - my_logger - INFO - Action, selected: 3
+2023-05-12 00:00:44,298 - my_logger - INFO - wood: 13
+2023-05-12 00:00:46,474 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:00:50,152 - my_logger - INFO - wood: 13
+2023-05-12 00:00:52,791 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:00:56,526 - my_logger - INFO - wood: 42
+2023-05-12 00:00:58,748 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:00,330 - my_logger - INFO - wood: 45
+2023-05-12 00:01:02,560 - my_logger - INFO - Action, selected: 2
+2023-05-12 00:01:04,151 - my_logger - INFO - wood: 45
+2023-05-12 00:01:06,372 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:07,839 - my_logger - INFO - wood: 45
+2023-05-12 00:01:10,678 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:12,312 - my_logger - INFO - wood: 45
+2023-05-12 00:01:14,598 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:16,132 - my_logger - INFO - wood: 45
+2023-05-12 00:01:18,411 - my_logger - INFO - Action, selected: 4
+2023-05-12 00:01:26,076 - my_logger - INFO - wood: 45
+2023-05-12 00:01:28,336 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:29,831 - my_logger - INFO - wood: 45
+2023-05-12 00:01:32,751 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:34,335 - my_logger - INFO - wood: 45
+2023-05-12 00:01:36,562 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:38,074 - my_logger - INFO - wood: 45
+2023-05-12 00:01:40,256 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:01:43,915 - my_logger - INFO - wood: 45
+2023-05-12 00:01:46,081 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:01:49,736 - my_logger - INFO - wood: 5
+2023-05-12 00:01:52,553 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:54,108 - my_logger - INFO - wood: 57
+2023-05-12 00:01:56,283 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:01:57,830 - my_logger - INFO - wood: 57
+2023-05-12 00:02:00,179 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:02:03,936 - my_logger - INFO - wood: 57
+2023-05-12 00:02:06,140 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:02:09,941 - my_logger - INFO - wood: 57
+2023-05-12 00:02:12,725 - my_logger - INFO - Action, selected: 2
+2023-05-12 00:02:14,312 - my_logger - INFO - wood: 57
+2023-05-12 00:02:16,508 - my_logger - INFO - Action, selected: 4
+2023-05-12 00:02:24,306 - my_logger - INFO - wood: 83
+2023-05-12 00:02:26,489 - my_logger - INFO - Action, selected: 6
+2023-05-12 00:02:27,995 - my_logger - INFO - wood: 83
+2023-05-12 00:02:30,248 - my_logger - INFO - Action, selected: 5
+2023-05-12 00:02:33,902 - my_logger - INFO - wood: 103
+2023-05-12 00:02:35,742 - my_logger - INFO - time to finish 143.4628975391388
