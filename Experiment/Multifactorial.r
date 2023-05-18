@@ -1,13 +1,37 @@
-if(!require(psych)){installed.packages("psych")}
-if(!require(FSA)){installed.packages("FSA")}
-if(!require(Rmisc)){installed.packages("Rmisc")}
-if(!require(ggplot2)){installed.packages("ggplot2")}
-if(!require(car)){installed.packages("car")}
-if(!require(multcomp)){installed.packages("multcomp")}
-if(!require(multcompView)){installed.packages("multcompView")}
-if(!require(lsmeans)){installed.packages("lsmeans")}
-if(!require(rcompanion)){installed.packages("rcompanion")}
-if(!require(rcompanion)){installed.packages("phia")}
+# Se instalan los paquetes necesarios
+if (!require(psych)) {
+    install.packages("psych")
+}
+if (!require(FSA)) {
+    install.packages("FSA")
+}
+if (!require(ggplot2)) {
+    install.packages("ggplot2")
+}
+if (!require(car)) {
+    install.packages("car")
+}
+if (!require(multcompView)) {
+    install.packages("multcompView")
+}
+if (!require(multcomp)) {
+    install.packages("multcomp")
+}
+if (!require(emmeans)) {
+    install.packages("emmeans")
+}
+if (!require(lsmeans)) {
+    install.packages("lsmeans")
+}
+if (!require(rcompanion)) {
+    install.packages("rcompanion")
+}
+if (!require(Rmisc)) {
+    installed.packages("Rmisc")
+}
+if (!require(rcompanion)) {
+    installed.packages("phia")
+}
 
 library(FSA)
 library(rcompanion)
