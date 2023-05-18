@@ -511,7 +511,7 @@ class TerrarianEyes:
         numbers = {}
         for numName in numNames:
             images = self.templates[numName]
-            #rectangles = self.matchImage(cropped_image, images, threshold = 0.535)
+            # TODO test with rectangles = self.matchImage(cropped_image, images, threshold = 0.535)
             #rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.62)
             rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.6)
             for i in range(len(rectangles)):

@@ -330,7 +330,6 @@ class TerrEnv(gym.Env):
 
         pydirectinput.press('ctrl')   
 
-
     def end(self):
         pydirectinput.keyDown('alt')
         pydirectinput.press('f4')

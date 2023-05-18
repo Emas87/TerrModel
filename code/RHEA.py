@@ -17,7 +17,6 @@ class RHEA:
         self.rollouts_per_step = rollouts_per_step  # number of rollouts per planning step
         self.logger = logger
 
-
     def search(self, state, max_time=2):
         start_time = time.time()
 
