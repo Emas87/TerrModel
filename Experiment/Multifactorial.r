@@ -218,6 +218,9 @@ rm(datos)
 
 #SE ORDENAN LOS DATOS
 data$seed <- factor(data$seed, levels = unique(data$seed))
+data$time <- factor(data$time, levels = unique(data$time))
+data$algorithm <- factor(data$algorithm, levels = unique(data$algorithm))
+
 
 #VERIFICAMOS QUE TODO ESTE BIEN
 headTail(data)
@@ -251,13 +254,12 @@ model <- lm(result ~ seed * algorithm * time, data = data)
 
 Anova(model, type = "II")
 
-# SE EVALÚAN LOS SUPUESTOS DESPUES DE OBTENER EL MODELO LINEAL
+# SE EVALUAN LOS SUPUESTOS DESPUES DE OBTENER EL MODELO LINEAL
 # SE GENERA EL HISTOGRAMA DE RESIDUOS
 x <- residuals(model)
 plotNormalHistogram(x)
 
-plot(fitted(model))
-residuals(model)
+plot(fitted(model), residuals(model))
 plot(model)
 
 # SE HACE LA COMPARACION DE PARES DE LOS PROMEDIOS DE MINIMOS CUADRADOS
@@ -288,7 +290,32 @@ pairs(marginal, adjust = "tukey")
 cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "tukey")
 cld
 
-# Summaruze seed
+# Summaruze mean result vs algorithm
+sum <- Summarize(result ~ algorithm, data = data, digits = 3)
+
+sum$se <- sum$sd / sqrt(sum$n)
+sum$se <- signif(sum$se, digits = 3)
+sum
+
+sum$algorithm <- factor(sum$algorithm, levels = unique(sum$algorithm))
+
+#GRAFICO
+pd <- position_dodge(.2)
+
+ggplot(sum, aes(x = algorithm,
+                y = mean,
+                color = algorithm)) +
+  geom_errorbar(aes(ymin = mean - se,
+                    ymax = mean + se,
+                    width = 0.2,
+                    size = 0.7)) +
+  geom_point(shape = 15, size = 4, position = pd) +
+  theme_bw() +
+  theme(axis.title = element_text(face = "bold")) +
+  scale_colour_manual(values = c("black", "red", "green")) +
+  ylab("result")
+
+# Summaruze mean result vs seed in function of the algorithm
 sum <- Summarize(result ~ seed + algorithm, data = data, digits = 3)
 
 sum$se <- sum$sd / sqrt(sum$n)
@@ -314,7 +341,7 @@ ggplot(sum, aes(x = seed,
                         ylab("result")
 
 
-# Summaruze time
+# Summaruze mean result vs time in function of the algorithm
 sum <- Summarize(result ~ time + algorithm, data = data, digits = 3)
 
 sum$se <- sum$sd / sqrt(sum$n)
@@ -338,3 +365,5 @@ ggplot(sum, aes(x = time,
   theme(axis.title = element_text(face = "bold")) +
   scale_colour_manual(values = c("black", "red", "green")) +
                         ylab("result")
+
+
