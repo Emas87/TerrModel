@@ -223,7 +223,7 @@ data$algorithm <- factor(data$algorithm, levels = unique(data$algorithm))
 
 
 #VERIFICAMOS QUE TODO ESTE BIEN
-headTail(data)
+headtail(data)
 summary(data)
 str(data)
 
@@ -290,7 +290,7 @@ pairs(marginal, adjust = "tukey")
 cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "tukey")
 cld
 
-# Summaruze mean result vs algorithm
+# Summarize mean result vs algorithm
 sum <- Summarize(result ~ algorithm, data = data, digits = 3)
 
 sum$se <- sum$sd / sqrt(sum$n)
@@ -315,7 +315,7 @@ ggplot(sum, aes(x = algorithm,
   scale_colour_manual(values = c("black", "red", "green")) +
   ylab("result")
 
-# Summaruze mean result vs seed in function of the algorithm
+# Summarize mean result vs seed in function of the algorithm
 sum <- Summarize(result ~ seed + algorithm, data = data, digits = 3)
 
 sum$se <- sum$sd / sqrt(sum$n)
