@@ -25,25 +25,22 @@ TILESZ = 16
 
 class TerrarianEyes:
 
-    def __init__(self, tiles_weights_path, objects_weights_path) -> None:
+    def __init__(self, weights_path) -> None:
 
         self.logger = logger
 
         #
-        self.tiles_weights_path = tiles_weights_path
-        self.objects_weights_path = objects_weights_path
-        self.objects_model = None
-        self.tiles_model = None
+        self.weights_path = weights_path
+        self.yolo_model = None
         self.templates = {}
 
         # Yolo model
         self.device = select_device('')
         self.dnn = False
-        self.data_objects = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset_objects','data.yaml')
-        self.data_tiles = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset_tiles', 'data.yaml')
+        self.data = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset', 'data.yaml')
         self.half = False
         self.imgsz = [640, 640]
-        self.conf_thres = 0.25
+        self.conf_thres = 0.15
         self.iou_thres = 0.45
         self.classes = None
         self.agnostic_nms = False
@@ -55,26 +52,18 @@ class TerrarianEyes:
         self.loadModels()
         self.loadImages()
 
-        # Get classes Inventory
-        self.object_classes = []
-        with open(self.data_objects, "r") as f:
+        # Get classes
+
+        self.classes = []
+        with open(self.data, "r") as f:
             lines = f.readlines()
         for line in lines:
             if "names: " in line:
                 classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '')
-                self.object_classes = classesStr.split(', ')
+                self.classes = classesStr.split(', ')
 
-
-        self.tiles_classes = []
-        with open(self.data_tiles, "r") as f:
-            lines = f.readlines()
-        for line in lines:
-            if "names: " in line:
-                classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '')
-                self.tiles_classes = classesStr.split(', ')
-
-        self.inventory = Inventory(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )
-        self.map = Map(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )
+        self.inventory = Inventory(self.classes + ['player', 'xxxx'] )
+        self.map = Map(self.classes + ['player', 'xxxx'] )
 
     def matchImage(self, sourceImage, templateImages, threshold = 0.7):
         # Match in gray
@@ -120,8 +109,7 @@ class TerrarianEyes:
                 confidences.append(res[pt[1], pt[0]])
         return rectangles, confidences
 
-    def findTiles(self, source, post_processing=True):
-        results = self.detectYoloTiles(source)
+    def findTiles(self, results, source, post_processing=True):
         if not post_processing:
             return results
         final_results = {}
@@ -154,10 +142,6 @@ class TerrarianEyes:
         return final_results
         #return final_rectangles
 
-    def findObjects(self, source):
-        results = self.detectYoloObjects(source)
-        return results
-
     @staticmethod
     def showImage(img_rgb):
         # display the images
@@ -169,20 +153,18 @@ class TerrarianEyes:
                 break
 
     def loadModels(self):
-        if self.tiles_weights_path is not None:
-            self.tiles_model  = DetectMultiBackend([self.tiles_weights_path], device=self.device, dnn=self.dnn, data=self.data_tiles, fp16=self.half)
-        if self.objects_weights_path is not None:
-            self.objects_model  = DetectMultiBackend([self.objects_weights_path], device=self.device, dnn=self.dnn, data=self.data_objects, fp16=self.half)
+        if self.weights_path is not None:
+            self.yolo_model  = DetectMultiBackend([self.weights_path], device=self.device, dnn=self.dnn, data=self.data, fp16=self.half)
     
-    def detectYoloTiles(self, source):
-        stride, names, pt = self.tiles_model.stride, self.tiles_model.names, self.tiles_model.pt
+    def detectYolo(self, source):
+        stride, names, pt = self.yolo_model.stride, self.yolo_model.names, self.yolo_model.pt
         imgsz = check_img_size(self.imgsz, s=stride)  # check image size
 
         # Dataloader
         bs = 1  # batch_size
 
         # Warming inference
-        self.tiles_model.warmup(imgsz=(1 if pt or self.tiles_model.triton else bs, 3, *imgsz))  # warmup
+        self.yolo_model.warmup(imgsz=(1 if pt or self.yolo_model.triton else bs, 3, *imgsz))  # warmup
         dt = (Profile(), Profile(), Profile())
 
         #Preprocessing
@@ -191,55 +173,23 @@ class TerrarianEyes:
         im = np.ascontiguousarray(im)  # contiguous
 
         with dt[0]:
-            im = torch.from_numpy(im).to(self.tiles_model.device)
-            im = im.half() if self.tiles_model.fp16 else im.float()  # uint8 to fp16/32
+            im = torch.from_numpy(im).to(self.yolo_model.device)
+            im = im.half() if self.yolo_model.fp16 else im.float()  # uint8 to fp16/32
             im /= 255  # 0 - 255 to 0.0 - 1.0
             if len(im.shape) == 3:
                 im = im[None]  # expand for batch dim
 
         # Inference
         with dt[1]:            
-            pred = self.tiles_model(im, augment=False, visualize=False)
+            pred = self.yolo_model(im, augment=False, visualize=False)
 
         # NMS
+        classes = None
         with dt[2]:
-            pred = non_max_suppression(pred, self.conf_thres, self.iou_thres, self.classes, self.agnostic_nms, max_det=self.max_det)
+            pred = non_max_suppression(pred, self.conf_thres, self.iou_thres, classes, self.agnostic_nms, max_det=self.max_det)
 
         return self.getBoxes(pred, names, source, im)
-        
-    def detectYoloObjects(self, source):
-        stride, names, pt = self.objects_model.stride, self.objects_model.names, self.objects_model.pt
-        imgsz = check_img_size(self.imgsz, s=stride)  # check image size
-
-        # Dataloader
-        bs = 1  # batch_size
-
-        # Warming inference
-        self.objects_model.warmup(imgsz=(1 if pt or self.objects_model.triton else bs, 3, *imgsz))  # warmup
-        dt = (Profile(), Profile(), Profile())
-
-        #Preprocessing
-        im = letterbox(source, imgsz, stride=stride, auto=pt)[0]  # padded resize
-        im = im.transpose((2, 0, 1))[::-1]  # HWC to CHW, BGR to RGB
-        im = np.ascontiguousarray(im)  # contiguous
-
-        with dt[0]:
-            im = torch.from_numpy(im).to(self.objects_model.device)
-            im = im.half() if self.objects_model.fp16 else im.float()  # uint8 to fp16/32
-            im /= 255  # 0 - 255 to 0.0 - 1.0
-            if len(im.shape) == 3:
-                im = im[None]  # expand for batch dim
-
-        # Inference
-        with dt[1]:            
-            pred = self.objects_model(im, augment=False, visualize=False)
-
-        # NMS
-        with dt[2]:
-            pred = non_max_suppression(pred, self.conf_thres, self.iou_thres, self.classes, self.agnostic_nms, max_det=self.max_det)
-        
-        return self.getBoxes(pred, names, source, im)
-    
+            
     def getBoxes(self, pred, names, source, im):
         boxes = {}
         for det in pred:  # per image
@@ -304,7 +254,6 @@ class TerrarianEyes:
         except Exception as e:
             raise Exception() from e
 
-
         loop_time = time()
         while(True):
             # get an updated image of the game
@@ -315,28 +264,22 @@ class TerrarianEyes:
                 break
 
             # do tiles detection
-            tiles = self.findTiles(screenshot)
-            #tiles = {}
-            objects = self.findObjects(screenshot)
-            self.translateObjects(objects, screenshot)
+            results = self.detectYolo(screenshot)
+            tiles = self.findTiles(results, screenshot)
+            self.translateObjects(results, screenshot)
             self.translateTiles(tiles)
             with open("delete.txt", 'w') as f:
                 f.write(str(self.inventory))
                 f.write(str(self.map))
-            #objects = {}
-            annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
-            final_rectangles = []
-            for clss, rows in tiles.items():
+            annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.yolo_model.names))
+            #final_rectangles = []
+            for clss, rows in results.items():
                 if clss == 'player':
                     continue
                 for row in rows:
-                    final_rectangles.append(row)
-                    annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.tiles_model.names.items() if v == clss), None), True))
-            for clss, rows in objects.items():
-                for row in rows:
-                    final_rectangles.append(row)
-                    annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.objects_model.names.items() if v == clss), None), True))
-            
+                    #final_rectangles.append(row)
+                    annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.yolo_model.names.items() if v == clss), None), True))
+
             #final_rectangles.append([0,0,10,10])
             #self.showImage(screenshot)
             # draw the detection results onto the original image
@@ -357,27 +300,15 @@ class TerrarianEyes:
             if key == ord('q'):
                 cv.destroyAllWindows()
                 break
-    
-    def updateMap(self, screenshot):
-        #self.showImage(screenshot)
-        # do tiles detection
-        self.map = Map(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )
-        tiles = self.findTiles(screenshot)
-        self.translateTiles(tiles)
-        """annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.objects_model.names))
-        final_rectangles = []
-        for clss, rows in tiles.items():
-            for row in rows:
-                final_rectangles.append(row)
-                annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.tiles_model.names.items() if v == clss), None), True))
-        # display the images
-        self.showImage(screenshot)"""
 
-    def updateInventory(self, screenshot):
-        # do objects detection
-        self.inventory = Inventory(self.tiles_classes + self.object_classes + ['player', 'xxxx'] )        
-        objects = self.findObjects(screenshot)
-        self.translateObjects(objects, screenshot)
+    def updateMapInventory(self, screenshot):
+        # do detection
+        self.map = Map(self.classes + ['player', 'xxxx'] )
+        self.inventory = Inventory(self.classes + ['player', 'xxxx'] )        
+        results = self.detectYolo(screenshot)
+        self.translateObjects(results, screenshot)
+        tiles = self.findTiles(results, screenshot)
+        self.translateTiles(tiles)
 
     def startRecorder(self, window_name):
         # initialize the WindowCapture class
@@ -418,6 +349,8 @@ class TerrarianEyes:
         # rectangles (x,y,w,h)
         # center x + w/2, y + h/2
         for clss, rows in obj_dict.items():
+            if clss == 'tree' or clss == 'dirt' or clss == 'heart':
+                continue
             for obj_row in rows:
                 x1 = obj_row[0]
                 y1 = obj_row[1]
@@ -470,8 +403,11 @@ class TerrarianEyes:
         # rectangles (x,y,w,h)
         # center x + w/2, y + h/2
         obj_dict["player"] = [(950, 515, 970 - 950, 560 - 515)]
-        for clss, rows in obj_dict.items():
-            for obj_row in rows:
+        #for clss, rows in obj_dict.items():
+        for clss in ['tree', 'dirt', 'workbench']:
+            if clss not in obj_dict:
+                continue
+            for obj_row in obj_dict[clss]:
                 x1 = obj_row[0]
                 y1 = obj_row[1]
                 w = obj_row[2]
@@ -568,11 +504,10 @@ class TerrarianEyes:
 
 if __name__ == "__main__":
     # Create Instance
-    #tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
-    #tiles_weights_path = os.path.join('runs', 'train', 'yolov5m6-tiles', 'weights', 'best.pt')
-    tiles_weights_path = os.path.join('runs', 'train', 'yolov5s6-tiles', 'weights', 'best.pt')
-    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
-    eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
+    #weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
+    #weights_path = os.path.join('runs', 'train', 'yolov5m6-tiles', 'weights', 'best.pt')
+    weights_path = os.path.join('runs', 'train', 'yolov5l6', 'weights', 'best.pt')
+    eyes = TerrarianEyes(weights_path)
     #eyes = TerrarianEyes("", "")
     """images = eyes.templates['dirt']
     img_rgb = cv.imread('positive/trippy.png')
@@ -590,11 +525,11 @@ if __name__ == "__main__":
             break"""
     
     #Inference 
-    img = cv.imread("delete.png") 
-    number = eyes.findNumber(img,0,0,30,22)
+    #img = cv.imread("delete.png") 
+    #number = eyes.findNumber(img,0,0,30,22)
 
     #eyes.startController('.*Paint')    
-    #eyes.startController('Terraria')    
+    eyes.startController('Terraria')    
     #eyes.startController(None)   
 
     #eyes.startRecorder(None)    

@@ -1,0 +1,14 @@
+path: ../dataset/
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 9
+names: ['breastplate', 'dirt', 'heart', 'helmet', 'legs', 'slime', 'tree', 'wood', 'workbench']
+
+roboflow:
+  workspace: tec-h4jb3
+  project: terralleq
+  version: 1
+  license: MIT
+  url: https://universe.roboflow.com/tec-h4jb3/terralleq/dataset/1

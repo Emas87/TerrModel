@@ -250,44 +250,47 @@ interaction.plot(x.factor = data$time,
 
 # SE GENERA EL MODELO LINEAL DE LOS DATOS Y EL ANALISIS ANOVA
 # model <- lm(result ~ seed + algorithm + seed:algorithm, data = data) # nolint
-model <- lm(result ~ seed * algorithm * time, data = data)
-
-Anova(model, type = "II")
+model <- lm(result ~ algorithm * seed * time, data = data)
+Anova(model, type = "II", alpha = 0.05)
 
 # SE EVALUAN LOS SUPUESTOS DESPUES DE OBTENER EL MODELO LINEAL
-# SE GENERA EL HISTOGRAMA DE RESIDUOS
+# SE GENERA EL HISTOGRAMA DE RESIDUOS para verificar normalidad
 x <- residuals(model)
 plotNormalHistogram(x)
 
+# Homocedasticidad
 plot(fitted(model), residuals(model))
+
 plot(model)
 
+
+# POST-HOC
 # SE HACE LA COMPARACION DE PARES DE LOS PROMEDIOS DE MINIMOS CUADRADOS
 # DE CADA UNO DE LOS GRUPOS
 marginal <- lsmeans(model, ~ algorithm)
-pairs(marginal, adjust = "tukey")
+pairs(marginal, adjust = "sidak")
 
 # SE IDENTIFICAN LOS GRUPOS DIFERENTES EN LOS QUE SE CLASIFICAN LOS ALGORITMOS
 # EN ESTUDIO
-cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "tukey")
+cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "sidak")
 cld
 
 # seed
 marginal <- lsmeans(model, ~ seed)
-pairs(marginal, adjust = "tukey")
+pairs(marginal, adjust = "sidak")
 
 # SE IDENTIFICAN LOS GRUPOS DIFERENTES EN LOS QUE SE CLASIFICAN LOS seed
 # EN ESTUDIO
-cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "tukey")
+cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "sidak")
 cld
 
 # time
 marginal <- lsmeans(model, ~ time)
-pairs(marginal, adjust = "tukey")
+pairs(marginal, adjust = "sidak")
 
 # SE IDENTIFICAN LOS GRUPOS DIFERENTES EN LOS QUE SE CLASIFICAN LOS time
 # EN ESTUDIO
-cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "tukey")
+cld <- cld(marginal, alpha = 0.05, Letters = letters, adjust = "sidak")
 cld
 
 # Summarize mean result vs algorithm
@@ -302,18 +305,24 @@ sum$algorithm <- factor(sum$algorithm, levels = unique(sum$algorithm))
 #GRAFICO
 pd <- position_dodge(.2)
 
-ggplot(sum, aes(x = algorithm,
+plot <- ggplot(sum, aes(x = algorithm,
                 y = mean,
                 color = algorithm)) +
   geom_errorbar(aes(ymin = mean - se,
-                    ymax = mean + se,
+                    ymax = mean + se),
                     width = 0.2,
-                    size = 0.7)) +
+                    size = 0.7, position = pd) +
   geom_point(shape = 15, size = 4, position = pd) +
   theme_bw() +
   theme(axis.title = element_text(face = "bold")) +
   scale_colour_manual(values = c("black", "red", "green")) +
   ylab("result")
+
+# Increase the font size to 20 (adjust as needed)
+plot + theme(axis.title = element_text(size = 20),
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 20)) +
+  scale_size(guide = "none")
 
 # Summarize mean result vs seed in function of the algorithm
 sum <- Summarize(result ~ seed + algorithm, data = data, digits = 3)
@@ -323,25 +332,30 @@ sum$se <- signif(sum$se, digits = 3)
 sum
 
 sum$seed <- factor(sum$seed, levels = unique(sum$seed))
+#sum$seed <- factor(sum$seed, levels(sum$seed)[c(7,5,2,8,3,6,1,4)])
 
 #GRAFICO
 pd <- position_dodge(.2)
 
-ggplot(sum, aes(x = seed,
+plot <- ggplot(sum, aes(x = seed,
                 y = mean,
                 color = algorithm)) +
   geom_errorbar(aes(ymin = mean - se,
-                    ymax = mean + se,
+                    ymax = mean + se),
                     width = 0.2,
-                    size = 0.7)) +
+                    size = 0.7, position = pd) +
   geom_point(shape = 15, size = 4, position = pd) +
   theme_bw() +
   theme(axis.title = element_text(face = "bold")) +
   scale_colour_manual(values = c("black", "red", "green")) +
-                        ylab("result")
+  ylab("result")
+# Increase the font size to 20 (adjust as needed)
+plot + theme(axis.title = element_text(size = 20),
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 20)) +
+  scale_size(guide = "none")
 
-
-# Summaruze mean result vs time in function of the algorithm
+# Summarize mean result vs time in function of the algorithm
 sum <- Summarize(result ~ time + algorithm, data = data, digits = 3)
 
 sum$se <- sum$sd / sqrt(sum$n)
@@ -353,17 +367,25 @@ sum$time <- factor(sum$time, levels = unique(sum$time))
 #GRAFICO
 pd <- position_dodge(.2)
 
-ggplot(sum, aes(x = time,
+plot <- ggplot(sum, aes(x = time,
                 y = mean,
                 color = algorithm)) +
   geom_errorbar(aes(ymin = mean - se,
-                    ymax = mean + se,
+                    ymax = mean + se),
                     width = 0.2,
-                    size = 0.7)) +
+                    size = 0.7, position = pd) +
   geom_point(shape = 15, size = 4, position = pd) +
   theme_bw() +
   theme(axis.title = element_text(face = "bold")) +
   scale_colour_manual(values = c("black", "red", "green")) +
-                        ylab("result")
+  ylab("result")
+  
+# Increase the font size to 20 (adjust as needed)
+plot + theme(axis.title = element_text(size = 20),
+    axis.text = element_text(size = 16),
+    legend.text = element_text(size = 20)) +
+    scale_size(guide = "none")
 
-
+pairwise.t.test(data$result, data$algorithm, p.adjust.method = 'BH')
+pairwise.t.test(data$result, data$seed, p.adjust.method = 'BH')
+pairwise.t.test(data$result, data$time, p.adjust.method = 'BH')

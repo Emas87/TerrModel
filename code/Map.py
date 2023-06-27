@@ -277,7 +277,6 @@ class Map:
             positions = self.findTiles(sibling[0], sibling[1], clss, positions=positions)
         return positions
 
-    
     def getCloser(self):
         closest = 0
         min_distance = float('inf')

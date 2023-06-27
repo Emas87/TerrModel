@@ -304,12 +304,12 @@ if __name__ == "__main__":
     #dataset = Dataset("dataset_objects_delete")
     #dataset.deleteMatches()
 
-    objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
-    tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
+    #objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
+    #tiles_weights_path = os.path.join('runs', 'train', 'yolov5l6-tiles', 'weights', 'best.pt')
 
     #dataset.addToDataset("positive", objects_weights_path, None)
 
-    #dataset.merge_dataset('dataset_tiles_delete', objects_weights_path, tiles_weights_path)
+    #dataset.merge_dataset('dataset_tiles', objects_weights_path, tiles_weights_path)
     
     #dataset.detect(objects_weights_path)
     #dataset.detect(tiles_weights_path)

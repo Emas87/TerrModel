@@ -122,7 +122,7 @@ class TerrEnv(gym.Env):
                     # release the '3' key
                     pydirectinput.keyUp(self.action_map[3])
                     #action = 3
-            elif action == 10: # Build
+            elif action == 10: # Build workbench
                 # click on workbench, drag it to above a dirt, close to a player, maybe check for slime close
                 workbench , row = self.eyes.inventory.getBuild('workbench')
                 if workbench:
@@ -135,11 +135,35 @@ class TerrEnv(gym.Env):
                     # position of the item to be build
                     self.drag(50, 650,965,555)
                     # TODO
-                    # try to find helmet
+                    # try to find helmet coordinates
+                    x = 0
+                    y = 0
+                    pydirectinput.moveTo(x, y)
+                    pydirectinput.mouseDown(button='left')
+                    pydirectinput.mouseUp(button='left')
+
+                    # position of the item to be build to the helmet position
                     # click on helmet, dragit to helmet position
+                    self.drag(50, 650, 1840, 500)
                     # click below helmet in build menu, drag it to breastplate possition
+                    x = 50
+                    y = 710
+                    pydirectinput.moveTo(x, y)
+                    pydirectinput.mouseDown(button='left')
+                    pydirectinput.mouseUp(button='left')
+
+                    # position of the item to be build to the breastplate position
+                    self.drag(50, 650, 1840, 550)
                     # click below breastplate in build menu, drag it to legs possition
-                    # set win to True
+                    x = 50
+                    y = 710
+                    pydirectinput.moveTo(x, y)
+                    pydirectinput.mouseDown(button='left')
+                    pydirectinput.mouseUp(button='left')
+
+                    # position of the item to be build to the legs position
+                    self.drag(50, 650, 1840, 600)
+
                     self.win = True
                     reward = 100
         done= self.get_done() 
