@@ -42,9 +42,8 @@ class TerrEnv(gym.Env):
             5: 'cut'
         }
         # Create Instance
-        tiles_weights_path = os.path.join('runs', 'train', 'yolov5s6-tiles', 'weights', 'best.pt')
-        objects_weights_path = os.path.join('runs', 'train', 'yolov5l6-objects', 'weights', 'best.pt')
-        self.eyes = TerrarianEyes(tiles_weights_path, objects_weights_path)
+        weights_path = os.path.join('runs', 'train', 'yolov5l6', 'weights', 'best.pt')
+        self.eyes = TerrarianEyes(weights_path)
         self.timer = None
         self.time_limit = 120
         self.day_timer = time.time()
@@ -217,19 +216,18 @@ class TerrEnv(gym.Env):
 
     def get_observation(self):
         raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
-        self.eyes.updateMap(raw)
-        self.eyes.updateInventory(raw)
-        #with open("delete.txt", 'w') as f:
-        #    f.write(str(self.eyes.map))
+        self.eyes.updateMapInventory(raw)
+        with open("delete.txt", 'w') as f:
+            f.write(str(self.eyes.map) + "\n" +str(self.eyes.inventory))
         #gray = cv2.cvtColor(raw, cv2.COLOR_BGR2GRAY)
         #resized = cv2.resize(gray, (1920,1080))
         #channel = np.reshape(resized, (1,1080,1920))
         return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
     
-    def get_objects(self):
-        raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
-        self.eyes.updateInventory(raw)
-        return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
+    #def get_objects(self):
+    #    raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
+    #    self.eyes.updateInventory(raw)
+    #    return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
     
     def get_done(self):
         if self.win:

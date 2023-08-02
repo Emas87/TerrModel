@@ -29,7 +29,7 @@ class RHEA:
                 if time.time() - start_time >= max_time:  # check if 2 seconds have elapsed
                     break
                 score = 0
-                for i in range(self.rollouts_per_step):
+                for _ in range(self.rollouts_per_step):
                     rollout_score = self.rollout(state, a)
                     score += rollout_score
                 scores.append((a, score))
@@ -66,7 +66,7 @@ class RHEA:
         # Get number of wood and if it is higher than 100 build
         while not self.game_env.finished():
             # get a observation every 4 actions, it takes too much time
-            if iterations > 3:
+            """if iterations > 3:
                 iterations = 0
                 observation = self.game_env.get_observation()
                 state.map.current_map = observation['map']
@@ -74,7 +74,10 @@ class RHEA:
             else:
                 observation = self.game_env.get_objects()
                 state.map.current_map = observation['map']
-                state.inventory.inventory = observation['inventory']
+                state.inventory.inventory = observation['inventory']"""
+            observation = self.game_env.get_observation()
+            state.map.current_map = observation['map']
+            state.inventory.inventory = observation['inventory']
             #state = State()
             state.cut_tree = 0
             action = self.search(state, max_time)  # get the recommended action
@@ -99,7 +102,7 @@ if __name__ == "__main__":
     # Get number of wood and if it is higher than 100 build
     while not rhea.game_env.finished():
         # get a observation every 4 actions, it takes too much time
-        if iterations > 3:
+        """if iterations > 3:
             iterations = 0
             observation = rhea.game_env.get_observation()
             state.map.current_map = observation['map']
@@ -107,11 +110,14 @@ if __name__ == "__main__":
         else:
             observation = rhea.game_env.get_objects()
             state.map.current_map = observation['map']
-            state.inventory.inventory = observation['inventory']
+            state.inventory.inventory = observation['inventory']"""
+        observation = rhea.game_env.get_observation()
+        state.map.current_map = observation['map']
+        state.inventory.inventory = observation['inventory']
         #state = State()
         state.cut_tree = 0
         time1 = time.time()
-        action = rhea.search(state, 1)  # get the recommended action
+        action = rhea.search(state, 2)  # get the recommended action
         state.run_action(action)
         time2 = time.time()
         print(f'time to plan action: {str(time2-time1)}, selected:> {action}')

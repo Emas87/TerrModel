@@ -266,7 +266,7 @@ class TerrarianEyes:
             # do tiles detection
             results = self.detectYolo(screenshot)
             tiles = self.findTiles(results, screenshot)
-            self.translateObjects(results, screenshot)
+            self.translateObjects(results)
             self.translateTiles(tiles)
             with open("delete.txt", 'w') as f:
                 f.write(str(self.inventory))
@@ -306,7 +306,7 @@ class TerrarianEyes:
         self.map = Map(self.classes + ['player', 'xxxx'] )
         self.inventory = Inventory(self.classes + ['player', 'xxxx'] )        
         results = self.detectYolo(screenshot)
-        self.translateObjects(results, screenshot)
+        self.translateObjects(results)
         tiles = self.findTiles(results, screenshot)
         self.translateTiles(tiles)
 
@@ -345,7 +345,7 @@ class TerrarianEyes:
             elif key == ord('n'):
                 cv.imwrite('negative/{}.jpg'.format(loop_time), screenshot)
 
-    def translateObjects(self, obj_dict, screenshot):
+    def translateObjects(self, obj_dict):
         # rectangles (x,y,w,h)
         # center x + w/2, y + h/2
         for clss, rows in obj_dict.items():
@@ -402,9 +402,10 @@ class TerrarianEyes:
     def translateTiles(self, obj_dict):
         # rectangles (x,y,w,h)
         # center x + w/2, y + h/2
-        obj_dict["player"] = [(950, 515, 970 - 950, 560 - 515)]
         #for clss, rows in obj_dict.items():
-        for clss in ['tree', 'dirt', 'workbench']:
+        #print(f'Classes: {obj_dict.keys()}')
+        obj_dict["player"] = [(950, 515, 970 - 950, 560 - 515)]
+        for clss in ['tree', 'dirt', 'workbench', 'player']:
             if clss not in obj_dict:
                 continue
             for obj_row in obj_dict[clss]:

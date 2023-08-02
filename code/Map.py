@@ -49,7 +49,6 @@ class Map:
 
         attack = False
         #Find closest enemy to player 
-        player = (60, 32)
         player = (58, 31)
         closest = [0,0]
         min_distance = float('inf')
@@ -73,7 +72,6 @@ class Map:
 
         cut = False
         #Find closest tree to player 
-        #player = (60, 33)
         # test cut distance from the feet
         player = (58, 33)
         closest = [0,0]

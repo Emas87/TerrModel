@@ -1,8 +1,8 @@
 
-TerrAllEq - v1 v1
+AllEq - v3 2023-07-25 7:03pm
 ==============================
 
-This dataset was exported via roboflow.com on June 23, 2023 at 3:31 PM GMT
+This dataset was exported via roboflow.com on July 26, 2023 at 1:05 AM GMT
 
 Roboflow is an end-to-end computer vision platform that helps you
 * collaborate with your team on computer vision projects
@@ -17,7 +17,7 @@ visit https://github.com/roboflow/notebooks
 
 To find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com
 
-The dataset includes 330 images.
+The dataset includes 353 images.
 Game-objects are annotated in YOLO v5 PyTorch format.
 
 The following pre-processing was applied to each image:

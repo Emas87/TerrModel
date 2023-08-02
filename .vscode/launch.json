@@ -14,7 +14,7 @@
       "cwd": "${workspaceFolder}/code",
       "args": [
         "-dataset",
-        "dataset_objects",
+        "dataset_origin",
       ]
     },
     {

@@ -11,7 +11,7 @@ files = os.listdir(args.path)
 for i in range(0,len(files)):
     NewFile = str(i)
     file = os.path.join(args.path, files[i])
-    NewFile = os.path.join(args.path, NewFile + ".png")
+    NewFile = os.path.join(args.path, NewFile + ".txt")
     if file != NewFile:
         os.rename(file, NewFile)
         print("os.rename(" + file + ", " + NewFile + ")")

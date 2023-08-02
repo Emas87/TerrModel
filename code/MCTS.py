@@ -91,7 +91,7 @@ class MCTS:
             #if fully_expanded:
             #    break
             result, actions = self.simulate(node.state, max_iterations)
-            #self.logger.info(f"simulate with {node.state.last_action}, result: {result}, with these actions {str(actions)}, initial score {node.state.score}")
+            self.logger.info(f"simulate with {node.state.last_action}, result: {result}, with these actions {str(actions)}, initial score {node.state.score}")
             self.backpropagate(node, result)
             if time.time() - start_time >= max_time:
                 break
@@ -114,7 +114,7 @@ class MCTS:
         # Get number of wood and if it is higher than 100 build
         while not self.game_env.finished():
             # get a observation every 4 actions, it takes too much time
-            if iterations > 3:
+            """if iterations > 3:
                 iterations = 0
                 observation = self.game_env.get_observation()
                 state.map.current_map = observation['map']
@@ -122,7 +122,11 @@ class MCTS:
             else:
                 observation = self.game_env.get_objects()
                 state.map.current_map = observation['map']
-                state.inventory.inventory = observation['inventory']
+                state.inventory.inventory = observation['inventory']"""
+            observation = self.game_env.get_observation()
+            state.map.current_map = observation['map']
+            state.inventory.inventory = observation['inventory']
+            
             state.cut_tree = 0
             action = self.search(state, max_iterations=num_simulations, max_time=max_time)  # get the recommended action
             state.run_action(action)            
@@ -147,19 +151,22 @@ if __name__ == "__main__":
     # Get number of wood and if it is higher than 100 build
     while not mcts.game_env.finished():
         # get a observation every 4 actions, it takes too much time
-        if iterations > 3:
+        """if iterations > 3:
             iterations = 0
             observation = mcts.game_env.get_observation()
-            state.map.current_map = observation['map']
+            state.map.current_map = observation['map']dddd
             state.inventory.inventory = observation['inventory']
         else:
             observation = mcts.game_env.get_objects()
             state.map.current_map = observation['map']
-            state.inventory.inventory = observation['inventory']
+            state.inventory.inventory = observation['inventory']"""
+        observation = mcts.game_env.get_observation()
+        state.map.current_map = observation['map']
+        state.inventory.inventory = observation['inventory']
         #state = State()
         state.cut_tree = 0
         time1 = time.time()
-        action = mcts.search(state, max_iterations=num_simulations, max_time=1)  # get the recommended action
+        action = mcts.search(state, max_iterations=num_simulations, max_time=2)  # get the recommended action
         state.run_action(action)
         time2 = time.time()
         print(f'time to plan action: {str(time2-time1)}, selected:> {action}')

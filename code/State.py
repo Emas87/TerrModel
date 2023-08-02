@@ -24,26 +24,18 @@ class State():
             5: 'cut',
             6: 'closer'
         }
-        self.data_objects = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset_objects','data.yaml')
-        self.data_tiles = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset_tiles', 'data.yaml')
+        self.data = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset', 'data.yaml')
         self.cut_tree = 0
         # Get classes Inventory
-        object_classes = []
-        with open(self.data_objects, "r") as f:
+        classes = []
+        with open(self.data, "r") as f:
             lines = f.readlines()
         for line in lines:
             if "names: " in line:
                 classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '')
-                object_classes = classesStr.split(', ')
+                classes = classesStr.split(', ')
 
-        tiles_classes = []
-        with open(self.data_tiles, "r") as f:
-            lines = f.readlines()
-        for line in lines:
-            if "names: " in line:
-                classesStr = line.replace("names: ",'').replace('\'', '').replace('[','').replace(']', '').replace('\n', '')
-                tiles_classes = classesStr.split(', ')
-        self.classes = tiles_classes + object_classes + ['player', 'xxxx']
+        self.classes =  classes + ['player', 'xxxx']
 
         self.inventory = Inventory(self.classes)
         self.map = Map(self.classes)
