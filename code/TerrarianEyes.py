@@ -137,7 +137,7 @@ class TerrarianEyes:
                 for row in rows:
                     if clss not in final_results:
                         final_results[clss] = []
-                    final_results[clss].append((row[0],row[1],row[2], row[3]))
+                    final_results[clss].append([row[0],row[1],row[2], row[3]])
 
         return final_results
         #return final_rectangles
@@ -269,8 +269,7 @@ class TerrarianEyes:
             self.translateObjects(results)
             self.translateTiles(tiles)
             with open("delete.txt", 'w') as f:
-                f.write(str(self.inventory))
-                f.write(str(self.map))
+                f.write(self.map.print() + "\n" +str(self.inventory))
             annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.yolo_model.names))
             #final_rectangles = []
             for clss, rows in results.items():
@@ -301,7 +300,7 @@ class TerrarianEyes:
                 cv.destroyAllWindows()
                 break
 
-    def updateMapInventory(self, screenshot):
+    def updateMapInventory(self, screenshot, print=False):
         # do detection
         self.map = Map(self.classes + ['player', 'xxxx'] )
         self.inventory = Inventory(self.classes + ['player', 'xxxx'] )        
@@ -309,7 +308,22 @@ class TerrarianEyes:
         self.translateObjects(results)
         tiles = self.findTiles(results, screenshot)
         self.translateTiles(tiles)
+        if print:
+            with open("delete.txt", 'w') as f:
+                f.write(self.map.print() + "\n" +str(self.inventory))
 
+            # print new screenshot
+            results.update(tiles)
+            annotator = Annotator(screenshot, line_width=int(self.line_thickness/3), font_size = 5, example=str(self.yolo_model.names))
+            #final_rectangles = []
+            for clss, rows in results.items():
+                if clss == 'player':
+                    continue
+                for row in rows:
+                    #final_rectangles.append(row)
+                    annotator.box_label((row[0], row[1], row[0] + row[2], row[1] + row[3]), clss, color=colors(next((k for k, v in self.yolo_model.names.items() if v == clss), None), True))
+            cv.imwrite('delete.jpg', screenshot)
+    
     def startRecorder(self, window_name):
         # initialize the WindowCapture class
         wincap = WindowCapture(window_name)
@@ -449,13 +463,12 @@ class TerrarianEyes:
         for numName in numNames:
             images = self.templates[numName]
             # TODO test with rectangles = self.matchImage(cropped_image, images, threshold = 0.535)
-            #rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.62)
             rectangles, confidences = self.matchImageColor(cropped_image, images, threshold = 0.6)
             for i in range(len(rectangles)):
                 if int(rectangles[i][0]) > 30:
                     continue
                 numbers[int(rectangles[i][0])] = (numName, rectangles[i], confidences[i])
-        # TODO delete rectangles that overlap more than %50
+        # delete rectangles that overlap more than %50
         key_sorted = sorted(numbers)
         for i in range(len(key_sorted)-1,-1,-1):
             for j in range(len(key_sorted)-1, -1, -1):

@@ -14,6 +14,8 @@ from configure_logging import configure_logging
 
 # Configure the shared logger
 logger = configure_logging('run_experiments.log')
+RIGHT = 'd'
+LEFT = 'a'
 
 class TerrEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
@@ -34,12 +36,11 @@ class TerrEnv(gym.Env):
         self.game_location = {'top': 0, 'left': 0, 'width': 1920, 'height': 1080}
         self.done_location = {'top': 460, 'left': 760, 'width': 400, 'height': 70}
         self.action_map = {
-            0: 'no_op',
-            1: 'space',
-            2: 'd', 
-            3: 'a', 
             4: 'attack',
-            5: 'cut'
+            5: 'cut',
+            7: 'helmet',
+            8: 'breastplate',
+            9: 'legs'
         }
         # Create Instance
         weights_path = os.path.join('runs', 'train', 'yolov5l6', 'weights', 'best.pt')
@@ -48,123 +49,164 @@ class TerrEnv(gym.Env):
         self.time_limit = 120
         self.day_timer = time.time()
         self.day_limit = 360
+        self.second_phase = False
            
     def step(self, action):
         if self.timer is None:
             raise AssertionError("Cannot call env.step() before calling reset()")
+        print(f"Step: {action}")
+        
+        # More information
+        info = {}
         # Get current health
         health = self.eyes.map.getHealth()
         reward = 0
-        if action < 4:
-            # press 'action' key and hold it down
-            pydirectinput.keyDown(self.action_map[action])
+        # In case we need map or inventory
+        if action == 4: # attack
+            # find closest enemy position and check 
+            #with open("delete.txt", 'w') as f:
+            #    f.write(str(self.eyes.map))
+            attack, x, y= self.eyes.map.isEnemyOnAttackRange()
+            # if is in attack range
+            if attack:
+                # Move mouse to enemy position
+                pydirectinput.moveTo((x+1)*16 + 16, y*16 + 8)
+                # attack
+                pydirectinput.press('3')
+                # Press the left mouse button
+                pydirectinput.mouseDown(button='left')
+                time.sleep(6)
+                # Release the left mouse button3
+                pydirectinput.mouseUp(button='left')
+                reward = 20
+        elif action == 5: # cut wood
+            # find closest tree position and check 
+            # if is in cut range
+            cut, x, y = self.eyes.map.isTreeOnCutRange()
+            # if is in attack range
+            if cut:
+                # Move mouse to enemy position
+                pydirectinput.moveTo((x+1)*16 + 16, y*16 + 8)
+                
+                # attack
+                pydirectinput.press('3')
+                # Press the left mouse button
+                pydirectinput.mouseDown(button='left')
+                time.sleep(2)
+                # Release the left mouse button3
+                pydirectinput.mouseUp(button='left')
+                reward = 10
+        elif action == 6: # closer
+            reward = 4
+            closest = self.eyes.map.getCloserSpiral(self.second_phase)
+            #TODO get closer to tree is not working
+            print(f'closest: {closest}')
+            closest = closest[0]
+            if closest - 58 > 0:
+                # dRight
+                # press '2' key and hold it down
+                pydirectinput.keyDown('d')
 
-            # keep the key pressed for 2 seconds
-            time.sleep(0.3)
-            # release the 'action' key
-            pydirectinput.keyUp(self.action_map[action])
-            reward = 1 
-        else: 
-            # In case we need map or inventory
-            if action == 4: # attack
-                # find closest enemy position and check 
-                #with open("delete.txt", 'w') as f:
-                #    f.write(str(self.eyes.map))
-                attack, x, y= self.eyes.map.isEnemyOnAttackRange()
-                # if is in attack range
-                if attack:
-                    # Move mouse to enemy position
-                    pydirectinput.moveTo((x+1)*16 + 16, y*16 + 8)
-                    # attack
-                    pydirectinput.press('3')
-                    # Press the left mouse button
-                    pydirectinput.mouseDown(button='left')
-                    time.sleep(6)
-                    # Release the left mouse button
-                    pydirectinput.mouseUp(button='left')
-                    reward = 20
-            elif action == 5: # cut wood
-                # find closest tree position and check 
-                # if is in cut range
-                cut, x, y = self.eyes.map.isTreeOnCutRange()
-                # if is in attack range
-                if cut:
-                    # Move mouse to enemy position
-                    pydirectinput.moveTo((x+1)*16 + 16, y*16 + 8)
-                    
-                    # attack
-                    pydirectinput.press('3')
-                    # Press the left mouse button
-                    pydirectinput.mouseDown(button='left')
-                    time.sleep(2)
-                    # Release the left mouse button3
-                    pydirectinput.mouseUp(button='left')
-                    reward = 10
-            elif action == 6: # closer
-                reward = 4
-                closest = self.eyes.map.getCloser()
-                if closest - 58 > 0:
-                    # press '2' key and hold it down
-                    pydirectinput.keyDown(self.action_map[2])
+                # keep the key pressed for 2 seconds
+                time.sleep(0.3)
+                # release the '2' key
+                pydirectinput.keyUp(RIGHT)
+                #action = 2
+            else:
+                # press '3' key and hold it down
+                pydirectinput.keyDown(LEFT)
 
-                    # keep the key pressed for 2 seconds
-                    time.sleep(0.3)
-                    # release the '2' key
-                    pydirectinput.keyUp(self.action_map[2])
-                    #action = 2
+                # keep the key pressed for 2 seconds
+                time.sleep(0.3)
+                # release the '3' key
+                pydirectinput.keyUp(LEFT)
+                #action = 3
+            if closest == 0 and self.second_phase:
+                self.step(10)
+        elif action == 7: # Build helmet
+            # use inventory to know where to click
+            helmet , row = self.eyes.inventory.canBuildHelmet()
+            if helmet:
+                reward = 8
+                # position of the helmet to be built
+                x, y, w, h = self.eyes.inventory.convertCoordsBuild(row)
+                # select workbench in build inventory
+                pydirectinput.moveTo(int(x+w/2), int(y+h/2))
+                pydirectinput.mouseDown(button='left')
+                pydirectinput.mouseUp(button='left')
+                time.sleep(0.5)
+
+                # click on helmet, drag it to helmet position
+                self.drag(50, 650, 1840, 500)
+                # move mouse so Yolo can identify item
+                pydirectinput.moveTo(80, 80)
+
+        elif action == 8: # Build breastplate
+            breastplate , row = self.eyes.inventory.canBuildBP()
+            if breastplate:
+                reward = 8
+                # position of the helmet to be built
+                x, y, w, h = self.eyes.inventory.convertCoordsBuild(row)
+                # select workbench in build inventory
+                pydirectinput.moveTo(int(x+w/2), int(y+h/2))
+                pydirectinput.mouseDown(button='left')
+                pydirectinput.mouseUp(button='left')
+                time.sleep(0.5)
+
+                # click on breastplate, drag it to breastplate position
+                self.drag(50, 650, 1840, 550)
+                # move mouse so Yolo can identify item
+                pydirectinput.moveTo(80, 80)
+
+        elif action == 9: # Build legs
+            legs , row = self.eyes.inventory.canBuildLegs()
+            if legs:
+                reward = 8
+                # position of the helmet to be built
+                x, y, w, h = self.eyes.inventory.convertCoordsBuild(row)
+                # select workbench in build inventory
+                pydirectinput.moveTo(int(x+w/2), int(y+h/2))
+                pydirectinput.mouseDown(button='left')
+                pydirectinput.mouseUp(button='left')
+                time.sleep(0.5)
+
+                # click on legs, drag it to legs position
+                self.drag(50, 650, 1840, 600)
+                # move mouse so Yolo can identify item
+                pydirectinput.moveTo(80, 80)
+
+
+        elif action == 10: # Build workbench
+            # click on workbench, drag it to above a dirt, close to a player, maybe check for slime close
+            workbench , row = self.eyes.inventory.getBuild('workbench')
+            if workbench or self.second_phase:
+                # position of the workbench to be built
+                # find right coord to place the workbench
+                wb_col, wb_row = self.eyes.map.findWBCoords2Place()
+                wb_x, wb_y = self.eyes.map.convertCoords(wb_col, wb_row)
+                if wb_x is None or wb_y is None:
+                    info["status"] = "NotCompleted"
                 else:
-                    # press '3' key and hold it down
-                    pydirectinput.keyDown(self.action_map[3])
+                    info["status"] = "Completed"
 
-                    # keep the key pressed for 2 seconds
-                    time.sleep(0.3)
-                    # release the '3' key
-                    pydirectinput.keyUp(self.action_map[3])
-                    #action = 3
-            elif action == 10: # Build workbench
-                # click on workbench, drag it to above a dirt, close to a player, maybe check for slime close
-                workbench , row = self.eyes.inventory.getBuild('workbench')
-                if workbench:
-                    x, y, w, h = self.eyes.inventory.convertCoordsBuild(row)
-                    # select workbench
-                    pydirectinput.moveTo(int(x+w/2), int(y+h/2))
-                    pydirectinput.mouseDown(button='left')
-                    pydirectinput.mouseUp(button='left')
+                    # if second phase already initiated, there should be already a worbench to be placed
+                    if not self.second_phase:
+                        # Find workbench in build inventory
+                        x, y, w, h = self.eyes.inventory.convertCoordsBuild(row)
 
-                    # position of the item to be build
-                    self.drag(50, 650,965,555)
-                    # TODO
-                    # try to find helmet coordinates
-                    x = 0
-                    y = 0
-                    pydirectinput.moveTo(x, y)
-                    pydirectinput.mouseDown(button='left')
-                    pydirectinput.mouseUp(button='left')
+                        # if row is the build row, just drag it
+                        if row != 4:
+                            # select workbench in build inventory
+                            pydirectinput.moveTo(int(x+w/2), int(y+h/2))
+                            pydirectinput.mouseDown(button='left')
+                            pydirectinput.mouseUp(button='left')
 
-                    # position of the item to be build to the helmet position
-                    # click on helmet, dragit to helmet position
-                    self.drag(50, 650, 1840, 500)
-                    # click below helmet in build menu, drag it to breastplate possition
-                    x = 50
-                    y = 710
-                    pydirectinput.moveTo(x, y)
-                    pydirectinput.mouseDown(button='left')
-                    pydirectinput.mouseUp(button='left')
+                        self.drag(50, 650, wb_x, wb_y)
+                    else:
+                        self.drag(0, 0, wb_x, wb_y)
+                    print(f'cords for WB: {wb_x}, {wb_y}')
 
-                    # position of the item to be build to the breastplate position
-                    self.drag(50, 650, 1840, 550)
-                    # click below breastplate in build menu, drag it to legs possition
-                    x = 50
-                    y = 710
-                    pydirectinput.moveTo(x, y)
-                    pydirectinput.mouseDown(button='left')
-                    pydirectinput.mouseUp(button='left')
 
-                    # position of the item to be build to the legs position
-                    self.drag(50, 650, 1840, 600)
-
-                    self.win = True
-                    reward = 100
         done= self.get_done() 
         died= self.died() 
         if died:
@@ -175,10 +217,9 @@ class TerrEnv(gym.Env):
             new_health = self.eyes.map.getHealth()
             if new_health - health < 0:
                 reward = reward - 2
-        # calculate real reward
-        info = {}
-        return observation, reward, done, info
         
+        return observation, reward, done, info
+    
     def reset(self):
         self.win = False
         time.sleep(10)
@@ -216,9 +257,7 @@ class TerrEnv(gym.Env):
 
     def get_observation(self):
         raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
-        self.eyes.updateMapInventory(raw)
-        with open("delete.txt", 'w') as f:
-            f.write(str(self.eyes.map) + "\n" +str(self.eyes.inventory))
+        self.eyes.updateMapInventory(raw, print=True)        
         #gray = cv2.cvtColor(raw, cv2.COLOR_BGR2GRAY)
         #resized = cv2.resize(gray, (1920,1080))
         #channel = np.reshape(resized, (1,1080,1920))
@@ -243,9 +282,19 @@ class TerrEnv(gym.Env):
         return done
     
     def finished(self):
+        if self.eyes.inventory.inventory[6][2] == self.eyes.inventory.classes.index('legs') and \
+            self.eyes.inventory.inventory[6][1] == self.eyes.inventory.classes.index('breastplate') and \
+            self.eyes.inventory.inventory[6][0] == self.eyes.inventory.classes.index('helmet'):
+            return True
+        if not self.second_phase:
+            self.secondPhase()
+        return False
+    
+    def secondPhase(self):
         # find wood in inventory and get coordinates
         #self.eyes.inventory.inventory[0][3] = self.eyes.inventory.classes.index('wood')
         wood, col, row = self.eyes.inventory.getWood()
+        print(f'wood: {wood}, col: {col}, row: {row}')
         # find number
         if wood:
             x, y, w, h = self.eyes.inventory.convertCoords(col, row)
@@ -258,7 +307,9 @@ class TerrEnv(gym.Env):
             self.logger.info(f"wood: {count}")
             if count >= 100 and count < 200:
                 # build
-                self.step(10) 
+                _, _, _, info = self.step(10) 
+                #if "status" in info and info["status"] != "NotCompleted":
+                self.second_phase = True
                 return True
         return False
     
@@ -361,14 +412,17 @@ class TerrEnv(gym.Env):
 if __name__ == "__main__":
     
     # Setup
-    
     game_env = TerrEnv()  # initialize the game state
     #game_env.reset()  # initialize the game state
-    game_env.start(7)
+    #game_env.start(7)
     game_env.reset()
-    while True:
+    while not game_env.finished():
+        #wb_x, wb_y = game_env.eyes.map.findWBCoords2Place()
         game_env.get_observation()
-        game_env.finished()
+        game_env.step(7)
+        game_env.step(8)
+        game_env.step(9)
+        
 
 
     

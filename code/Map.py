@@ -52,9 +52,9 @@ class Map:
         player = (58, 31)
         closest = [0,0]
         min_distance = float('inf')
-        debug_matrix = [['x' for j in range(54,63 + 1)] for i in range(27,37 + 1)]
+        debug_matrix = [['x' for j in range(53,64 + 1)] for i in range(27,37 + 1)]
         for i in range(27,37 + 1):
-            for j in range(54,63 + 1):
+            for j in range(53,64 + 1):
                 debug_matrix[i-27][j-54] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
                 if self.classes[self.current_map[i][j]] == "slime":
                     distance = abs(i - player[1]) + abs(j - player[0])
@@ -275,19 +275,165 @@ class Map:
             positions = self.findTiles(sibling[0], sibling[1], clss, positions=positions)
         return positions
 
-    def getCloser(self):
+    def getCloser(self, second_phase = False):
         closest = 0
         min_distance = float('inf')
         rows = [8, 16, 24, 32, 40, 48, 56, 64]
+        clss = 'tree'
+        if second_phase:
+            rows = range(len(self.current_map))
+            clss = 'workbench'
         for i in rows:
             for j in range(len(self.current_map[i])):
-                if self.current_map[i][j] == self.classes.index('tree'):
+                if self.current_map[i][j] == self.classes.index(clss):
                     distance = abs(j - 58)
                     if distance < min_distance:
                         closest = j
                         min_distance = distance
         return closest
+    
+    def getCloserSpiral(self, second_phase = False):
+        closest = 0
+        clss = 'tree'
+        if second_phase:
+            rows = range(len(self.current_map))
+            clss = 'workbench'
+        #Find closest plain tiles to place workbench 
+        player = (59, 33)
+        x_max = len(self.current_map[0])/2 - 1
+        y_max = len(self.current_map)/2 - 1
+        # in x placement range is 4 tiles and y is 3 tiles
+        i = 0
+        j = 0
+        xc_max = 1 # max for each while iteration
+        yc_max = 1 # max for each while iteration
+        # spiral to try to find 2 free tiles of dirt in order to place the workbench
+        while xc_max < x_max or yc_max < y_max:
+            if yc_max + 1 >= xc_max:
+                for current_j in range(j+1, xc_max+1):
+                    j = current_j
+                    #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                    # check for dirt and dirt+
+                    if self.classes[self.current_map[player[1]+i][player[0]+j]] == clss:
+                        return player[0]+j,player[1]+i
+            else:
+                j = xc_max
+                i -= 1
+
+            for current_i in range(i+1,yc_max+1):
+                i = current_i
+                #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                # check for dirt and dirt+
+                if self.classes[self.current_map[player[1]+i][player[0]+j]] == clss:
+                        return player[0]+j,player[1]+i
+
+            if yc_max >= xc_max:
+                for current_j in range(j-1,-xc_max-1,-1):
+                    j = current_j
+                    #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                    # check for dirt and dirt+
+                    if self.classes[self.current_map[player[1]+i][player[0]+j]] == clss:
+                        return player[0]+j,player[1]+i
+            else:
+                j = -xc_max
+                i += 1
+
+            for current_i in range(i-1,-yc_max-1,-1):
+                i = current_i
+                #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                # check for dirt and dirt+
+                if self.classes[self.current_map[player[1]+i][player[0]+j]] == clss:
+                        return player[0]+j,player[1]+i
+            if yc_max < y_max:
+                yc_max+=1
+            if xc_max < x_max:
+                xc_max+=1
+        return 0,0
 
     def print(self):
-        with open("delete.txt", 'w') as f:
-            f.write(str(self.map))
+        string = "0000 "
+        for i in range(0, self.max_tiles[0]+1):
+            number_str = str(i)    
+            # Calculate the number of zeros needed
+            zeros_needed = 4 - len(number_str)            
+            # Pad the string with leading zeros
+            padded_number_str = '0' * zeros_needed + number_str
+            string += f'{padded_number_str} '
+        string += '\n'
+        #self.max_tiles : (120, 67)
+        for i in range(0,self.max_tiles[1]):
+            number_str = str(i)    
+            # Calculate the number of zeros needed
+            zeros_needed = 4 - len(number_str)            
+            # Pad the string with leading zeros
+            padded_number_str = '0' * zeros_needed + number_str
+            string += f'{padded_number_str} '
+            for j in range(self.max_tiles[0]):
+                string += f'{self.classes[self.current_map[i-1][j]][0:4]} '
+            string += '\n'
+
+
+        return string
+
+    def findWBCoords2Place(self):
+        #Find closest plain tiles to place workbench 
+        player = (59, 33)
+        # in x placement range is 4 tiles and y is 3 tiles
+        x_max = 5
+        y_max = 3
+        i = 0
+        j = 0
+        xc_max = 1 # max for each while iteration
+        yc_max = 1 # max for each while iteration
+        # spiral to try to find 2 free tiles of dirt in order to place the workbench
+        while xc_max < x_max or yc_max < y_max:
+            if yc_max + 1 >= xc_max:
+                for current_j in range(j+1, xc_max+1):
+                    j = current_j
+                    #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                    # check for dirt and dirt+
+                    if self.classes[self.current_map[player[1]+i][player[0]+j]] == "dirt" and self.classes[self.current_map[player[1]+i][player[0]+j+1]] == "dirt" and \
+                    self.classes[self.current_map[player[1]+i-1][player[0]+j]] == "xxxx" and self.classes[self.current_map[player[1]+i-1][player[0]+j+1]] == "xxxx" :
+                        return player[0]+j,player[1]+i
+            else:
+                j = xc_max
+                i -= 1
+
+            for current_i in range(i+1,yc_max+1):
+                i = current_i
+                #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                # check for dirt and dirt+
+                if self.classes[self.current_map[player[1]+i][player[0]+j]] == "dirt" and self.classes[self.current_map[player[1]+i][player[0]+j+1]] == "dirt" and \
+                    self.classes[self.current_map[player[1]+i-1][player[0]+j]] == "xxxx" and self.classes[self.current_map[player[1]+i-1][player[0]+j+1]] == "xxxx" :
+                        return player[0]+j,player[1]+i
+
+            if yc_max >= xc_max:
+                for current_j in range(j-1,-xc_max-1,-1):
+                    j = current_j
+                    #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                    # check for dirt and dirt+
+                    if self.classes[self.current_map[player[1]+i][player[0]+j]] == "dirt" and self.classes[self.current_map[player[1]+i][player[0]+j+1]] == "dirt" and \
+                    self.classes[self.current_map[player[1]+i-1][player[0]+j]] == "xxxx" and self.classes[self.current_map[player[1]+i-1][player[0]+j+1]] == "xxxx" :
+                        return player[0]+j,player[1]+i
+            else:
+                j = -xc_max
+                i += 1
+
+            for current_i in range(i-1,-yc_max-1,-1):
+                i = current_i
+                #print(self.classes[self.current_map[player[1]+i][player[0]+j]])
+                # check for dirt and dirt+
+                if self.classes[self.current_map[player[1]+i][player[0]+j]] == "dirt" and self.classes[self.current_map[player[1]+i][player[0]+j+1]] == "dirt" and \
+                    self.classes[self.current_map[player[1]+i-1][player[0]+j]] == "xxxx" and self.classes[self.current_map[player[1]+i-1][player[0]+j+1]] == "xxxx" :
+                        return player[0]+j,player[1]+i
+            if yc_max < y_max:
+                yc_max+=1
+            if xc_max < x_max:
+                xc_max+=1
+        return None,None
+    
+    def convertCoords(self, col, row):
+        if col is None or row is None:
+            return None, None       
+        return (col+1)*16, (row)*16+8 # reverting index
+        

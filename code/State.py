@@ -16,16 +16,13 @@ class State():
     def __init__(self):
         self.last_action = None
         self.action_map = {
-            0: 'no_op',
-            1: 'space',
-            2: 'd', 
-            3: 'a', 
             4: 'attack',
             5: 'cut',
-            6: 'closer'
+            7: 'helmet',
+            8: 'breastplate',
+            9: 'legs'
         }
         self.data = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset', 'data.yaml')
-        self.cut_tree = 0
         # Get classes Inventory
         classes = []
         with open(self.data, "r") as f:
@@ -41,38 +38,16 @@ class State():
         self.map = Map(self.classes)
 
         self.score = 0
+        self.second_phase = False
     
     def run_action(self, action):
         new_state = State()
-        new_state.cut_tree = self.cut_tree
+        new_state.second_phase = self.second_phase
 
         # Get current health
         health = self.map.getHealth()
         reward = 0
-        if action == 0: # no_op
-            new_state.map.current_map = self.map.current_map.copy()
-        elif action == 1: # space
-            if self.map.canJump():
-                # Move map downward
-                self.map.moveMap(new_state.map.current_map, new_i=1)
-                reward = 1
-            else:
-                new_state.map.current_map = self.map.current_map.copy()
-        elif action == 2: # d
-            if self.map.canMove(right=True):
-                # Move map right
-                self.map.moveMap(new_state.map.current_map, new_j=-1)
-                reward = 2
-            else:
-                new_state.map.current_map = self.map.current_map.copy()
-        elif action == 3: # a
-            if self.map.canMove(right=False):
-                self.map.moveMap(new_state.map.current_map, new_j=1)
-                # Move map left
-                reward = 2
-            else:
-                new_state.map.current_map = self.map.current_map.copy()
-        elif action == 4: # attack
+        if action == 4: # attack
             # find closest enemy position and check 
             attack, x, y = self.map.isEnemyOnAttackRange()
             # if is in attack range
@@ -93,23 +68,30 @@ class State():
                 # delete tree tiles, after second cut, from map acording to x and y
                 if(self.last_action == 5):
                     new_state.map.deleteTileAt(x, y, self.classes.index('tree'))
-                    self.cut_tree += 1    
                     reward = 2 # to extra to cut the tree
-                reward += 10
-        elif action == 6: # get closer to a tree
+                reward += 15
+        elif action == 6: # get closer to a tree or workbench
             reward = 4
-            closest = self.map.getCloser()
+            closest = self.map.getCloserSpiral(self.second_phase)[0]
             if closest - 58 > 0:
                 right = True
-                #action = 2
             else:
                 right = False
-                #action = 3
             if right and self.map.canMove(right):
                 # Move map left
                 self.map.moveMap(new_state.map.current_map, new_j=-1)
             elif not right and self.map.canMove(right):
+                # Move map right
                 self.map.moveMap(new_state.map.current_map, new_j=1)
+        elif action == 7:
+            reward = 20
+            self.inventory.inventory[6][0] = self.inventory.classes.index('helmet')
+        elif action == 8:
+            reward = 20
+            self.inventory.inventory[6][1] = self.inventory.classes.index('breastplate')
+        elif action == 9:
+            reward = 20
+            self.inventory.inventory[6][2] = self.inventory.classes.index('legs')
         new_state.last_action = action
         # Apply effects of the map, gravity attack by an enemy
         new_state.map.fixMap(action == 1 and self.last_action != 1)
@@ -134,23 +116,28 @@ class State():
             done = True
 
         # Get win condition certain number of woods
-        if self.cut_tree == 5:
+        if self.inventory.inventory[6][2] == self.inventory.classes.index('legs') and \
+            self.inventory.inventory[6][1] == self.inventory.classes.index('breastplate') and \
+            self.inventory.inventory[6][0] == self.inventory.classes.index('helmet'):
             done = True
 
         return done
 
     def get_available_actions(self):
-        actions = [0, 6]
+        actions = [6]
         #if self.map.canJump():
         #    actions.append(1)
-        if self.map.canMove(right=True):
-            actions.append(2)
-        if self.map.canMove(right=False):
-            actions.append(3)
         if self.map.isEnemyOnAttackRange()[0]:
             actions.append(4)
-        if self.map.isTreeOnCutRange()[0]:
+        if self.map.isTreeOnCutRange()[0] and not self.second_phase:
             actions.append(5)
+        if self.second_phase and self.inventory.canBuildHelmet()[0]:
+            actions.append(7)
+        if self.second_phase and self.inventory.canBuildBP()[0]:
+            actions.append(8)
+        if self.second_phase and self.inventory.canBuildLegs()[0]:
+            actions.append(9)
+
         return actions
 
     def __str__(self) -> str:

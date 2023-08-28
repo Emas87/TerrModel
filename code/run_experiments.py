@@ -12,7 +12,7 @@ if __name__ == "__main__":
     experiment_file = f"experiments{i}.txt"
     game_env = TerrEnv()
     mcts = MCTS(game_env, exploration=3)
-    rhea = RHEA(game_env, horizon=1, rollouts_per_step=2)
+    rhea = RHEA(game_env, horizon=2, rollouts_per_step=2)
     #mcts = None
     #rhea = None
     with open(experiment_file) as f:
@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     for i in range(len(lines)):
         experiment = lines[i].strip().split(" ")
-        if len(experiment) > 3: # already done
+        if len(experiment) > 3: # reading first line
             continue
         algorithm = experiment[0]
         seed = experiment[1]

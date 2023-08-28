@@ -67,18 +67,28 @@ class Inventory:
         row = floor(center_diff[1]/slot_size[1])
 
     def convertCoordsBuild(self, row):
-        
-        build_min = (24, 420)
-        build_max = (24 + 54, 690 + int(4*54))    
-
-        slot_size = (build_max[1]-build_min[1])/9
-        center_diff = slot_size*row
-        center = center_diff + build_min[1]
+        y_coords = [420, 475, 530, 580, 630, 690, 740, 800, 850]
+        slot_size = 50
         x = int(30)
-        y = int(center - slot_size/2)
+        y = y_coords[row]
         w = slot_size
         h = slot_size
         return x, y, w, h
         # result center[0] - slot_size[0]/2, center[1], slot_size[0], slot_size[1]/2
+
+    def canBuildHelmet(self):
+        # check if helmet is in the build inventory[7] and the is not presetn in the armor inventory[6][0]
+        helmet , row = self.getBuild('helmet')
+        return self.inventory[6][0] != self.classes.index("helmet") and helmet, row
+    
+    def canBuildBP(self):
+        # check if breastplate is in the build inventory[7] and the is not presetn in the armor inventory[6][1]
+        breastplate , row = self.getBuild('breastplate')
+        return self.inventory[6][1] != self.classes.index("breastplate") and breastplate, row
+    
+    def canBuildLegs(self):
+        # check if legs is in the build inventory[7] and the is not presetn in the armor inventory[6][2]
+        legs , row = self.getBuild('legs')
+        return self.inventory[6][1] != self.classes.index("legs") and legs, row
 
     
