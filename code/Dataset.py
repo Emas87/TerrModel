@@ -245,8 +245,8 @@ class Dataset:
         #Find new labels
         dataset.detect(own_weights, other_weights)
 
-    def addToDataset(self, dir_path, weights_path=None):
-        eyes = TerrarianEyes(weights_path)
+    def addToDataset(self, dir_path, weights_path=None, dataset=None):
+        eyes = TerrarianEyes(weights_path, dataset=dataset)
         image_files = os.listdir(os.path.join(dir_path))
         for image_file in image_files:
             value = []
@@ -285,7 +285,7 @@ if __name__ == "__main__":
 
     weights_path = os.path.join('runs', 'train', 'yolov5l6', 'weights', 'best.pt')
 
-    #dataset.addToDataset("images", weights_path)
+    #dataset.addToDataset("images", weights_path, dataset=args.dataset)
 
     #dataset.merge_dataset('dataset_tiles', weights_path)
     
@@ -294,7 +294,7 @@ if __name__ == "__main__":
 
     dataset.balance()
     #deletes = ['anvil','arrow', 'axe', 'bar', 'bow', 'chest', 'cobwebI', 'delete', 'eye', 'furnace', 'gel', 'glowstick', 'lifeC', 'ore', 'pickaxe', 'platform', 'pot', 'potion', 'rope', 'star', 'sword', 'torchT', 'zombie']
-    #deletes = ['sand','liquid', 'snow']
+    #deletes = ['delete']
 
     #for delete in deletes:
     #    dataset.delete_class(delete)

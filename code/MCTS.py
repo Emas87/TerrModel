@@ -149,4 +149,3 @@ if __name__ == "__main__":
         #print(f'time to plan action: {str(time2-time1)}, selected:> {action}')
         mcts.game_env.step(action)
 
-    mcts.game_env.end()

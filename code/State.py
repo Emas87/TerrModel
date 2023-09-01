@@ -57,7 +57,7 @@ class State():
                 if(self.last_action == 4):
                     new_state.map.deleteTileAt(x, y, self.classes.index('slime'))
                     reward = 2 # to extra to kill a slime
-                reward += 11
+                reward += 22
         elif action == 5: # cut wood
             # find closest tree position and check 
             # if is in cut range
@@ -131,11 +131,11 @@ class State():
             actions.append(4)
         if self.map.isTreeOnCutRange()[0] and not self.second_phase:
             actions.append(5)
-        if self.second_phase and self.inventory.canBuildHelmet()[0]:
+        if self.inventory.inventory[6][0] != self.classes.index("helmet") and (self.inventory.getItem('helmet')[0] or self.inventory.canBuildHelmet()[0]):
             actions.append(7)
-        if self.second_phase and self.inventory.canBuildBP()[0]:
+        if self.inventory.inventory[6][1] != self.classes.index("breastplate") and (self.inventory.getItem('breastplate')[0] or self.inventory.canBuildBP()[0]):
             actions.append(8)
-        if self.second_phase and self.inventory.canBuildLegs()[0]:
+        if self.inventory.inventory[6][23] != self.classes.index("legs") and (self.inventory.getItem('legs')[0] or self.inventory.canBuildLegs()[0]):
             actions.append(9)
 
         return actions

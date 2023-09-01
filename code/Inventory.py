@@ -36,18 +36,18 @@ class Inventory:
         str1 = 'Inventory:\n' + '\n'.join([' '.join([self.classes[item][:4] for item in row]) for row in self.inventory]) + '\n'
         return str1
 
-    def getWood(self):
-        for i in range(len(self.inventory)):
+    def getItem(self, item):
+        for i in range(len(self.inventory)-4):
             for j in range(len(self.inventory[i])):
-                if self.inventory[i][j] == self.classes.index('wood'):
+                if self.inventory[i][j] == self.classes.index(item):
                     return True, j, i
-        return False, 0, 0
+        return False, -1, -1
     
     def getBuild(self, item):
         for j in range(len(self.inventory[7])):
             if self.inventory[7][j] == self.classes.index(item):
                 return True, j
-        return False, 0
+        return False, -1
     
     def convertCoords(self, col, row):        
         inventory_min = (20, 20)
@@ -79,16 +79,16 @@ class Inventory:
     def canBuildHelmet(self):
         # check if helmet is in the build inventory[7] and the is not presetn in the armor inventory[6][0]
         helmet , row = self.getBuild('helmet')
-        return self.inventory[6][0] != self.classes.index("helmet") and helmet, row
+        return helmet, row
     
     def canBuildBP(self):
         # check if breastplate is in the build inventory[7] and the is not presetn in the armor inventory[6][1]
         breastplate , row = self.getBuild('breastplate')
-        return self.inventory[6][1] != self.classes.index("breastplate") and breastplate, row
+        return breastplate, row
     
     def canBuildLegs(self):
         # check if legs is in the build inventory[7] and the is not presetn in the armor inventory[6][2]
         legs , row = self.getBuild('legs')
-        return self.inventory[6][1] != self.classes.index("legs") and legs, row
+        return legs, row
 
     

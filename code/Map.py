@@ -52,10 +52,10 @@ class Map:
         player = (58, 31)
         closest = [0,0]
         min_distance = float('inf')
-        debug_matrix = [['x' for j in range(53,64 + 1)] for i in range(27,37 + 1)]
+        #debug_matrix = [['x' for j in range(52,65 + 1)] for i in range(27,37 + 1)]
         for i in range(27,37 + 1):
-            for j in range(53,64 + 1):
-                debug_matrix[i-27][j-54] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
+            for j in range(52,65 + 1):
+                #debug_matrix[i-27][j-54] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
                 if self.classes[self.current_map[i][j]] == "slime":
                     distance = abs(i - player[1]) + abs(j - player[0])
                     if distance < min_distance:
@@ -76,10 +76,10 @@ class Map:
         player = (58, 33)
         closest = [0,0]
         min_distance = float('inf')
-        debug_matrix = [['x' for j in range(56,61 + 1)] for i in range(29,35 + 1)]
+        #debug_matrix = [['x' for j in range(56,61 + 1)] for i in range(29,35 + 1)]
         for i in range(29,35 + 1):
             for j in range(56,61 + 1):
-                debug_matrix[i-29][j-56] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
+                #debug_matrix[i-29][j-56] = f'{self.classes[self.current_map[i][j]]} {j} {i}'
                 if self.classes[self.current_map[i][j]] == "tree":
                     distance = abs(i - player[1]) + abs(j - player[0])
                     if distance < min_distance:

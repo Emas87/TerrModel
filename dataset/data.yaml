@@ -8,7 +8,7 @@ names: ['breastplate', 'dirt', 'heart', 'helmet', 'legs', 'slime', 'tree', 'wood
 
 roboflow:
   workspace: tec-h4jb3
-  project: alleq
-  version: 3
+  project: tab-rl1sq
+  version: 2
   license: MIT
-  url: https://universe.roboflow.com/tec-h4jb3/alleq/dataset/3
+  url: https://universe.roboflow.com/tec-h4jb3/tab-rl1sq/dataset/2

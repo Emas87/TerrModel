@@ -25,7 +25,7 @@ TILESZ = 16
 
 class TerrarianEyes:
 
-    def __init__(self, weights_path) -> None:
+    def __init__(self, weights_path, dataset=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset')) -> None:
 
         self.logger = logger
 
@@ -37,7 +37,7 @@ class TerrarianEyes:
         # Yolo model
         self.device = select_device('')
         self.dnn = False
-        self.data = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset', 'data.yaml')
+        self.data = os.path.join(dataset, 'data.yaml')
         self.half = False
         self.imgsz = [640, 640]
         self.conf_thres = 0.15
@@ -85,6 +85,7 @@ class TerrarianEyes:
             except cv.error:
                 res = []
 
+            res = np.array(res)
             loc = np.where( res >= threshold)
             for pt in zip(*loc[::-1]):
                 rectangles.append((pt[0], pt[1], w, h))
