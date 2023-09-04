@@ -63,7 +63,7 @@ class RHEA:
 
         # start
         self.game_env.start(seed)
-        self.game_env.reset()  # initialize the game state
+        #self.game_env.reset()  # initialize the game state
         time1 = time.time()
 
         # Get number of wood and if it is higher than 100 build

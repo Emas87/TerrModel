@@ -453,7 +453,7 @@ class TerrarianEyes:
         for j in range(0,4):
             final_rectangles.append((30 , 690 + int(j*54), 40, 40))
         detection_image = vision.draw_rectangles(image, final_rectangles, line_type=self.line_thickness)
-        self.showImage(detection_image)
+        #self.showImage(detection_image)
 
     def findNumber(self, screenshot, x, y, w, h):
         # crop only 3/4 of image, to avoid any number related to the inventory order
@@ -547,7 +547,7 @@ if __name__ == "__main__":
     eyes.startController('Terraria')    
     #eyes.startController(None)   
 
-    #eyes.startRecorder(None)    
+    #eyes.startRecorder('Terraria')    
 
 
     exit()

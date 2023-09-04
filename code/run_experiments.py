@@ -36,7 +36,6 @@ if __name__ == "__main__":
             lines[i] = lines[i].strip() + f' {str(result)}\n'
         with open(experiment_file, "w") as f:
             f.writelines(lines)
-        game_env.second_phase = False
 
     
     

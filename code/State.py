@@ -129,14 +129,16 @@ class State():
         #    actions.append(1)
         if self.map.isEnemyOnAttackRange()[0]:
             actions.append(4)
-        if self.map.isTreeOnCutRange()[0] and not self.second_phase:
+        # TODO if self.map.isTreeOnCutRange()[0] and not self.second_phase:
+        if self.map.isTreeOnCutRange()[0]:
             actions.append(5)
-        if self.inventory.inventory[6][0] != self.classes.index("helmet") and (self.inventory.getItem('helmet')[0] or self.inventory.canBuildHelmet()[0]):
-            actions.append(7)
-        if self.inventory.inventory[6][1] != self.classes.index("breastplate") and (self.inventory.getItem('breastplate')[0] or self.inventory.canBuildBP()[0]):
-            actions.append(8)
-        if self.inventory.inventory[6][23] != self.classes.index("legs") and (self.inventory.getItem('legs')[0] or self.inventory.canBuildLegs()[0]):
-            actions.append(9)
+        if self.second_phase:
+            if self.inventory.inventory[6][0] != self.classes.index("helmet") and (self.inventory.getItem('helmet')[0] or self.inventory.canBuildHelmet()[0]):
+                actions.append(7)
+            if self.inventory.inventory[6][1] != self.classes.index("breastplate") and (self.inventory.getItem('breastplate')[0] or self.inventory.canBuildBP()[0]):
+                actions.append(8)
+            if self.inventory.inventory[6][2] != self.classes.index("legs") and (self.inventory.getItem('legs')[0] or self.inventory.canBuildLegs()[0]):
+                actions.append(9)
 
         return actions
 

@@ -107,7 +107,7 @@ class MCTS:
         num_simulations = 1  # number of simulations to run
 
         self.game_env.start(seed)
-        self.game_env.reset()  # initialize the game state
+        #self.game_env.reset()  # initialize the game state
         time1 = time.time()
 
         # Get number of wood and if it is higher than 100 build
@@ -144,7 +144,7 @@ if __name__ == "__main__":
         state.inventory.inventory = observation['inventory'].copy()
         state.second_phase = mcts.game_env.second_phase
         #time1 = time.time()
-        action = mcts.search(state, max_iterations=num_simulations, max_time=2)  # get the recommended action
+        action = mcts.search(state, max_iterations=num_simulations, max_time=3)  # get the recommended action
         #time2 = time.time()
         #print(f'time to plan action: {str(time2-time1)}, selected:> {action}')
         mcts.game_env.step(action)
