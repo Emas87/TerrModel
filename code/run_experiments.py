@@ -6,7 +6,7 @@ from configure_logging import configure_logging
 
 # Configure the shared logger
 logger = configure_logging('run_experiments.log')
-
+TIMEOUT = 500
 if __name__ == "__main__":
     i = ""
     experiment_file = f"experiments{i}.txt"
@@ -27,13 +27,20 @@ if __name__ == "__main__":
         seed = experiment[1]
         max_time = experiment[2]
         logger.info(f'Running {algorithm} {seed} {max_time}')
-        #lunch experiment
-        if algorithm == 'mcts':
-            result = mcts.run(int(seed), int(max_time))
-            lines[i] = lines[i].strip() + f' {str(result)}\n'
-        elif algorithm == 'rhea':
-            result = rhea.run(int(seed), int(max_time))
-            lines[i] = lines[i].strip() + f' {str(result)}\n'
+        while True:
+            #launch experiment
+            if algorithm == 'mcts':
+                result = mcts.run(int(seed), int(max_time), timeout=TIMEOUT)
+                if result == 0:
+                    continue
+                lines[i] = lines[i].strip() + f' {str(result)}\n'
+                break
+            elif algorithm == 'rhea':
+                result = rhea.run(int(seed), int(max_time), timeout=TIMEOUT)
+                if result == 0:
+                    continue
+                lines[i] = lines[i].strip() + f' {str(result)}\n'
+                break
         with open(experiment_file, "w") as f:
             f.writelines(lines)
 

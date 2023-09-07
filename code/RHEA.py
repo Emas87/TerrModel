@@ -57,7 +57,7 @@ class RHEA:
             score += reward
         return score
     
-    def run(self, seed=0, max_time=2):
+    def run(self, seed=0, max_time=2, timeout=600):
         # Setup
         state = State()
 
@@ -65,17 +65,24 @@ class RHEA:
         self.game_env.start(seed)
         #self.game_env.reset()  # initialize the game state
         time1 = time.time()
+        time2 = time1
 
         # Get number of wood and if it is higher than 100 build
         while not self.game_env.finished():
             observation = self.game_env.get_observation()
             state.map.current_map = observation['map'].copy()
             state.inventory.inventory = observation['inventory'].copy()
+
             state.second_phase = self.game_env.second_phase
             action = self.search(state, max_time)  # get the recommended action
             self.logger.info(f'Action, selected: {action}')
             self.game_env.step(action)
-        time2 = time.time()
+            time2 = time.time()
+            if time2 - time1 >= timeout:
+                # wait for any other action to be finished
+                time.sleep(6)
+                self.game_env.end()
+                return 0
         self.logger.info(f'time to finish {str(time2-time1)}')
         self.game_env.end()
         return float(time2 - time1)    

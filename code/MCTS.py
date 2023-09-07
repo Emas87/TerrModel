@@ -101,7 +101,7 @@ class MCTS:
         #action =  max(root_node.children, key=lambda node: node.state.score).state.last_action
         return action
 
-    def run(self, seed, max_time=1):
+    def run(self, seed, max_time=1, timeout=600):
         # Setup
         state = State()
         num_simulations = 1  # number of simulations to run
@@ -109,6 +109,7 @@ class MCTS:
         self.game_env.start(seed)
         #self.game_env.reset()  # initialize the game state
         time1 = time.time()
+        time2 = time1
 
         # Get number of wood and if it is higher than 100 build
         while not self.game_env.finished():
@@ -121,8 +122,15 @@ class MCTS:
             action = self.search(state, max_iterations=num_simulations, max_time=max_time)  # get the recommended action
             self.logger.info(f'Action, selected: {action}')
             self.game_env.step(action)
+            time2 = time.time()
+            if time2 - time1 >= timeout:
+                # wait for any other action to be finished
+                time.sleep(6)
+                self.game_env.end()
+                return 0
 
-        time2 = time.time()
+        
+
         self.logger.info(f'time to finish {str(time2-time1)}')
         self.game_env.end()
 

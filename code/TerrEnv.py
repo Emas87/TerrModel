@@ -59,7 +59,7 @@ class TerrEnv(gym.Env):
             pydirectinput.moveTo(460, 155)
             # delete any item in teh inventory in that position
             pydirectinput.keyDown('ctrl')
-            time.sleep(0.2)
+            time.sleep(0.3)
             pydirectinput.mouseDown(button='left')
             pydirectinput.mouseUp(button='left')
             pydirectinput.keyUp('ctrl')
@@ -121,27 +121,22 @@ class TerrEnv(gym.Env):
                 reward = 10
         elif action == 6: # closer
             reward = 4
-            closest = self.eyes.map.getCloserSpiral(self.second_phase)
-            # print(f'closest: {closest}')
-            if closest[0] - 58 >= 3:
-                # Right
-                # press '2' key and hold it down
-                pydirectinput.keyDown(RIGHT)
+            def move(direction):
+                pydirectinput.keyDown(direction)
 
                 # keep the key pressed for 2 seconds
                 time.sleep(0.3)
                 # release the '2' key
-                pydirectinput.keyUp(RIGHT)
-                #action = 2
+                pydirectinput.keyUp(direction)
+            closest = self.eyes.map.getCloserSpiral(self.second_phase)
+            # print(f'closest: {closest}')
+            if closest[0] - 58 >= 3:
+                # Right
+                my_thread = threading.Thread(target=move, args=(RIGHT))
+                my_thread.start() 
             elif closest[0] - 58 <= -3:
-                # press '3' key and hold it down
-                pydirectinput.keyDown(LEFT)
-
-                # keep the key pressed for 2 seconds
-                time.sleep(0.3)
-                # release the '3' key
-                pydirectinput.keyUp(LEFT)
-                #action = 3
+                my_thread = threading.Thread(target=move, args=(LEFT))
+                my_thread.start() 
             elif self.second_phase and not ((self.eyes.inventory.inventory[6][0] != self.eyes.classes.index("helmet") and self.eyes.inventory.canBuildHelmet()[0]) or \
                       (self.eyes.inventory.inventory[6][1] != self.eyes.classes.index("breastplate") and self.eyes.inventory.canBuildBP()[0]) or \
                       (self.eyes.inventory.inventory[6][2] != self.eyes.classes.index("legs") and self.eyes.inventory.canBuildLegs()[0])):
@@ -258,6 +253,7 @@ class TerrEnv(gym.Env):
                 wb_x, wb_y = self.eyes.map.convertCoords(wb_col, wb_row)
                 if wb_x is None or wb_y is None:
                     info["status"] = "NotCompleted"
+                    print('Thre is no place to put the workbench')
                 else:
                     info["status"] = "Completed"
 
@@ -266,8 +262,9 @@ class TerrEnv(gym.Env):
                         # Find workbench in inventory
                         x, y, w, h = self.eyes.inventory.convertCoords(col, row)
                        
-                        #self.drag(900, 400, wb_x, wb_y)
                         self.drag(int(x+w/2), int(y+h/2), wb_x, wb_y)
+                        # Yolo has an offset from time to time, this will try to click above teh tile that was calculated
+                        self.drag(950, 550, wb_x, wb_y-16)
                     else:
                         # Find workbench in build inventory
                         x, y, w, h = self.eyes.inventory.convertCoordsBuild(row)
@@ -281,6 +278,9 @@ class TerrEnv(gym.Env):
                             pydirectinput.mouseUp(button='left')
 
                         self.drag(50, 650, wb_x, wb_y)
+
+                        # Yolo has an offset from time to time, this will try to click above teh tile that was calculated
+                        self.drag(950, 550, wb_x, wb_y-16)
 
                     # click on 460, 155 to leave any item that couldn't be allocated correctly
                     putAway()
@@ -302,11 +302,11 @@ class TerrEnv(gym.Env):
     
     def reset(self):
         self.win = False
-        time.sleep(10)
+        time.sleep(12)
         #pydirectinput.click(x=150, y=250)
         # Press Esc
         pydirectinput.keyDown('esc')
-        time.sleep(0.2)
+        time.sleep(0.3)
         pydirectinput.keyUp('esc')
         observation = self.get_observation()
         return observation
@@ -343,12 +343,7 @@ class TerrEnv(gym.Env):
         #resized = cv2.resize(gray, (1920,1080))
         #channel = np.reshape(resized, (1,1080,1920))
         return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
-    
-    #def get_objects(self):
-    #    raw = np.array(self.cap.grab(self.game_location))[:,:,:3].astype(np.uint8)
-    #    self.eyes.updateInventory(raw)
-    #    return {"map": self.eyes.map.current_map, "inventory": self.eyes.inventory.inventory}
-    
+        
     def get_done(self):
         if self.win:
             return True
@@ -401,7 +396,7 @@ class TerrEnv(gym.Env):
         pydirectinput.click(345, 435, clicks = 2)
 
         # wait until is opened
-        time.sleep(20)
+        time.sleep(22)
 
         # Click 'Single Palyer' 945, 300
         pydirectinput.moveTo(945, 300)
@@ -497,10 +492,6 @@ class TerrEnv(gym.Env):
             self.drag(1840, 600, 520, 300)
         
         
-
-        #pydirectinput.keyDown('esc')
-        #time.sleep(0.2)
-        #pydirectinput.keyUp('esc')
 
         pydirectinput.press('ctrl')
         self.second_phase = False
