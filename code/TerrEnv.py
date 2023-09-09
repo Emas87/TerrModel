@@ -17,7 +17,7 @@ from configure_logging import configure_logging
 logger = configure_logging('run_experiments.log')
 RIGHT = 'd'
 LEFT = 'a'
-DEBUG = True
+DEBUG = False
 
 class TerrEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
