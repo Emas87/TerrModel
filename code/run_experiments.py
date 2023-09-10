@@ -8,7 +8,7 @@ from configure_logging import configure_logging
 logger = configure_logging('run_experiments.log')
 TIMEOUT = 500
 if __name__ == "__main__":
-    i = ""
+    i = "2"
     experiment_file = f"experiments{i}.txt"
     game_env = TerrEnv()
     mcts = MCTS(game_env, exploration=3)
