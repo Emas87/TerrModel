@@ -27,7 +27,7 @@ class RHEA:
             return action
         while time.time() - start_time < max_time:
             for a in available_actions:
-                if time.time() - start_time >= max_time:  # check if 2 seconds have elapsed
+                if time.time() - start_time >= max_time:  # check if max_time seconds have elapsed
                     break
                 score = 0
                 for _ in range(self.horizon):
