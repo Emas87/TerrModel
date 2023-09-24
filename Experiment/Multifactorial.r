@@ -115,8 +115,8 @@ mcts 1 3 93.87201619148254
 mcts 2 2 198.2295002937317
 mcts 4 2 190.98475980758667
 rhea 2 2 155.02112793922424
-rhea 7 2 474.5637357234955
-rhea 3 3 368.74963569641113
+rhea 7 2 198.3829483985901
+rhea 3 3 233.9864547252655
 rhea 4 3 138.8304727077484
 rhea 0 2 88.82187485694885
 mcts 2 3 205.19269132614136
@@ -162,7 +162,7 @@ mcts 2 2 185.44292998313904
 rhea 4 3 133.7801263332367
 mcts 5 3 116.57391095161438
 mcts 1 3 103.97783398628235
-mcts 4 2 323.5418210029602
+mcts 4 2 145.07135128974915
 rhea 0 3 90.41676759719849
 rhea 3 3 167.9379997253418
 rhea 5 2 80.92302536964417
@@ -173,7 +173,7 @@ mcts 2 3 224.25706887245178
 mcts 0 3 197.65769028663635
 mcts 7 2 190.08676433563232
 rhea 7 3 206.6653699874878
-mcts 6 3 384.9930205345154
+mcts 6 3 172.51871490478516
 rhea 5 3 79.46983098983765
 
 rhea 2 3 189.52651596069336
@@ -185,12 +185,12 @@ mcts 0 2 185.06620144844055
 rhea 1 2 96.56639742851257
 rhea 1 3 110.15878057479858
 rhea 0 2 94.50266790390015
-mcts 1 3 451.24510979652405
+mcts 1 3 116.56413650512695
 rhea 5 2 82.37934136390686
 rhea 0 3 88.95668649673462
 rhea 6 2 161.99786019325256
 rhea 4 3 142.7427065372467
-rhea 7 2 319.67664980888367
+rhea 7 2 146.31722855567932
 mcts 6 3 209.3561658859253
 rhea 2 2 198.16097044944763
 mcts 4 2 123.77343535423279
@@ -199,7 +199,7 @@ rhea 3 3 202.8498661518097
 mcts 5 2 92.61046767234802
 mcts 3 3 215.2208173274994
 rhea 5 3 145.99872374534607
-rhea 6 3 326.9003052711487
+rhea 6 3 209.8558051586151
 mcts 5 3 136.8423719406128
 mcts 0 3 140.4361367225647
 rhea 4 2 117.0086190700531
@@ -262,6 +262,10 @@ plotNormalHistogram(x)
 plot(fitted(model), residuals(model))
 
 plot(model)
+
+############################################################################################################################# nolint
+# Prueba de Levene
+leveneTest(result ~ algorithm * seed * time, data = data)
 
 
 # POST-HOC
@@ -389,3 +393,59 @@ plot + theme(axis.title = element_text(size = 20),
 pairwise.t.test(data$result, data$algorithm, p.adjust.method = 'BH')
 pairwise.t.test(data$result, data$seed, p.adjust.method = 'BH')
 pairwise.t.test(data$result, data$time, p.adjust.method = 'BH')
+
+####################################################################################################################
+library(rcompanion)
+t_sqrt <- sqrt(data$result)
+
+modelt <- lm(t_sqrt ~ algorithm * seed * time, data = data)
+
+library(car)
+Anova(modelt, type = "II") # Suma de cuadrados
+
+xt <- residuals(modelt)
+
+library(rcompanion)
+plotNormalHistogram(xt)
+# Homocedasticidad
+plot(fitted(modelt), residuals(modelt))
+
+plot(modelt)
+
+####################################################################################################################
+library(rcompanion)
+t_cub <- sign(data$result) * abs(data$result)^(1 / 3)
+
+model_cube <- lm(t_cub ~ algorithm * seed * time, data = data)
+
+library(car)
+Anova(model_cube, type = "II") # Suma de cuadrados
+
+xcube <- residuals(model_cube)
+
+library(rcompanion)
+plotNormalHistogram(xcube)
+
+# Homocedasticidad
+plot(fitted(model_cube), residuals(model_cube))
+
+plot(model_cube)
+
+###################################################################################################################
+library(rcompanion)
+t_log <- log(data$result)
+
+model_log <- lm(t_log ~ algorithm * seed * time, data = data)
+
+library(car)
+Anova(model_log, type = "II") # Suma de cuadrados
+
+xlog <- residuals(model_log)
+
+library(rcompanion)
+plotNormalHistogram(xlog)
+
+# Homocedasticidad
+plot(fitted(model_log), residuals(model_log))
+
+plot(model_log)
