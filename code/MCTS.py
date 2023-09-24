@@ -39,7 +39,7 @@ class MCTS:
     def __init__(self, game_env, exploration=1.0):
         self.exploration = exploration
         self.game_env = game_env  # initialize the game state
-        self.logger = logger
+        #self\.logger = logger
 
     def select(self, root_node):
         node = root_node
@@ -91,7 +91,7 @@ class MCTS:
             #if fully_expanded:
             #    break
             result, actions = self.simulate(node.state, max_iterations)
-            self.logger.info(f"simulate with {node.state.last_action}, result: {result}, with these actions {str(actions)}, initial score {node.state.score}")
+            #self\.logger.info(f"simulate with {node.state.last_action}, result: {result}, with these actions {str(actions)}, initial score {node.state.score}")
             self.backpropagate(node, result)
             if time.time() - start_time >= max_time:
                 break
@@ -120,7 +120,7 @@ class MCTS:
             
             state.second_phase = self.game_env.second_phase
             action = self.search(state, max_iterations=num_simulations, max_time=max_time)  # get the recommended action
-            self.logger.info(f'Action, selected: {action}')
+            #self\.logger.info(f'Action, selected: {action}')
             self.game_env.step(action)
             time2 = time.time()
             if time2 - time1 >= timeout:
@@ -131,7 +131,7 @@ class MCTS:
 
         
 
-        self.logger.info(f'time to finish {str(time2-time1)}')
+        #self\.logger.info(f'time to finish {str(time2-time1)}')
         self.game_env.end()
 
         return float(time2 - time1)

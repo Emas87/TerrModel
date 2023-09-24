@@ -14,7 +14,7 @@ class RHEA:
         self.game_env = game_env  # initialize the game state
         self.action_space = self.game_env.action_map  # the action space
         self.horizon = horizon  # number of rollouts per planning step
-        self.logger = logger
+        #self\.logger = logger
 
     def search(self, state, max_time=2):
         start_time = time.time()
@@ -75,7 +75,7 @@ class RHEA:
 
             state.second_phase = self.game_env.second_phase
             action = self.search(state, max_time)  # get the recommended action
-            self.logger.info(f'Action, selected: {action}')
+            #self\.logger.info(f'Action, selected: {action}')
             self.game_env.step(action)
             time2 = time.time()
             if time2 - time1 >= timeout:
@@ -83,7 +83,7 @@ class RHEA:
                 time.sleep(6)
                 self.game_env.end()
                 return 0
-        self.logger.info(f'time to finish {str(time2-time1)}')
+        #self\.logger.info(f'time to finish {str(time2-time1)}')
         self.game_env.end()
         return float(time2 - time1)    
 

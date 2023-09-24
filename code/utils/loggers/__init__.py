@@ -62,7 +62,7 @@ class Loggers():
         self.opt = opt
         self.hyp = hyp
         self.plots = not opt.noplots  # plot results
-        self.logger = logger  # for printing results to console
+        #self\.logger = logger  # for printing results to console
         self.include = include
         self.keys = [
             'train/box_loss',
@@ -87,16 +87,16 @@ class Loggers():
         if not clearml:
             prefix = colorstr('ClearML: ')
             s = f"{prefix}run 'pip install clearml' to automatically track, visualize and remotely train YOLOv5 🚀 in ClearML"
-            self.logger.info(s)
+            #self\.logger.info(s)
         if not comet_ml:
             prefix = colorstr('Comet: ')
             s = f"{prefix}run 'pip install comet_ml' to automatically track and visualize YOLOv5 🚀 runs in Comet"
-            self.logger.info(s)
+            #self\.logger.info(s)
         # TensorBoard
         s = self.save_dir
         if 'tb' in self.include and not self.opt.evolve:
             prefix = colorstr('TensorBoard: ')
-            self.logger.info(f"{prefix}Start with 'tensorboard --logdir {s.parent}', view at http://localhost:6006/")
+            #self\.logger.info(f"{prefix}Start with 'tensorboard --logdir {s.parent}', view at http://localhost:6006/")
             self.tb = SummaryWriter(str(s))
 
         # W&B
@@ -271,7 +271,7 @@ class Loggers():
             plot_results(file=self.save_dir / 'results.csv')  # save results.png
         files = ['results.png', 'confusion_matrix.png', *(f'{x}_curve.png' for x in ('F1', 'PR', 'P', 'R'))]
         files = [(self.save_dir / f) for f in files if (self.save_dir / f).exists()]  # filter
-        self.logger.info(f"Results saved to {colorstr('bold', self.save_dir)}")
+        #self\.logger.info(f"Results saved to {colorstr('bold', self.save_dir)}")
 
         if self.tb and not self.clearml:  # These images are already captured by ClearML by now, we don't want doubles
             for f in files:

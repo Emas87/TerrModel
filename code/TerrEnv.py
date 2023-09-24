@@ -23,7 +23,7 @@ class TerrEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
     def __init__(self):
         super().__init__()
-        self.logger = logger
+        #self\.logger = logger
         self.win = False
         # Setup spaces
         self.observation_space = spaces.Dict(
@@ -380,7 +380,7 @@ class TerrEnv(gym.Env):
             raw = np.array(self.cap.grab(location))[:,:,:3].astype(np.uint8)
             count = self.eyes.findNumber(raw, x, int(y + h/2), w, int(h/2))
             # is bigger than 100
-            self.logger.info(f"wood: {count}")
+            #self\.logger.info(f"wood: {count}")
             if count >= 120 and count < 200:
                 # build
                 _, _, _, info = self.step(10) 

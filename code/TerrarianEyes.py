@@ -27,7 +27,7 @@ class TerrarianEyes:
 
     def __init__(self, weights_path, dataset=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dataset')) -> None:
 
-        self.logger = logger
+        #self\.logger = logger
 
         #
         self.weights_path = weights_path
@@ -261,7 +261,7 @@ class TerrarianEyes:
             screenshot = wincap.get_screenshot()
             #screenshot = self.captureWindow()
             if screenshot is None:
-                self.logger.error("ERROR: Window is minimized or closed, please maximize it or open it and rerun the script")
+                #self\.logger.error("ERROR: Window is minimized or closed, please maximize it or open it and rerun the script")
                 break
 
             # do tiles detection
@@ -291,7 +291,7 @@ class TerrarianEyes:
             #cv.imshow('Matches', detection_image)
 
             # debug the loop rate
-            self.logger.info('FPS {}'.format(1 / (time() - loop_time)))
+            #self\.logger.info('FPS {}'.format(1 / (time() - loop_time)))
             loop_time = time()
 
             # press 'q' with the output window focused to exit.
@@ -335,14 +335,14 @@ class TerrarianEyes:
             # get an updated image of the game
             screenshot = wincap.get_screenshot()
             if screenshot is None:
-                self.logger.error("ERROR: Window is minimized, please maximize it an rerun the script")
+                #self\.logger.error("ERROR: Window is minimized, please maximize it an rerun the script")
                 break
 
             # display the images
             cv.imshow('Matches', screenshot)
 
             # debug the loop rate
-            self.logger.info('FPS {}'.format(1 / (time() - loop_time)))
+            #self\.logger.info('FPS {}'.format(1 / (time() - loop_time)))
             loop_time = time()
 
             # press 'q' with the output window focused to exit.
