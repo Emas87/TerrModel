@@ -162,7 +162,7 @@ def kmean_anchors(dataset='./data/coco128.yaml', n=9, img_size=640, thr=4.0, gen
         fg = anchor_fitness(kg)
         if fg > f:
             f, k = fg, kg.copy()
-            pbar.desc = f'{PREFIX}Evolving anchors with Genetic Algorithm: fitness = {f:.4f}'
+            pbar.desc = f'{PREFIX}Evolving anchors with Genetic algorithm: fitness = {f:.4f}'
             if verbose:
                 print_results(k, verbose)
 

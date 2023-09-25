@@ -22,7 +22,7 @@ class RHEA:
         scores = []
         available_actions = state.get_available_actions()
         action = available_actions[0]
-        print(f'available_actions: {available_actions}')
+        #print(f'available_actions: {available_actions}')
         if(len(available_actions) == 1):
             return action
         while time.time() - start_time < max_time:
@@ -35,12 +35,12 @@ class RHEA:
                     score += rollout_score
                 scores.append((a, score))
             scores = sorted(scores, key=lambda x: x[1], reverse=True)
-            print(scores)
+            #print(scores)
             action = scores[0][0]
             #state = self.forward_model(state, action)
             state,_ = state.run_action(action)
             available_actions = state.get_available_actions()
-            print(f'available_actions: {available_actions}')
+            #print(f'available_actions: {available_actions}')
         return action
 
     def rollout(self, state, action):

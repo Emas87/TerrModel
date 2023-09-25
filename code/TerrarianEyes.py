@@ -19,7 +19,7 @@ import logging
 from configure_logging import configure_logging
 
 # Configure the shared logger
-logger = configure_logging('run_experiments.log')
+#logger = configure_logging('run_experiments.log')
 
 TILESZ = 16
 

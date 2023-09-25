@@ -12,7 +12,7 @@ b = (0,1,2,3,4,5,6,7)
 c = (2, 3)
 
 for i in [1,2,3,4,5,6,7,8,9,10]:
-    lines = ["Algorithm seed time result\n"]
+    lines = ["algorithm seed time result\n"]
     combinations = get_all_combinations(a, b, c)
     for combination in combinations:
         lines.append(f'{combination[0]} {combination[1]} {combination[2]}\n')

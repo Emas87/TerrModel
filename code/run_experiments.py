@@ -5,11 +5,11 @@ from TerrEnv import TerrEnv
 from configure_logging import configure_logging
 
 # Configure the shared logger
-logger = configure_logging('run_experiments.log')
+#logger = configure_logging('run_experiments.log')
 TIMEOUT = 500
 if __name__ == "__main__":
-    j = "5"
-    for j in range(1, 11):
+    jinitial = 1
+    for j in range(jinitial, 11):
         experiment_file = f"experiments{j}.txt"
         game_env = TerrEnv()
         mcts = MCTS(game_env, exploration=3)
@@ -18,7 +18,7 @@ if __name__ == "__main__":
         #rhea = None
         with open(experiment_file) as f:
             lines = f.readlines()
-        # format: Algorithm seed time result
+        # format: algorithm seed time result
 
         for i in range(len(lines)):
             experiment = lines[i].strip().split(" ")
@@ -27,7 +27,7 @@ if __name__ == "__main__":
             algorithm = experiment[0]
             seed = experiment[1]
             max_time = experiment[2]
-            logger.info(f'Running {algorithm} {seed} {max_time}')
+            #logger.info(f'Running {algorithm} {seed} {max_time}')
             while True:
                 #launch experiment
                 if algorithm == 'mcts':

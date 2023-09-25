@@ -14,7 +14,7 @@ import logging
 from configure_logging import configure_logging
 
 # Configure the shared logger
-logger = configure_logging('run_experiments.log')
+#logger = configure_logging('run_experiments.log')
 RIGHT = 'd'
 LEFT = 'a'
 DEBUG = False
@@ -53,7 +53,7 @@ class TerrEnv(gym.Env):
         self.second_phase = False
            
     def step(self, action):
-        print(f"Step: {action}")
+        #print(f"Step: {action}")
 
         def putAway():
             pydirectinput.moveTo(460, 155)
@@ -253,7 +253,7 @@ class TerrEnv(gym.Env):
                 wb_x, wb_y = self.eyes.map.convertCoords(wb_col, wb_row)
                 if wb_x is None or wb_y is None:
                     info["status"] = "NotCompleted"
-                    print('Thre is no place to put the workbench')
+                    #print('Thre is no place to put the workbench')
                 else:
                     info["status"] = "Completed"
 
@@ -386,7 +386,7 @@ class TerrEnv(gym.Env):
                 _, _, _, info = self.step(10) 
                 #if "status" in info and info["status"] != "NotCompleted":
                 self.second_phase = True
-                print('Second Phase')
+                #print('Second Phase')
                 return True
         return False
     
